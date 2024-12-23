@@ -8,5 +8,20 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    
+    public PlayerBase player;
+
+    private void Awake()
+    {
+        player = GetComponent<PlayerBase>();
+    }
+
+    private void Start()
+    {
+        player.Move(InputSystem.Instance.Movement);
+    }
+
+    private void Update()
+    {
+        
+    }
 }

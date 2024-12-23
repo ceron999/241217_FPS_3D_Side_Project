@@ -24,12 +24,16 @@ public class CharacterBase : MonoBehaviour
     // 무기 관련 데이터
 
     // 애니메이션 데이터
+    public UnityEngine.CharacterController unityCharacterController;
 
     public void Move(Vector2 input)
     {
         horizontal = input.x;
         vertical = input.y;
+        moveSpeed = 0;
         Vector2 movement = Vector2.zero;
+
+
     }
 
     public void Rotate()

@@ -12,7 +12,7 @@ public class InputSystem : MonoBehaviour
 
     // ÀÌµ¿
     public Vector2 Movement => movement;
-    public Vector2 movement;
+    private Vector2 movement;
 
     public bool IsRun => isRun;
     private bool isRun = false;
