@@ -16,8 +16,8 @@ public class InputSystem : MonoBehaviour
 
     public bool IsRun => isRun;
     private bool isRun = false;
-    public bool IsSit => isSit;
-    private bool isSit = false;
+    public bool IsCrouch => isCrouch;
+    private bool isCrouch = false;
 
     // 조작 액션
     public System.Action OnClickAlpha1;                 // 주 무기 스위칭
@@ -63,12 +63,12 @@ public class InputSystem : MonoBehaviour
 
         // 이동 설정
         float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("vertical");
+        float inputY = Input.GetAxis("Vertical");
         movement = new Vector2(inputX, inputY);
 
         // 이동 상태 변환
         isRun = Input.GetKey(KeyCode.LeftShift);
-        isSit = Input.GetKey(KeyCode.LeftControl);
+        isCrouch = Input.GetKey(KeyCode.LeftControl);
 
         // 점프
         if (Input.GetKeyDown(KeyCode.Space))

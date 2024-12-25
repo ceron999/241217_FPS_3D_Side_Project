@@ -17,11 +17,21 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        player.Move(InputSystem.Instance.Movement);
+        InputSystem.Instance.OnClickSpace += CommandJump;
     }
 
     private void Update()
     {
-        
+        player.SetRunning(InputSystem.Instance.IsRun);
+        player.SetCrouch(InputSystem.Instance.IsCrouch);
+        player.Move(InputSystem.Instance.Movement);
     }
+
+    #region Command Function
+    void CommandJump()
+    {
+        player.Jump();
+    }
+
+    #endregion
 }
