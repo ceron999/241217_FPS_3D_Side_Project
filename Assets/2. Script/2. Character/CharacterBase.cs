@@ -9,8 +9,8 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
 
     // 이동 관련 데이터
-    [field: SerializeField]
     public bool IsRun { get; set; } = false;
+    [field: SerializeField]
     public bool IsCrouch { get; set; } = false;
 
     public float speed;
@@ -20,6 +20,8 @@ public class CharacterBase : MonoBehaviour
 
     public float runningBlend;
     public float crouchBlend;
+
+    public float rotation;
 
     // 회전 관련 데이터
 
@@ -36,6 +38,10 @@ public class CharacterBase : MonoBehaviour
     protected float gravity = -9.8f;
 
     // 공격 관련 데이터
+    public Transform weaponHolder;
+    protected WeaponBase nowWeapon;
+    protected bool isShooting = false;
+    protected bool isReloading = false;
 
     // 캐릭터가 보유한 Status
     public CharacterStatusData characterStatusData;
@@ -51,6 +57,11 @@ public class CharacterBase : MonoBehaviour
     {
         characterAnimator = GetComponent<Animator>();
         unityCharacterController = GetComponent<UnityEngine.CharacterController>();
+    }
+
+    private void Start()
+    {
+        nowWeapon = weaponHolder.GetChild(0).GetComponent<WeaponBase>();
     }
 
     /// <summary>
@@ -93,9 +104,10 @@ public class CharacterBase : MonoBehaviour
         IsCrouch = isCrouching;
     }
 
-    public void Rotate()
+    public void Rotate(float angle)
     {
-
+        rotation += angle;
+        transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 
     public void Jump()
@@ -103,19 +115,20 @@ public class CharacterBase : MonoBehaviour
         if(isGrounded)
         {
             verticalVelocity = jumpFoice;
-            
+            characterAnimator.SetTrigger("Jump Trigger");
             // 애니메이션 구동
         }
     }
 
-    public void Shoot()
+    public void Shoot(bool isShoot)
     {
-
+        isShooting = isShoot;
     }
 
     public void Reload()
     {
-
+        isReloading = true;
+        characterAnimator.SetTrigger("Reload Trigger");
     }
 
     protected void CheckGround()

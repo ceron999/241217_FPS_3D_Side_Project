@@ -10,6 +10,9 @@ public class InputSystem : MonoBehaviour
 {
     public static InputSystem Instance;
 
+    // 커서
+    private bool isShowCursor = false;
+
     // 이동
     public Vector2 Movement => movement;
     private Vector2 movement;
@@ -18,6 +21,10 @@ public class InputSystem : MonoBehaviour
     private bool isRun = false;
     public bool IsCrouch => isCrouch;
     private bool isCrouch = false;
+
+    // 회전
+    public Vector2 Look => look;
+    private Vector2 look;
 
     // 조작 액션
     public System.Action OnClickAlpha1;                 // 주 무기 스위칭
@@ -28,13 +35,19 @@ public class InputSystem : MonoBehaviour
 
     public System.Action OnClickSpace;                  // 점프
 
-    public System.Action OnClickMouseLeftButtonDown;    // 좌클릭
-    public System.Action OnClickMouseRightButton;       // 우클릭
+    public System.Action OnClickLeftMouseButtonDown;    // 좌클릭 down
+    public System.Action OnClickLeftMouseButtonUp;      // 좌클릭 up
+    public System.Action OnClickRightMouseButtonDown;   // 우클릭
+
+    public System.Action OnClickR;                      // 재장전
 
     private void Awake()
     {
         if(Instance == null)
             Instance = this;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -70,11 +83,37 @@ public class InputSystem : MonoBehaviour
         isRun = Input.GetKey(KeyCode.LeftShift);
         isCrouch = Input.GetKey(KeyCode.LeftControl);
 
+        // 회전 상태 변환
+        float lookX = Input.GetAxis("Mouse X");
+        float lookY = Input.GetAxis("Mouse Y");
+        look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY);
+
         // 점프
         if (Input.GetKeyDown(KeyCode.Space))
         {
             OnClickSpace?.Invoke();
         }
 
+        // 재장전
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            OnClickR?.Invoke();
+        }
+
+        // 공격
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnClickLeftMouseButtonDown?.Invoke();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnClickLeftMouseButtonUp?.Invoke();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnClickLeftMouseButtonDown?.Invoke();
+        }
     }
 }
