@@ -17,7 +17,7 @@ public class PlayerBase : CharacterBase
         // 2. 사격
         if(isShooting)
         {
-            bool isFireSuccess = nowWeapon.Fire();
+            bool isFireSuccess = nowWeapon.Activate();
             if (false == isFireSuccess)
             {
                 if (nowWeapon.RemainAmmo <= 0 && false == isReloading)
@@ -26,7 +26,7 @@ public class PlayerBase : CharacterBase
                     Reload();
                 }
             }
-            nowWeapon.Fire();
+            nowWeapon.Activate();
         }
 
         // 3. animation 설정
@@ -81,5 +81,16 @@ public class PlayerBase : CharacterBase
             else
                 weapons[i].gameObject.SetActive(true);
         }
+    }
+
+    public void ThrowStart()
+    {
+        characterAnimator.SetTrigger("Throw Start Trigger");
+    }
+
+    public void ThrowEnd()
+    {
+        nowWeapon.Activate();
+        characterAnimator.SetTrigger("Throw End Trigger");
     }
 }

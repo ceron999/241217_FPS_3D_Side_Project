@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class C4 : WeaponBase
 {
-    
+    public override bool Activate()
+    {
+        return true;
+    }
 }

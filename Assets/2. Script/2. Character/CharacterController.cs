@@ -11,6 +11,20 @@ public class CharacterController : MonoBehaviour
 {
     public PlayerBase player;
 
+    #region 투사 변수
+    public Transform throwStartPivot;
+    public GameObject throwObjectPrefab;
+    public LineRenderer throwGuideLineRenderer;
+
+    private GameObject throwGuideObject;
+    private bool isThrowMode = false;
+    private List<GameObject> throwGuideObjects = new List<GameObject>();
+
+    public int guideStep = 30;
+    public float throwPower = 10f;
+    public float throwAngle = 45f;
+    #endregion
+
     private void Awake()
     {
         player = GetComponent<PlayerBase>();
@@ -48,6 +62,8 @@ public class CharacterController : MonoBehaviour
     {
         player.Jump();
     }
+
+    // 총
     void CommandFireStart()
     {
         player.Shoot(true);
@@ -68,24 +84,69 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    // 칼
+    void CommandAttackStart()
+    {
+        // 아직 애니메이션 없어서 나중에 구현
+    }
+    void CommandAttackEnd()
+    {
+
+    }
+
+    // 수류탄
+    void CommandThrowStart()
+    {
+        if (!isThrowMode)
+        {
+            isThrowMode = true;
+            player.ThrowStart();
+        }
+    }
+
+    void CommandThrowEnd()
+    {
+        if (isThrowMode)
+        {
+            player.ThrowEnd();
+            isThrowMode = false;
+        }
+    }
+
     // 무기 변환
     public void CommandSwitchMainWeapon()
     {
+        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
+        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchMainWeapon();
     }
 
     public void CommandSwitchPistol()
     {
+        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
+        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchPistol();
     }
 
     public void CommandSwitchKnife()
     {
+        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandAttackStart;
+        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandAttackEnd;
         player.SwitchKnife();
     }
 
     public void CommandSwitchGrenade()
     {
+        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
+        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
         player.SwitchGrenade();
     }
 

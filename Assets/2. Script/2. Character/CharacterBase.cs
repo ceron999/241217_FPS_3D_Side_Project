@@ -11,7 +11,6 @@ public class CharacterBase : MonoBehaviour
 
     // 이동 관련 데이터
     public bool IsRun { get; set; } = false;
-    [field: SerializeField]
     public bool IsCrouch { get; set; } = false;
 
     public float speed;
@@ -134,7 +133,6 @@ public class CharacterBase : MonoBehaviour
 
     public void ReloadComplete()
     {
-        Debug.Log(1);
         nowWeapon.Reload();
         isReloading = false;
     }

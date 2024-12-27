@@ -10,7 +10,15 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         Rigidbody rigid = GetComponent<Rigidbody>();
-        rigid.AddForce(transform.up * (-1f) * bulletSpeed, ForceMode.Impulse);
+        rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(gameObject, lifeTime); // 본인 GameObject를 LifeTime 이후에 파괴 되도록 명령
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision != null)
+        {
+            Debug.Log(collision.gameObject.name);
+        }
     }
 }

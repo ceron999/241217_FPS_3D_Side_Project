@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class Knife : WeaponBase
 {
-    
+
+    public override bool Activate()
+    {
+        return true;
+    }
 }
