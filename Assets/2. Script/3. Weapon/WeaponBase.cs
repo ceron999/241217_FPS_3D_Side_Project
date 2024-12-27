@@ -13,7 +13,7 @@ public class WeaponBase : MonoBehaviour
     public int clipSize; // 탄창 크기
 
     private float lastFireTime; // 마지막 발사 실제 시간
-    private int currentAmmo; // 현재 탄창의 남은 총알 수
+    public int currentAmmo; // 현재 탄창의 남은 총알 수
 
     private void Awake()
     {

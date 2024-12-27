@@ -42,9 +42,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0.014828934
+  m_ExitTime: 1
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -399,9 +399,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0.01430244
+  m_ExitTime: 1
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -563,7 +563,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Upper Body Layer
     m_StateMachine: {fileID: 5725503678948213835}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: 3aab33e6f6db9df4d9f91c85c287634b, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -1225,7 +1225,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400056, guid: 914b09da235eea34ebdc4e71d057e815, type: 3}
+  m_Motion: {fileID: 7400000, guid: da18b001ea8f3ec45ac92120012ccae1, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

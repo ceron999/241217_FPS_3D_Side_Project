@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -129,6 +130,13 @@ public class CharacterBase : MonoBehaviour
     {
         isReloading = true;
         characterAnimator.SetTrigger("Reload Trigger");
+    }
+
+    public void ReloadComplete()
+    {
+        Debug.Log(1);
+        nowWeapon.Reload();
+        isReloading = false;
     }
 
     protected void CheckGround()
