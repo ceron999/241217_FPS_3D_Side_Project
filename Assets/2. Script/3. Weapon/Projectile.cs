@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float bulletDamage;
     public float lifeTime;
     public float bulletSpeed;
 
@@ -16,9 +17,18 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision != null)
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
             Debug.Log(collision.gameObject.name);
+            if(collision.gameObject.TryGetComponent(out IDamage damageInterface))
+            {
+                float damageMultiple = 1f;
+                if(collision.gameObject.TryGetComponent(out DamageMultiflier multiflier))
+                {
+                    damageMultiple = multiflier.DamageMultiplier;
+                }
+                damageInterface.ApplyDamage(bulletDamage * damageMultiple);
+            }
         }
     }
 }

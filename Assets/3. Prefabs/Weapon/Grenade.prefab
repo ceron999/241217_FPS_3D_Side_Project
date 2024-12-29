@@ -290,6 +290,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentAmmo: 0
   clipSize: 0
+  throwStartPivot: {fileID: 0}
+  throwVector: {x: 0, y: 0, z: 0}
+  throwPower: 10
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!54 &3615237120830634577
 Rigidbody:
   m_ObjectHideFlags: 0

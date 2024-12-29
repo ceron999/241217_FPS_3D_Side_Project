@@ -25,9 +25,13 @@ public class Gun : WeaponBase
             return false;
 
         Projectile bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.bulletDamage = weaponDamage;
         bullet.gameObject.SetActive(true);
         lastFireTime = Time.time;
         currentAmmo--;
+
+        // Muzzle effect Ãâ·Â
+        EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash1, firePoint.position, firePoint.rotation);
 
         return true;
     }

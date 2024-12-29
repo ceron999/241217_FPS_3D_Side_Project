@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Rifle : Gun
 {
-    
+    private void Start()
+    {
+        weaponDamage = 20;
+    }
 }

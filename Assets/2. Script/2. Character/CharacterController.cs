@@ -14,15 +14,9 @@ public class CharacterController : MonoBehaviour
     #region 투사 변수
     public Transform throwStartPivot;
     public GameObject throwObjectPrefab;
-    public LineRenderer throwGuideLineRenderer;
-
-    private GameObject throwGuideObject;
     private bool isThrowMode = false;
-    private List<GameObject> throwGuideObjects = new List<GameObject>();
 
-    public int guideStep = 30;
     public float throwPower = 10f;
-    public float throwAngle = 45f;
     #endregion
 
     private void Awake()
@@ -95,6 +89,12 @@ public class CharacterController : MonoBehaviour
     }
 
     // 수류탄
+
+    /// <summary>
+    /// 좌클릭을 누르면 시작
+    /// 1. 던지기 모션 시작
+    /// 2. 누른 위치에서 예상 투척 라인 표시
+    /// </summary>
     void CommandThrowStart()
     {
         if (!isThrowMode)
@@ -104,6 +104,24 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 애니메이션 중간에 적용되는 함수
+    /// 투사체를 생성하여 던짐
+    /// </summary>
+    public void ThrowPrefab()
+    {
+        GameObject throwObject = Instantiate(throwObjectPrefab, throwStartPivot);
+        if(throwObject.TryGetComponent<Grenade>(out Grenade grenadeComponent))
+        {
+            grenadeComponent.throwStartPivot = throwStartPivot;
+            grenadeComponent.throwPower = throwPower;
+            grenadeComponent.Activate();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     void CommandThrowEnd()
     {
         if (isThrowMode)

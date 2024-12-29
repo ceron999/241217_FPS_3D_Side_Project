@@ -10,9 +10,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CharacterStatusData", menuName = "Character/Status")]
 public class CharacterStatusData : ScriptableObject
 {
-    public float MaxHp;
+    public float HP;
 
     public float WalkSpeed;
     public float RunSpeed;
-    public float SitSpeed;
+    public float CrouchSpeed;
 }

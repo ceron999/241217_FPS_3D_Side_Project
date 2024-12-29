@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterBase : MonoBehaviour
+public class CharacterBase : MonoBehaviour, IDamage
 {
     /// <summary>
     /// Class 요약: 플레이어/ AI 캐릭터의 조작 관련 함수 보관
     /// </summary>
 
     // 이동 관련 데이터
+    public bool IsDie { get; set; } = false;
     public bool IsRun { get; set; } = false;
     public bool IsCrouch { get; set; } = false;
 
@@ -44,7 +45,8 @@ public class CharacterBase : MonoBehaviour
     protected bool isReloading = false;
 
     // 캐릭터가 보유한 Status
-    public CharacterStatusData characterStatusData;
+    public CharacterStatusData maxStat;
+    public CharacterStatusData curStat;
 
     // 무기 관련 데이터
 
@@ -57,6 +59,12 @@ public class CharacterBase : MonoBehaviour
     {
         characterAnimator = GetComponent<Animator>();
         unityCharacterController = GetComponent<UnityEngine.CharacterController>();
+
+        curStat = ScriptableObject.CreateInstance<CharacterStatusData>();
+        curStat.HP = maxStat.HP;
+        curStat.WalkSpeed = maxStat.WalkSpeed;
+        curStat.RunSpeed = maxStat.RunSpeed;
+        curStat.CrouchSpeed = maxStat.CrouchSpeed;
     }
 
     private void Start()
@@ -122,7 +130,8 @@ public class CharacterBase : MonoBehaviour
 
     public void Shoot(bool isShoot)
     {
-        isShooting = isShoot;
+        if(!IsRun)
+            isShooting = isShoot;
     }
 
     public void Reload()
@@ -149,6 +158,22 @@ public class CharacterBase : MonoBehaviour
         else
         {
             verticalVelocity = gravity;
+        }
+    }
+
+    public void ApplyDamage(float getDamage)
+    {
+        if (IsDie)
+            return;
+
+        //데미지 받음
+        curStat.HP -= getDamage;
+        if (curStat.HP <= 0)
+        {
+            // 사망
+            characterAnimator.SetTrigger("Dead Trigger");
+            IsDie = true;
+            Debug.Log("사망");
         }
     }
 }

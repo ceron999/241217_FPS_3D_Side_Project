@@ -4,20 +4,55 @@ using UnityEngine;
 
 public class Grenade : WeaponBase
 {
+    public Transform throwStartPivot;
+
     Rigidbody rigid;
-    Vector3 throwVector;
-    float throwPower = 3;
+    public Vector3 throwVector = Vector3.zero;
+    public float throwPower = 10;
+
+    // Æø¹ß °ü·Ã º¯¼ö
+    public LayerMask targetLayerMask;
+    float bombRadius = 2.5f;
 
     private void Awake()
     {
-        //rigid = GetComponent<Rigidbody>();
-        //rigid.useGravity = false;
+        rigid = GetComponent<Rigidbody>();
     }
 
     public override bool Activate()
     {
-        //rigid.useGravity = true;
-        //rigid.AddForce(throwVector, ForceMode.Impulse);
+        throwVector = (throwStartPivot.transform.forward + throwStartPivot.transform.up) * throwPower;
+        rigid.AddForce(throwVector, ForceMode.Impulse);
+        Boom();
         return true;
+    }
+
+    void Boom()
+    {
+        StartCoroutine(BoomCorontine());
+    }
+
+    IEnumerator BoomCorontine()
+    {
+        yield return new WaitForSeconds(4);
+        // 1. Æø¹ß ¹Ý°æ °´Ã¼ Å½Áö
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2.5f,
+                                                    targetLayerMask, QueryTriggerInteraction.Ignore);
+
+        // 2. Æø¹ß ÀÌÆåÆ® Àû¿ë
+        // Muzzle effect Ãâ·Â
+        EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash3, this.transform.position, this.transform.rotation);
+
+        // 2. Æø¹ß µ¥¹ÌÁö Àû¿ë
+        for (int i = 0; i < colliders.Length; i++)
+            if (colliders[i].transform.root.TryGetComponent(out IDamage damageInterface))
+            {
+                damageInterface.ApplyDamage(80f);
+            }
+        
+
+        // 3. Á¦°Å
+        Debug.Log("Boom");
+        Destroy(this.gameObject);
     }
 }

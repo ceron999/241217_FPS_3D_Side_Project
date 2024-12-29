@@ -7,7 +7,9 @@ public class PlayerBase : CharacterBase
     // 무기 데이터
     public List<WeaponBase> weapons;
 
-    // 달리기 및 앉기 관련 데이터
+    //투척 데이터
+    public Transform throwPivot;
+    public GameObject throwPrefab;
     
     private void Update()
     {
@@ -88,9 +90,14 @@ public class PlayerBase : CharacterBase
         characterAnimator.SetTrigger("Throw Start Trigger");
     }
 
+    public void SetGrenadeVisual(int active)
+    {
+        bool isActive = active == 1 ? true : false;
+        nowWeapon.gameObject.SetActive(isActive);
+    }
+
     public void ThrowEnd()
     {
-        nowWeapon.Activate();
         characterAnimator.SetTrigger("Throw End Trigger");
     }
 }
