@@ -41,6 +41,10 @@ public class InputSystem : MonoBehaviour
 
     public System.Action OnClickR;                      // 재장전
 
+    // UI 관련
+    public System.Action OnClickTabDown;                    // 상황판 표시
+    public System.Action OnClickTabUp;                    // 상황판 끄기
+
     private void Awake()
     {
         if(Instance == null)
@@ -114,6 +118,17 @@ public class InputSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             OnClickLeftMouseButtonDown?.Invoke();
+        }
+
+        // UI
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            OnClickTabDown?.Invoke();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            OnClickTabDown?.Invoke();
         }
     }
 }

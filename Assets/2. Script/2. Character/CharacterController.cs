@@ -40,6 +40,8 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickAlpha4 += CommandSwitchGrenade;             // 수류탄 변환
         InputSystem.Instance.OnClickAlpha5 += CommandSwitchC4;                  // C4 변환
 
+        InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // C4 변환
+        InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // C4 변환
     }
 
     private void Update()
@@ -134,6 +136,8 @@ public class CharacterController : MonoBehaviour
     // 무기 변환
     public void CommandSwitchMainWeapon()
     {
+        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
@@ -143,6 +147,8 @@ public class CharacterController : MonoBehaviour
 
     public void CommandSwitchPistol()
     {
+        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
@@ -152,6 +158,8 @@ public class CharacterController : MonoBehaviour
 
     public void CommandSwitchKnife()
     {
+        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandAttackStart;
@@ -161,6 +169,8 @@ public class CharacterController : MonoBehaviour
 
     public void CommandSwitchGrenade()
     {
+        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
@@ -170,8 +180,21 @@ public class CharacterController : MonoBehaviour
 
     public void CommandSwitchC4()
     {
+        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+
         player.SwitchC4();
     }
 
+
+    // 상황판 표시 및 끄기
+    public void CommandSummaryBoardOpen()
+    {
+        UIManager.Show<SummaryBoardUI>(UIList.SummaryBoardUI);
+    }
+
+    public void CommandSummaryBoardClose()
+    {
+        UIManager.Hide<SummaryBoardUI>(UIList.SummaryBoardUI);
+    }
     #endregion
 }
