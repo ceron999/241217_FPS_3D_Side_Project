@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : WeaponBase
 {
-
     public Projectile bulletPrefab;
     public Transform firePoint;
 

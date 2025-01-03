@@ -6,6 +6,11 @@ public class Pistol : Gun
 {
     private void Start()
     {
+        maxAmmo = 48;
+        holdAmmo = maxAmmo;
+        clipSize = 12;
+        currentAmmo = clipSize;
+
         weaponDamage = 15;
     }
 }

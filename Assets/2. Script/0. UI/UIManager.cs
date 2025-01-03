@@ -77,7 +77,7 @@ public class UIManager : SingletonBase<UIManager>
                 if(panels[uiType] == null)
                 {
                     string path = $"UI/{uiType.ToString()}";
-                    Debug.Log(path);
+                    
                     UIBase loadedPrefab = Resources.Load<UIBase>(path);
                     if (loadedPrefab == null)
                         return null;

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TempUICaller : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // 임시로 UI를 부르기 위한 작업
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    public static void SetUI()
     {
         UIManager.Show<RaderUI>(UIList.RaderUI);
         UIManager.Show<GameDataUI>(UIList.GameDataUI);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,14 @@ public class CharacterController : MonoBehaviour
     private bool isThrowMode = false;
 
     public float throwPower = 10f;
+    #endregion
+
+    #region 카메라 변수
+    public Transform cameraPivot;
+    public float bottomClamp = -90f;
+    public float topClamp = 90f;
+    private float targetYaw;
+    private float targetpitch;
     #endregion
 
     private void Awake()
@@ -42,6 +51,8 @@ public class CharacterController : MonoBehaviour
 
         InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // C4 변환
         InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // C4 변환
+
+        CameraSystem.Singleton.SetCameraFollowTarget(cameraPivot);
     }
 
     private void Update()
@@ -51,6 +62,35 @@ public class CharacterController : MonoBehaviour
         player.Move(InputSystem.Instance.Movement);
 
         player.Rotate(InputSystem.Instance.Look.x);
+        player.AimingPoint = CameraSystem.Singleton.AimingPoint;
+    }
+
+    private void LateUpdate()
+    {
+        CameraRotation();
+    }
+
+    private void CameraRotation()
+    {
+        if (InputSystem.Instance.Look.magnitude > 0f)
+        {
+            float yaw = InputSystem.Instance.Look.x;
+            float pitch = InputSystem.Instance.Look.y;
+
+            targetYaw += yaw;
+            targetpitch += pitch;
+        }
+
+        targetYaw = ClampAngle(targetYaw, float.MinValue, float.MaxValue);
+        targetpitch = ClampAngle(targetpitch, bottomClamp, topClamp);
+        cameraPivot.rotation = Quaternion.Euler(targetpitch, targetYaw, 0f);
+    }
+
+    private float ClampAngle(float IfAngle, float IfMin, float IfMax)
+    {
+        if (IfAngle < -360f) IfAngle += 360f;
+        if (IfAngle > 360f) IfAngle -= 360f;
+        return Mathf.Clamp(IfAngle, IfMin, IfMax);
     }
 
     #region Command Function

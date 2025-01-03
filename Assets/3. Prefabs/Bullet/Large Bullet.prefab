@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6392078064610792429}
   - component: {fileID: 1604527894874482771}
   - component: {fileID: 5280224701531851657}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Large Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.044058654, y: 0.026977321, z: 0.22030576}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6630155880598062931}
@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706a030a7cd1ebc4090da934e5b69d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletDamage: 0
   lifeTime: 2
   bulletSpeed: 10
 --- !u!54 &5280224701531851657
@@ -80,7 +81,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3176870834828701452}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

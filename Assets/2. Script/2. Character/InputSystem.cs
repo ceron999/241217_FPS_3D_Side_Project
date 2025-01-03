@@ -90,7 +90,7 @@ public class InputSystem : MonoBehaviour
         // 회전 상태 변환
         float lookX = Input.GetAxis("Mouse X");
         float lookY = Input.GetAxis("Mouse Y");
-        look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY);
+        look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY * (-1f));
 
         // 점프
         if (Input.GetKeyDown(KeyCode.Space))

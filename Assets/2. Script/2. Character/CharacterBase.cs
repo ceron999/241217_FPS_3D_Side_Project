@@ -49,6 +49,12 @@ public class CharacterBase : MonoBehaviour, IDamage
     public CharacterStatusData curStat;
 
     // 무기 관련 데이터
+    public Vector3 AimingPoint 
+    { 
+        get => aimingPointTransform.position; 
+        set => aimingPointTransform.position = value; 
+    }
+    public Transform aimingPointTransform;
 
     // 애니메이션 데이터
     public Animator characterAnimator;

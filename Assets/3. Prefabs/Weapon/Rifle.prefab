@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 261792507957353625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.139, z: 0.8943}
+  m_LocalPosition: {x: 0, y: 0.139, z: 0.952}
   m_LocalScale: {x: 1.053, y: 1.053, z: 4.224495}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,11 +323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43645be8cf5a4ef4da0520afc6980482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDamage: 0
+  currentAmmo: 0
+  clipSize: 40
   bulletPrefab: {fileID: 7846164642439440378, guid: 973dd08f9a8f5e94a99a61ef8e48245b, type: 3}
   firePoint: {fileID: 5782065098156868951}
-  fireRate: 0.1
-  clipSize: 40
-  currentAmmo: 0
+  fireRate: 0.15
 --- !u!1 &3296263059700711560
 GameObject:
   m_ObjectHideFlags: 0

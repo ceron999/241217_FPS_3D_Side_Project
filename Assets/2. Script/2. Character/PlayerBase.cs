@@ -22,6 +22,9 @@ public class PlayerBase : CharacterBase
             bool isFireSuccess = nowWeapon.Activate();
             if (false == isFireSuccess)
             {
+                if (nowWeapon.holdAmmo <= 0)
+                    return;
+
                 if (nowWeapon.RemainAmmo <= 0 && false == isReloading)
                 {
                     isReloading = true;

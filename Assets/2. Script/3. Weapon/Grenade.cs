@@ -19,6 +19,16 @@ public class Grenade : WeaponBase
         rigid = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        maxAmmo = 1;
+        holdAmmo = maxAmmo;
+        clipSize = 1;
+        currentAmmo = clipSize;
+
+        weaponDamage = 120;
+    }
+
     public override bool Activate()
     {
         throwVector = (throwStartPivot.transform.forward + throwStartPivot.transform.up) * throwPower;
@@ -47,7 +57,7 @@ public class Grenade : WeaponBase
         for (int i = 0; i < colliders.Length; i++)
             if (colliders[i].transform.root.TryGetComponent(out IDamage damageInterface))
             {
-                damageInterface.ApplyDamage(80f);
+                damageInterface.ApplyDamage(weaponDamage);
             }
         
 
