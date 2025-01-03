@@ -10,20 +10,25 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        Rigidbody rigid = GetComponent<Rigidbody>();
-        rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+        //Rigidbody rigid = GetComponent<Rigidbody>();
+        //rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(gameObject, lifeTime); // 본인 GameObject를 LifeTime 이후에 파괴 되도록 명령
+    }
+
+    private void Update()
+    {
+        transform.position += transform.forward * Time.deltaTime * bulletSpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Character"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
             Debug.Log(collision.gameObject.name);
-            if(collision.gameObject.TryGetComponent(out IDamage damageInterface))
+            if (collision.gameObject.TryGetComponent(out IDamage damageInterface))
             {
                 float damageMultiple = 1f;
-                if(collision.gameObject.TryGetComponent(out DamageMultiflier multiflier))
+                if (collision.gameObject.TryGetComponent(out DamageMultiflier multiflier))
                 {
                     damageMultiple = multiflier.DamageMultiplier;
                 }

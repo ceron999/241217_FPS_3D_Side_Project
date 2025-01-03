@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.139, z: 0.952}
-  m_LocalScale: {x: 1.053, y: 1.053, z: 4.224495}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3688815203657726377}
@@ -324,8 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponDamage: 0
-  currentAmmo: 0
-  clipSize: 40
+  holdAmmo: 0
   bulletPrefab: {fileID: 7846164642439440378, guid: 973dd08f9a8f5e94a99a61ef8e48245b, type: 3}
   firePoint: {fileID: 5782065098156868951}
   fireRate: 0.15

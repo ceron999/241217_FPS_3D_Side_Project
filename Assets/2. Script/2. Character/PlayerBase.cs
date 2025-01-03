@@ -10,14 +10,31 @@ public class PlayerBase : CharacterBase
     //투척 데이터
     public Transform throwPivot;
     public GameObject throwPrefab;
-    
+
     private void Update()
     {
         // 1. 지형 확인
         CheckGround();
+        
+        // 3. animation 설정
 
+        runningBlend = Mathf.Lerp(runningBlend, IsRun ? 1f : 0f, Time.deltaTime * 10f);
+        crouchBlend = Mathf.Lerp(crouchBlend, IsCrouch ? 1f : 0f, Time.deltaTime * 10f);
+
+        characterAnimator.SetFloat("Speed", speed);
+        characterAnimator.SetFloat("Horizontal", horizontal);
+        characterAnimator.SetFloat("Vertical", vertical);
+        characterAnimator.SetFloat("RunningBlend", runningBlend);
+        characterAnimator.SetFloat("CrouchBlend", crouchBlend);
+    }
+
+    private void LateUpdate()
+    {
         // 2. 사격
-        if(isShooting)
+        /// 사격할 경우 총알이 불규칙하게 다른 방향으로 튀는 문제가 있었음.
+        /// 해당 문제는 이 코드가 update에서 lateUpdate로 이동하니까 문제 해결
+        /// 해당 문제는 Animation에서 뭔가 위치가 바뀌면서 총알도 그리 나간 것으로 보임
+        if (isShooting)
         {
             bool isFireSuccess = nowWeapon.Activate();
             if (false == isFireSuccess)
@@ -31,19 +48,9 @@ public class PlayerBase : CharacterBase
                     Reload();
                 }
             }
-            nowWeapon.Activate();
+            //nowWeapon.Activate();
         }
 
-        // 3. animation 설정
-        
-        runningBlend = Mathf.Lerp(runningBlend, IsRun ? 1f : 0f, Time.deltaTime * 10f);
-        crouchBlend = Mathf.Lerp(crouchBlend, IsCrouch ? 1f : 0f, Time.deltaTime * 10f);
-
-        characterAnimator.SetFloat("Speed", speed);
-        characterAnimator.SetFloat("Horizontal", horizontal);
-        characterAnimator.SetFloat("Vertical", vertical);
-        characterAnimator.SetFloat("RunningBlend", runningBlend);
-        characterAnimator.SetFloat("CrouchBlend", crouchBlend);
     }
 
     // 무기 스위칭 관련 데이터

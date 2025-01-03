@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class CharacterBase : MonoBehaviour, IDamage
 {
@@ -59,12 +60,14 @@ public class CharacterBase : MonoBehaviour, IDamage
     // 애니메이션 데이터
     public Animator characterAnimator;
     public UnityEngine.CharacterController unityCharacterController;
+    public RigBuilder rigBuilder;
 
 
     private void Awake()
     {
         characterAnimator = GetComponent<Animator>();
         unityCharacterController = GetComponent<UnityEngine.CharacterController>();
+        rigBuilder = GetComponent<RigBuilder>();
 
         curStat = ScriptableObject.CreateInstance<CharacterStatusData>();
         curStat.HP = maxStat.HP;
