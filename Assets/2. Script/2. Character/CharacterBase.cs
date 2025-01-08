@@ -76,11 +76,6 @@ public class CharacterBase : MonoBehaviour, IDamage
         curStat.CrouchSpeed = maxStat.CrouchSpeed;
     }
 
-    private void Start()
-    {
-        nowWeapon = weaponHolder.GetChild(0).GetComponent<WeaponBase>();
-    }
-
     /// <summary>
     /// 이동 방식
     /// w, a, s, d : 캐릭터가 바라보는 방향의 앞, 뒤, 좌, 우
@@ -177,6 +172,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
         //데미지 받음
         curStat.HP -= getDamage;
+        Debug.Log(curStat.HP);
         if (curStat.HP <= 0)
         {
             // 사망

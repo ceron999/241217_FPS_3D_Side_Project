@@ -23,7 +23,7 @@ public class CameraSystem : SingletonBase<CameraSystem>
         }
         else
         {
-            AimingPoint = ray.GetPoint(100f);
+            AimingPoint = ray.GetPoint(10f);
         }
     }
 

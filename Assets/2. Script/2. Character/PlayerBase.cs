@@ -11,6 +11,11 @@ public class PlayerBase : CharacterBase
     public Transform throwPivot;
     public GameObject throwPrefab;
 
+    private void Start()
+    {
+        nowWeapon = weaponHolder.GetChild(1).GetComponent<WeaponBase>();
+    }
+
     private void Update()
     {
         // 1. 지형 확인

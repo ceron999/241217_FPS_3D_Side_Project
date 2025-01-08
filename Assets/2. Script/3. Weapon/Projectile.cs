@@ -22,10 +22,9 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("HitScanner"))
         {
-            Debug.Log(collision.gameObject.name);
-            if (collision.gameObject.TryGetComponent(out IDamage damageInterface))
+            if (collision.transform.root.TryGetComponent(out IDamage damageInterface))
             {
                 float damageMultiple = 1f;
                 if (collision.gameObject.TryGetComponent(out DamageMultiflier multiflier))
