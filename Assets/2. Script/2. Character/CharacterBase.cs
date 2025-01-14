@@ -172,13 +172,12 @@ public class CharacterBase : MonoBehaviour, IDamage
 
         //데미지 받음
         curStat.HP -= getDamage;
-        Debug.Log(curStat.HP);
+        
         if (curStat.HP <= 0)
         {
             // 사망
             characterAnimator.SetTrigger("Dead Trigger");
             IsDie = true;
-            Debug.Log("사망");
         }
     }
 }
