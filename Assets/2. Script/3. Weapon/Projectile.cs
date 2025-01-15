@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviour
                     damageMultiple = multiflier.DamageMultiplier;
                 }
                 damageInterface.ApplyDamage(bulletDamage * damageMultiple);
+                Destroy(this.gameObject);
             }
         }
     }

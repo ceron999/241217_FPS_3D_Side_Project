@@ -67,10 +67,12 @@ public class CharacterController_AI : MonoBehaviour
         _curState = AIState.Search;
         _fsm = new FSM(new SearchState(this));
 
+        navMeshAgent.updatePosition = false;
     }
 
     private void Update()
     {
+        //navMeshAgent.nextPosition = transform.position;
         switch (_curState)
         {
             case AIState.Search:
@@ -104,8 +106,11 @@ public class CharacterController_AI : MonoBehaviour
 
             case AIState.Battle:
                 // 적이 죽으면 Die
-                if(target.IsDie)
+                if (target.IsDie)
+                {
+                    linkedAIBase.Shoot(false);
                     ChangeState(AIState.Search);
+                }
                 break;
 
             case AIState.Die:
@@ -244,6 +249,12 @@ public class CharacterController_AI : MonoBehaviour
     #endregion
 
     #region AI가 이동하는 함수
+    // 이동을 멈추는 함수
+    public void StopMove()
+    {
+        linkedAIBase.AIMove(Vector2.zero);
+    }
+
     // 타겟 방향으로 이동하는 함수
     public void SetMoveDirection()
     {
@@ -251,9 +262,18 @@ public class CharacterController_AI : MonoBehaviour
         Vector3 localDirection = linkedAIBase.transform.InverseTransformDirection(moveDirection);
         Vector2 input = new Vector2(localDirection.x, localDirection.z);
 
-        //해당 방향을 거의 다 바라보았을 때 이동하도록
-        if((linkedAIBase.transform.forward - moveDirection).magnitude < 0.1f)
+        float distance = Vector3.Distance(navMeshAgent.destination, transform.position);
+        if (distance < navMeshAgent.stoppingDistance)
+        {
+            // 이미 목표지점에 가까이 도착해있는 상태.
+            linkedAIBase.AIMove(Vector2.zero);
+        }
+        else
+        {
+            //해당 방향을 거의 다 바라보았을 때 이동하도록
+            //if((linkedAIBase.transform.forward.normalized - moveDirection).magnitude < 0.1f)
             linkedAIBase.AIMove(input);
+        }
     }
 
     public bool IsArrivedDestination()

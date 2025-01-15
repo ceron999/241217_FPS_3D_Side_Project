@@ -7,20 +7,31 @@ public class BattleState : StateBase
     // Base에 있는 생성자를 실행하라는 뜻
     public BattleState(CharacterController_AI getData) : base(getData) { }
 
+    private CharacterBase linkedAIBase;
     private CharacterBase target;
+
+    public LayerMask targetLayerMask = 1 << 9;      // 캐릭터 레이어
 
 
     public override void OnStateEnter()
     {
+        // AI를 정지 -> 이후 타겟에게 방향 설정할 것
+        linkedAIBase = _aiController.linkedAIBase;
         target = _aiController.target;
+
+        _aiController.navMeshAgent.SetDestination(_aiController.transform.position);
+        _aiController.StopMove();
+
+        linkedAIBase.aimRig.weight = 1;
         Debug.Log("Enter Battle State");
     }
     public override void OnStateUpdate()
     {
-        Debug.Log("Update Battle State");
+        Battle();
     }
     public override void OnStateExit()
     {
+        linkedAIBase.aimRig.weight = 0;
         Debug.Log("Exit Battle State");
     }
 
@@ -30,73 +41,55 @@ public class BattleState : StateBase
     /// </summary>
     void Battle()
     {
+        if (target.IsDie)
+            return;
 
-        //float distance = Vector3.Distance(transform.position, target.transform.position);
-        //float limitDistance = 10f;
-        //if (distance > limitDistance)
-        //{
-        //    target = null;
-        //    linkedCharacter.Shoot(false);
-        //    SetAiState(AIState.Peaceful);
-        //    return;
-        //}
+        // 목표 지점 설정
+        Vector3 pivot = _aiController.transform.position + Vector3.up;
+        Vector3 targetPosition = target.transform.position + Vector3.up;
+        Vector3 direction = (targetPosition - pivot).normalized;
 
-        //float weaponRange = 7f;
+        // 목표 방향에 플레이어 확인
+        bool isRaycastSuccessToTarget = false;
 
-        //if (distance > weaponRange)
-        //{
-        //    ChaseTarget();
-        //    UpdateChase();
-        //}
-        //else
-        //{
-        //    Vector3 pivot = linkedCharacter.transform.position + Vector3.up;
-        //    Vector3 targetPosition = target.transform.position + Vector3.up;
-        //    Vector3 direction = (targetPosition - pivot).normalized;
+        Ray ray = new Ray(pivot, direction);
+        float maxDistance = 7f;
 
-        //    bool isRaycastSuccessToTarget = false;
-        //    Ray ray = new Ray(pivot, direction);
-        //    if (Physics.Raycast(ray, out RaycastHit hitInfo,
-        //        weaponRange, attackValidLayer, QueryTriggerInteraction.Ignore))
-        //    {
-        //        if (hitInfo.transform.root.gameObject.CompareTag("Player"))
-        //        {
-        //            isRaycastSuccessToTarget = true;
-        //        }
-        //    }
+        // Debug.DrawRay(pivot, direction * 7, Color.red);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, maxDistance, 
+            targetLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            Debug.Log(hitInfo.collider.transform.root.name);
+            isRaycastSuccessToTarget = true;
+        }
 
-        //    Vector3 weaponFirePoint = linkedCharacter.currentWeapon.firePoint.position;
-        //    Vector3 directionFromWeapon = (targetPosition - weaponFirePoint).normalized;
-        //    bool isRaycastSuccessFromWeapon = false;
-        //    Ray weaponRay = new Ray(weaponFirePoint, directionFromWeapon);
-        //    if (Physics.Raycast(weaponRay, out RaycastHit weaponHitInfo,
-        //        weaponRange, attackValidLayer, QueryTriggerInteraction.Ignore))
-        //    {
-        //        if (weaponHitInfo.transform.root.gameObject.CompareTag("Player"))
-        //        {
-        //            isRaycastSuccessFromWeapon = true;
-        //        }
-        //    }
+        // 에임 방향 설정
+        Debug.DrawRay(pivot, linkedAIBase.transform.forward * 7, Color.red);
+        Debug.DrawRay(linkedAIBase.nowWeapon.transform.position,
+            linkedAIBase.nowWeapon.transform.forward * 7f, Color.blue);
 
-        //    if (isRaycastSuccessToTarget && isRaycastSuccessFromWeapon)
-        //    {
-        //        if (target.IsAlive)
-        //        {
-        //            // TODO : Attack
-        //            Transform targetChestTransform = target.GetBoneTransform(HumanBodyBones.Chest);
-        //            linkedCharacter.AimingPoint = targetChestTransform.position;
-        //            linkedCharacter.transform.forward = (target.transform.position - transform.position).normalized;
-        //            linkedCharacter.Move(Vector2.zero, 0);
-        //            linkedCharacter.Shoot(true);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        linkedCharacter.AimingPoint = transform.position + transform.forward * 100f;
+        linkedAIBase.AimingPoint = targetPosition;
 
-        //        ChaseTarget();
-        //        UpdateChase();
-        //    }
-        //}
+        bool isRaycastSuccessFromWeapon = false;
+        Ray weaponRay = new Ray(pivot, linkedAIBase.nowWeapon.transform.forward);
+        if (Physics.Raycast(weaponRay, out RaycastHit weaponHitInfo,
+            maxDistance, targetLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            if (weaponHitInfo.transform.root.gameObject.CompareTag("Player"))
+            {
+                isRaycastSuccessFromWeapon = true;
+            }
+        }
+
+        if (isRaycastSuccessToTarget && isRaycastSuccessFromWeapon)
+        {
+            if (!target.IsDie)
+            {
+                linkedAIBase.Shoot(true);
+            }
+            else
+                linkedAIBase.Shoot(false);
+        }
+
     }
 }

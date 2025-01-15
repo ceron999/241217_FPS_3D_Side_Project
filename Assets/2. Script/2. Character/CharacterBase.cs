@@ -44,7 +44,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     // 공격 관련 데이터
     public Transform weaponHolder;
-    protected WeaponBase nowWeapon;
+    public WeaponBase nowWeapon;
     protected bool isShooting = false;
     protected bool isReloading = false;
 
@@ -187,6 +187,7 @@ public class CharacterBase : MonoBehaviour, IDamage
         if (curStat.HP <= 0)
         {
             // 사망
+            Debug.Log(curStat.HP);
             characterAnimator.SetTrigger("Dead Trigger");
             IsDie = true;
         }
