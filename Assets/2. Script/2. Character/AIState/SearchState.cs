@@ -6,14 +6,14 @@ using UnityEngine.Windows;
 
 public class SearchState : StateBase
 {
+    private Vector3 targetPosition;
+
     // Base에 있는 생성자를 실행하라는 뜻
     public SearchState(CharacterController_AI getData) : base(getData) 
     {
         targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
         _aiController.navMeshAgent.SetDestination(targetPosition);
     }
-
-    private Vector3 targetPosition;
 
     public override void OnStateEnter()
     {
@@ -40,7 +40,6 @@ public class SearchState : StateBase
 
     void SearchPatrolPoints()
     {
-        Debug.Log(_aiController.navMeshAgent.hasPath);
         if(_aiController.navMeshAgent.hasPath)
         {
             _aiController.SetMoveDirection();

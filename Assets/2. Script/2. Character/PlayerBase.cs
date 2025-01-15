@@ -31,6 +31,9 @@ public class PlayerBase : CharacterBase
         characterAnimator.SetFloat("Vertical", vertical);
         characterAnimator.SetFloat("RunningBlend", runningBlend);
         characterAnimator.SetFloat("CrouchBlend", crouchBlend);
+
+        // 4. 소리 설정
+        audioSource.volume = IsCrouch ? 0f : 1f;
     }
 
     private void LateUpdate()

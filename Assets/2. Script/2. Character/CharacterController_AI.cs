@@ -38,9 +38,19 @@ public class CharacterController_AI : MonoBehaviour
 
     public AIBase linkedAIBase;
 
+    public CharacterBase target;                // 목표 타겟
+
+    public Vector3 listenPosition;              // 적 소리 들린 위치
+    public Vector3 findPosition;                // 적 소리
+
     public Transform patrolPointParent;
     public List<Transform> patrolPointList;
     public int pointOffset = 0;                // 이동할 포인트를 지정해주는 offset
+
+    // 탐지 변수
+    public LayerMask characterMask;
+    private float listenRadius = 10f;           // 소리 탐지 범위
+    private float existRadius = 3f;             // 존재 탐지 범위
 
     private void Awake()
     {
@@ -64,16 +74,27 @@ public class CharacterController_AI : MonoBehaviour
         {
             case AIState.Search:
                 // 적을 발견했을 경우 -> Battle
+                if(IsDetectingPlayer())
+                    ChangeState(AIState.Battle);
+
                 // 소리를 들었을 경우 or C4가 설치되었을 경우 -> takeWarning
+                if(IsListenSound() || IsInstalledC4())
+                    ChangeState(AIState.TakeWarning);
+
                 // 죽었을 경우 -> Die
                 if (linkedAIBase.curStat.HP <= 0)
-                {
                     ChangeState(AIState.Die); 
-                }
+
                 // 모든 적이 처치되었을 경우 -> Win
                 break;
 
             case AIState.TakeWarning:
+                // 탐지 목표 갱신
+                IsListenSound();
+
+                // 적이 안보이면 그냥 Search
+                if (IsNotExistPlayer())
+                    ChangeState(AIState.Search);
                 break;
 
             case AIState.Battle:
@@ -129,7 +150,79 @@ public class CharacterController_AI : MonoBehaviour
         }
     }
 
-    #region Search에서 이동하는 함수
+    #region State 변환 조건 함수
+    // 근처에서 소리가 났을 경우 Search -> TakeWarning
+    public bool IsListenSound()
+    {
+        Collider[] colArr = Physics.OverlapSphere(transform.position, listenRadius, characterMask);
+        if(colArr.Length == 0)
+            return false;
+
+        for (int i = 0; i < colArr.Length; i++)
+        {
+            // 플레이어 아니면 넘김
+            if (!colArr[i].CompareTag("Player"))
+                continue;
+
+            if (colArr[i].transform.root.TryGetComponent<AudioSource>(out AudioSource audio))
+            {
+                if (audio.volume > 0.5f)
+                {
+                    listenPosition = colArr[i].transform.position;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsInstalledC4()
+    {
+        return false;
+    }
+
+    // 적을 확인했을 경우 Search -> Battle
+    public bool IsDetectingPlayer()
+    {
+        return false;
+    }
+
+    // 의심 지점으로 이동했는데 플레이어를 찾지 못한 경우 TakeWarning -> Search
+    public bool IsNotExistPlayer()
+    {
+        // 탐지 목표 거리까 지 도착했는지 확인
+        if (navMeshAgent.remainingDistance > 0.1f)
+            return false;
+        
+        // 플레이어 탐지
+        Collider[] colArr = Physics.OverlapSphere(transform.position, existRadius, characterMask);
+
+        // 탐지 범위에 아무도 없으면 true
+        if (colArr.Length == 0)
+            return true;
+        else
+        {
+            // 탐지 범위에 캐릭터는 있는데 거기에 플레이어도 있는지 확인하고 있으면 false
+            for (int i = 0; i < colArr.Length; i++)
+            {
+                // 플레이어 아니면 넘김
+                if (colArr[i].CompareTag("Player"))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    public bool IsPlayerDie()
+    {
+        return false;
+    }
+    #endregion
+
+    #region AI가 이동하는 함수
     // 타겟 방향으로 이동하는 함수
     public void SetMoveDirection()
     {
@@ -137,8 +230,9 @@ public class CharacterController_AI : MonoBehaviour
         Vector3 localDirection = linkedAIBase.transform.InverseTransformDirection(moveDirection);
         Vector2 input = new Vector2(localDirection.x, localDirection.z);
 
-        linkedAIBase.Move(input);
-        linkedAIBase.transform.forward = moveDirection;
+        //해당 방향을 거의 다 바라보았을 때 이동하도록
+        if((linkedAIBase.transform.forward - moveDirection).magnitude < 0.1f)
+            linkedAIBase.AIMove(input);
     }
 
     public bool IsArrivedDestination()
@@ -169,15 +263,8 @@ public class CharacterController_AI : MonoBehaviour
     }
     #endregion
 
-    public bool IsListenSound()
+    public void Die()
     {
-        return false;
+        Destroy(this.gameObject);
     }
-
-    public bool IsSearchPlayer()
-    {
-        return false;
-    }
-
-
 }

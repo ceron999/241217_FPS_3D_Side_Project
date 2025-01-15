@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIBase : CharacterBase
 {
-
+    private float aiSpeed = 2f;
     private void Start()
     {
         nowWeapon = weaponHolder.GetChild(0).GetComponent<WeaponBase>();
@@ -34,6 +34,6 @@ public class AIBase : CharacterBase
         movement.y = verticalVelocity * Time.deltaTime;
 
         // ¿Ãµø
-        unityCharacterController.Move(movement * moveSpeed * Time.deltaTime);
+        unityCharacterController.Move(movement * aiSpeed * Time.deltaTime);
     }
 }

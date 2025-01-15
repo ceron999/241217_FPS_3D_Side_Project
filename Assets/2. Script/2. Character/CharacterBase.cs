@@ -9,6 +9,9 @@ public class CharacterBase : MonoBehaviour, IDamage
     /// <summary>
     /// Class 요약: 플레이어/ AI 캐릭터의 조작 관련 함수 보관
     /// </summary>
+    // 플레이어인지 확인하는 변수
+    public bool IsPlayer { get; private set; } = false;
+
 
     // 이동 관련 데이터
     public bool IsDie { get; set; } = false;
@@ -61,13 +64,17 @@ public class CharacterBase : MonoBehaviour, IDamage
     public Animator characterAnimator;
     public UnityEngine.CharacterController unityCharacterController;
     public RigBuilder rigBuilder;
+    public Rig aimRig;
 
+    // 음향
+    public AudioSource audioSource;
 
     private void Awake()
     {
         characterAnimator = GetComponent<Animator>();
         unityCharacterController = GetComponent<UnityEngine.CharacterController>();
         rigBuilder = GetComponent<RigBuilder>();
+        audioSource = GetComponent<AudioSource>();
 
         curStat = ScriptableObject.CreateInstance<CharacterStatusData>();
         curStat.HP = maxStat.HP;
@@ -110,7 +117,12 @@ public class CharacterBase : MonoBehaviour, IDamage
     public void SetRunning(bool isRunning)
     {
         IsRun = isRunning;
+        if (IsRun)
+            aimRig.weight = 0;
+        else
+            aimRig.weight = 1   ;
     }
+
     public void SetCrouch(bool isCrouching)
     {
         IsCrouch = isCrouching;
@@ -165,14 +177,13 @@ public class CharacterBase : MonoBehaviour, IDamage
         }
     }
 
-    public void ApplyDamage(float getDamage)
+    public virtual void ApplyDamage(float getDamage)
     {
         if (IsDie)
             return;
 
         //데미지 받음
         curStat.HP -= getDamage;
-        
         if (curStat.HP <= 0)
         {
             // 사망
