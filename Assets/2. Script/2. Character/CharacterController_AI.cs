@@ -49,7 +49,8 @@ public class CharacterController_AI : MonoBehaviour
 
     // 탐지 변수
     public LayerMask characterMask;
-    private float listenRadius = 10f;           // 소리 탐지 범위
+    private float listenRadius = 15f;           // 소리 탐지 범위
+    private float battleRadius = 7f;            // 전투 변경 탐지 범위
     private float existRadius = 3f;             // 존재 탐지 범위
 
     private void Awake()
@@ -92,12 +93,19 @@ public class CharacterController_AI : MonoBehaviour
                 // 탐지 목표 갱신
                 IsListenSound();
 
+                // 적을 발견했을 경우 -> Battle
+                if (IsDetectingPlayer())
+                    ChangeState(AIState.Battle);
+
                 // 적이 안보이면 그냥 Search
                 if (IsNotExistPlayer())
                     ChangeState(AIState.Search);
                 break;
 
             case AIState.Battle:
+                // 적이 죽으면 Die
+                if(target.IsDie)
+                    ChangeState(AIState.Search);
                 break;
 
             case AIState.Die:
@@ -168,6 +176,11 @@ public class CharacterController_AI : MonoBehaviour
             {
                 if (audio.volume > 0.5f)
                 {
+                    // 탐지 타겟 설정
+                    if(target == null)
+                        target = colArr[i].GetComponent<CharacterBase>();
+
+                    // 탐지 위치 설정
                     listenPosition = colArr[i].transform.position;
                     return true;
                 }
@@ -182,9 +195,17 @@ public class CharacterController_AI : MonoBehaviour
         return false;
     }
 
-    // 적을 확인했을 경우 Search -> Battle
+    // 적을 확인했을 경우 Search, TakeWarning -> Battle
     public bool IsDetectingPlayer()
     {
+        if (target == null)
+            return false;
+
+        if ((target.transform.position - transform.position).magnitude < battleRadius)
+        {
+            return true;
+        }
+
         return false;
     }
 

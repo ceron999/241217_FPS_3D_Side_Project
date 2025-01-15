@@ -32,8 +32,5 @@ public class AIBase : CharacterBase
         // 캐릭터가 이동할 방향벡터 설정
         movement = transform.forward * vertical + transform.right * horizontal;
         movement.y = verticalVelocity * Time.deltaTime;
-
-        // 이동
-        unityCharacterController.Move(movement * aiSpeed * Time.deltaTime);
     }
 }

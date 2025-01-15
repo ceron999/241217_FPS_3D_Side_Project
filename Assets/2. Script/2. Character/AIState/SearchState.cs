@@ -11,12 +11,14 @@ public class SearchState : StateBase
     // Base에 있는 생성자를 실행하라는 뜻
     public SearchState(CharacterController_AI getData) : base(getData) 
     {
+        _aiController.target = null;
         targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
         _aiController.navMeshAgent.SetDestination(targetPosition);
     }
 
     public override void OnStateEnter()
     {
+        _aiController.target = null;
         targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
         _aiController.navMeshAgent.SetDestination(targetPosition);
         Debug.Log("Enter Search State");
