@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BulletUI : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public static BulletUI Instance => UIManager.Singleton.GetUI<BulletUI>(UIList.BulletUI);
+
+    public TextMeshProUGUI weaponText;
+    public TextMeshProUGUI bulletText;
+
+    public void InitializeBulletUI(WeaponBase getWeaponData)
     {
-        
+        weaponText.text = getWeaponData.name;
+
+        bulletText.text = $"{getWeaponData.RemainAmmo} / {getWeaponData.holdAmmo}";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeWeapon(WeaponBase getWeaponData)
     {
-        
+        weaponText.text = getWeaponData.name;
+
+        bulletText.text = $"{getWeaponData.RemainAmmo} / {getWeaponData.holdAmmo}";
+    }
+
+    public void UpdateAmmoCount(int remainAmmo, int holdAmmo)
+    {
+        bulletText.text = $"{remainAmmo} / {holdAmmo}";
     }
 }

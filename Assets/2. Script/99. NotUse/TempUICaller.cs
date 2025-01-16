@@ -8,6 +8,7 @@ public class TempUICaller : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     public static void SetUI()
     {
+        UIManager.Show<CrosshairUI>(UIList.CrosshairUI);
         UIManager.Show<RaderUI>(UIList.RaderUI);
         UIManager.Show<GameDataUI>(UIList.GameDataUI);
         UIManager.Show<StatusUI>(UIList.StatusUI);

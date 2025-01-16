@@ -18,6 +18,11 @@ public abstract class WeaponBase : MonoBehaviour
     public abstract bool Activate();
 
 
+    protected virtual void Awake()
+    {
+        
+    }
+
     public void Reload()
     {
         // 모두 사용해서 장전 불가
@@ -34,6 +39,8 @@ public abstract class WeaponBase : MonoBehaviour
             currentAmmo = holdAmmo;
             holdAmmo = 0;
         }
+
+        BulletUI.Instance.UpdateAmmoCount(currentAmmo, holdAmmo);
     }
 
 }

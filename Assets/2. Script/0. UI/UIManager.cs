@@ -92,6 +92,10 @@ public class UIManager : SingletonBase<UIManager>
                     return panels[uiType].GetComponent<T>();
 
                 }
+                else
+                {
+                    return panels[uiType].GetComponent<T>();
+                }
             }
         }
 

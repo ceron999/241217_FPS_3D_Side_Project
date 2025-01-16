@@ -6,6 +6,7 @@ public enum UIList
 {
     PANEL_START,
 
+    CrosshairUI,
     RaderUI,
     GameDataUI,
     StatusUI,

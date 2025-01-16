@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8166933284783585225}
-  - component: {fileID: 6392078064610792429}
   - component: {fileID: 1604527894874482771}
+  - component: {fileID: 6392078064610792429}
   - component: {fileID: 5280224701531851657}
   m_Layer: 12
   m_Name: Large Bullet
@@ -35,6 +35,21 @@ Transform:
   - {fileID: 6630155880598062931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1604527894874482771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176870834828701452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706a030a7cd1ebc4090da934e5b69d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletDamage: 0
+  lifeTime: 2
+  bulletSpeed: 20
 --- !u!136 &6392078064610792429
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -50,7 +65,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -58,21 +73,6 @@ CapsuleCollider:
   m_Height: 0.12
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1604527894874482771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3176870834828701452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706a030a7cd1ebc4090da934e5b69d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletDamage: 0
-  lifeTime: 2
-  bulletSpeed: 10
 --- !u!54 &5280224701531851657
 Rigidbody:
   m_ObjectHideFlags: 0

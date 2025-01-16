@@ -19,15 +19,14 @@ public class Projectile : MonoBehaviour
     {
         transform.position += transform.forward * Time.deltaTime * bulletSpeed;
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider getCol)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("HitScanner"))
+        if (getCol.gameObject.layer == LayerMask.NameToLayer("HitScanner"))
         {
-            if (collision.transform.root.TryGetComponent(out IDamage damageInterface))
+            if (getCol.transform.root.TryGetComponent(out IDamage damageInterface))
             {
                 float damageMultiple = 1f;
-                if (collision.gameObject.TryGetComponent(out DamageMultiflier multiflier))
+                if (getCol.gameObject.TryGetComponent(out DamageMultiflier multiflier))
                 {
                     damageMultiple = multiflier.DamageMultiplier;
                 }

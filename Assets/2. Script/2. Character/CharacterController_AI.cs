@@ -92,6 +92,13 @@ public class CharacterController_AI : MonoBehaviour
                 break;
 
             case AIState.TakeWarning:
+                // 죽었을 경우 -> Die
+                if (linkedAIBase.curStat.HP <= 0)
+                {
+                    ChangeState(AIState.Die);
+                    return;
+                }
+
                 // 탐지 목표 갱신
                 IsListenSound();
 
@@ -310,7 +317,7 @@ public class CharacterController_AI : MonoBehaviour
 
     public void Battle()
     {
-        if (target.IsDie)
+        if (target.IsDie || linkedAIBase.IsDie)
             return;
 
         // 목표 지점 설정

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class C4 : WeaponBase
 {
-    private void Start()
+    protected override void Awake()
     {
         weaponDamage = 10000;
     }

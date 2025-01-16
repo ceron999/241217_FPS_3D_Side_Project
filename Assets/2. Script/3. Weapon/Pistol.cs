@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    private void Start()
+    protected override void Awake()
     {
         maxAmmo = 48;
         holdAmmo = maxAmmo;

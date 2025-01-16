@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sniper : Gun
 {
-    private void Start()
+    protected override void Awake()
     {
         maxAmmo = 40;
         holdAmmo = maxAmmo;

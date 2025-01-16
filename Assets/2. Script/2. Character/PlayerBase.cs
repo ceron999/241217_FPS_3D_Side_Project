@@ -13,7 +13,9 @@ public class PlayerBase : CharacterBase
 
     private void Start()
     {
+        StatusUI.Instance.SetHP(curStat.HP);
         nowWeapon = weaponHolder.GetChild(1).GetComponent<WeaponBase>();
+        BulletUI.Instance.InitializeBulletUI(nowWeapon);
     }
 
     private void Update()
@@ -117,5 +119,15 @@ public class PlayerBase : CharacterBase
     public void ThrowEnd()
     {
         characterAnimator.SetTrigger("Throw End Trigger");
+    }
+
+    public override void ApplyDamage(float getDamage)
+    {
+        base.ApplyDamage(getDamage);
+
+        if(curStat.HP >= 0)
+            StatusUI.Instance.SetHP(curStat.HP);
+        else
+            StatusUI.Instance.SetHP(0);
     }
 }

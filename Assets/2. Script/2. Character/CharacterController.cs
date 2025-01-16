@@ -177,17 +177,21 @@ public class CharacterController : MonoBehaviour
     public void CommandSwitchMainWeapon()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchMainWeapon();
+
+        
     }
 
     public void CommandSwitchPistol()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
@@ -199,6 +203,7 @@ public class CharacterController : MonoBehaviour
     public void CommandSwitchKnife()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
@@ -210,6 +215,7 @@ public class CharacterController : MonoBehaviour
     public void CommandSwitchGrenade()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
@@ -221,6 +227,7 @@ public class CharacterController : MonoBehaviour
     public void CommandSwitchC4()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         player.SwitchC4();
     }

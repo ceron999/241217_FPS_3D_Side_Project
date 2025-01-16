@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91739cb2b348deb429e74905f70b974d, type: 3}
   m_Name: AIData
   m_EditorClassIdentifier: 
-  HP: 80
+  HP: 100
   WalkSpeed: 2
   RunSpeed: 2
   CrouchSpeed: 0

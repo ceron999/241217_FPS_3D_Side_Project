@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Knife : WeaponBase
 {
-    private void Start()
+    protected override void Awake()
     {
         weaponDamage = 40;
     }

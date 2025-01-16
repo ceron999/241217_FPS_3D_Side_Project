@@ -12,9 +12,8 @@ public class Gun : WeaponBase
 
     private float lastFireTime; // 마지막 발사 실제 시간
 
-    private void Awake()
+    protected override void Awake()
     {
-        currentAmmo = clipSize;
         fireRate = Mathf.Max(fireRate, 0.1f); // 연사 속도가 0.1보다 작다면, 0.1로 설정
     }
 
@@ -32,6 +31,8 @@ public class Gun : WeaponBase
 
         // Muzzle effect 출력
         EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash1, firePoint.position, firePoint.rotation);
+
+        BulletUI.Instance.UpdateAmmoCount(currentAmmo, holdAmmo);
 
         return true;
     }
