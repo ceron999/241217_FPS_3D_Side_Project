@@ -115,9 +115,6 @@ public class CharacterController_AI : MonoBehaviour
 
             case AIState.Die:
                 break;
-
-            case AIState.Win:
-                break;
         }
 
 
@@ -147,10 +144,6 @@ public class CharacterController_AI : MonoBehaviour
 
             case AIState.Die:
                 _fsm.ChangeState(new DieState(this));
-                break;
-
-            case AIState.Win:
-                _fsm.ChangeState(new WinState(this));
                 break;
         }
     }
@@ -182,12 +175,14 @@ public class CharacterController_AI : MonoBehaviour
                 if (audio.volume > 0.5f)
                 {
                     // 탐지 타겟 설정
-                    if(target == null)
+                    if (target == null && !colArr[i].GetComponent<CharacterBase>().IsDie)
+                    {
                         target = colArr[i].GetComponent<CharacterBase>();
 
-                    // 탐지 위치 설정
-                    listenPosition = colArr[i].transform.position;
-                    return true;
+                        // 탐지 위치 설정
+                        listenPosition = colArr[i].transform.position;
+                        return true;
+                    }
                 }
             }
         }
@@ -204,6 +199,9 @@ public class CharacterController_AI : MonoBehaviour
     public bool IsDetectingPlayer()
     {
         if (target == null)
+            return false;
+
+        if (target.IsDie)
             return false;
 
         if ((target.transform.position - transform.position).magnitude < battleRadius)
@@ -301,6 +299,69 @@ public class CharacterController_AI : MonoBehaviour
         }
 
         pointOffset++;
+    }
+    #endregion
+
+    #region Battle State
+    public void SetAimRigWeight(float getWeight)
+    {
+        linkedAIBase.aimRig.weight = getWeight;
+    }
+
+    public void Battle()
+    {
+        if (target.IsDie)
+            return;
+
+        // 목표 지점 설정
+        Vector3 pivot = transform.position + Vector3.up;
+        Vector3 targetPosition = target.transform.position + Vector3.up;
+        Vector3 direction = (targetPosition - pivot).normalized;
+
+        // 목표 방향에 플레이어 확인
+        bool isRaycastSuccessToTarget = false;
+
+        Ray ray = new Ray(pivot, direction);
+        float maxDistance = 7f;
+
+        // Debug.DrawRay(pivot, direction * 7, Color.red);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, maxDistance,
+            characterMask, QueryTriggerInteraction.Ignore))
+        {
+            Debug.Log(hitInfo.collider.transform.root.name);
+            isRaycastSuccessToTarget = true;
+        }
+
+        // 에임 방향 설정
+        Debug.DrawRay(pivot, linkedAIBase.transform.forward * 7, Color.red);
+        Debug.DrawRay(linkedAIBase.nowWeapon.transform.position,
+            linkedAIBase.nowWeapon.transform.forward * 7f, Color.blue);
+
+        linkedAIBase.AimingPoint = targetPosition;
+
+        bool isRaycastSuccessFromWeapon = false;
+        Ray weaponRay = new Ray(pivot, linkedAIBase.nowWeapon.transform.forward);
+        if (Physics.Raycast(weaponRay, out RaycastHit weaponHitInfo,
+            maxDistance, characterMask, QueryTriggerInteraction.Ignore))
+        {
+            if (weaponHitInfo.transform.root.gameObject.CompareTag("Player"))
+            {
+                isRaycastSuccessFromWeapon = true;
+            }
+        }
+
+        if (isRaycastSuccessToTarget && isRaycastSuccessFromWeapon)
+        {
+            if (!target.IsDie)
+            {
+                linkedAIBase.Shoot(true);
+            }
+            else
+            {
+                target = null;
+                linkedAIBase.Shoot(false);
+            }
+        }
     }
     #endregion
 
