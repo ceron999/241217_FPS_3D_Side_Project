@@ -60,4 +60,9 @@ public class AIBase : CharacterBase
 
         unityCharacterController.Move(movement * Time.deltaTime * moveSpeed);
     }
+
+    public override void ApplyDamage(float getDamage)
+    {
+        base.ApplyDamage(getDamage);
+    }
 }

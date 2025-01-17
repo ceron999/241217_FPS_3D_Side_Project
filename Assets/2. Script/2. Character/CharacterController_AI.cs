@@ -336,7 +336,6 @@ public class CharacterController_AI : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo, maxDistance,
             characterMask, QueryTriggerInteraction.Ignore))
         {
-            Debug.Log(hitInfo.collider.transform.root.name);
             isRaycastSuccessToTarget = true;
         }
 

@@ -6,6 +6,9 @@ public enum UIList
 {
     PANEL_START,
 
+    //로딩 UI
+    LoadingUI,
+
     // 시작 화면 UI
     StartUI,
 

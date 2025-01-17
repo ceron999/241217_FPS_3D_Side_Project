@@ -22,7 +22,7 @@ public class Gun : WeaponBase
     {
         if (currentAmmo <= 0 || Time.time - lastFireTime < fireRate)
             return false;
-
+        
         Projectile bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         bullet.bulletDamage = weaponDamage;
         bullet.gameObject.SetActive(true);

@@ -187,7 +187,6 @@ public class CharacterBase : MonoBehaviour, IDamage
         if (curStat.HP <= 0)
         {
             // »ç¸Á
-            Debug.Log(curStat.HP);
             characterAnimator.SetTrigger("Dead Trigger");
             IsDie = true;
         }

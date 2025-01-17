@@ -93,7 +93,8 @@ public class StartUI : UIBase
     // 게임 시작
     public void OnClickStartButton()
     {
-
+        GameManager.Singleton.SetStartData(aiCount, mainWeaponType);
+        Main.Singleton.ChangeScene(SceneType.GameScene);
     }
 
     // 게임 종료

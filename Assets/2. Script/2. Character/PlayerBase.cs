@@ -14,7 +14,19 @@ public class PlayerBase : CharacterBase
     private void Start()
     {
         StatusUI.Instance.SetHP(curStat.HP);
-        nowWeapon = weaponHolder.GetChild(1).GetComponent<WeaponBase>();
+
+        if (GameManager.StartData.startMainWeaponType == MainWeaponType.Rifle)
+        {
+            Destroy(weapons[1].gameObject);
+            weapons.RemoveAt(1);
+        }
+        else
+        {
+            Destroy(weapons[0].gameObject);
+            weapons.RemoveAt(0);
+        }
+        
+        nowWeapon = weapons[0];
         BulletUI.Instance.InitializeBulletUI(nowWeapon);
     }
 
@@ -129,5 +141,7 @@ public class PlayerBase : CharacterBase
             StatusUI.Instance.SetHP(curStat.HP);
         else
             StatusUI.Instance.SetHP(0);
+
+        BattleManager.Instance.PlayerDie();
     }
 }
