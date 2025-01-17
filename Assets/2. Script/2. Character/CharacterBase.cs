@@ -117,10 +117,6 @@ public class CharacterBase : MonoBehaviour, IDamage
     public void SetRunning(bool isRunning)
     {
         IsRun = isRunning;
-        if (IsRun)
-            aimRig.weight = 0;
-        else
-            aimRig.weight = 1   ;
     }
 
     public void SetCrouch(bool isCrouching)
@@ -134,15 +130,15 @@ public class CharacterBase : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 
-    public void Jump()
-    {
-        if(isGrounded)
-        {
-            verticalVelocity = jumpFoice;
-            characterAnimator.SetTrigger("Jump Trigger");
-            // 애니메이션 구동
-        }
-    }
+    //public void Jump()
+    //{
+    //    if(isGrounded)
+    //    {
+    //        verticalVelocity = jumpFoice;
+    //        characterAnimator.SetTrigger("Jump Trigger");
+    //        // 애니메이션 구동
+    //    }
+    //}
 
     public void Shoot(bool isShoot)
     {
@@ -187,6 +183,7 @@ public class CharacterBase : MonoBehaviour, IDamage
         if (curStat.HP <= 0)
         {
             // 사망
+            aimRig.weight = 0;
             characterAnimator.SetTrigger("Dead Trigger");
             IsDie = true;
         }

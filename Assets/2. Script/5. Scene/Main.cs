@@ -116,6 +116,7 @@ public class Main : SingletonBase<Main>
 
         // Hide Loading UI
         UIManager.Hide<LoadingUI>(UIList.LoadingUI);
+        UIManager.Singleton.GetUI<LoadingUI>(UIList.LoadingUI,true);
 
         IsOnProgressSceneChanging = false;
         sceneLoadedCallback?.Invoke();

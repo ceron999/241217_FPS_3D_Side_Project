@@ -36,6 +36,21 @@ public class EffectManager : MonoBehaviour
 
         var newEffect = Instantiate(targetEffectData.effectPrefab, position, rotation);
         newEffect.gameObject.SetActive(true);
+        
         Destroy(newEffect, targetEffectData.lifeTime);
     }
+
+    public void CreateEffect(EffectType type, Vector3 position, Quaternion rotation, float multiplyScale)
+    {
+        var targetEffectData = effectDataList.Find(x => x.effectType == type);
+        if (targetEffectData == null)
+            return;
+
+        var newEffect = Instantiate(targetEffectData.effectPrefab, position, rotation);
+        newEffect.gameObject.SetActive(true);
+        newEffect.transform.localScale *= multiplyScale;
+
+        Destroy(newEffect, targetEffectData.lifeTime);
+    }
+
 }

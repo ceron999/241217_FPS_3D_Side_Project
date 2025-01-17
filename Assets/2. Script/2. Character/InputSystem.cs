@@ -11,6 +11,7 @@ public class InputSystem : MonoBehaviour
     public static InputSystem Instance;
 
     // 커서
+    public bool isStopCameraMove = false;
     private bool isShowCursor = false;
 
     // 이동
@@ -88,9 +89,12 @@ public class InputSystem : MonoBehaviour
         isCrouch = Input.GetKey(KeyCode.LeftControl);
 
         // 회전 상태 변환
-        float lookX = Input.GetAxis("Mouse X");
-        float lookY = Input.GetAxis("Mouse Y");
-        look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY * (-1f));
+        if (!isStopCameraMove)
+        {
+            float lookX = Input.GetAxis("Mouse X");
+            float lookY = Input.GetAxis("Mouse Y");
+            look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY * (-1f));
+        }
 
         // 점프
         if (Input.GetKeyDown(KeyCode.Space))

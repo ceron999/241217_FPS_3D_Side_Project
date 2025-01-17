@@ -19,6 +19,9 @@ public enum UIList
     StatusUI,
     BulletUI,
 
+    // 게임 종료 UI
+    GameEndUI,
+
     PANEL_End,
 
 

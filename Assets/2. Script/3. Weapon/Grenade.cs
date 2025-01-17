@@ -51,7 +51,7 @@ public class Grenade : WeaponBase
 
         // 2. 폭발 이펙트 적용
         // Muzzle effect 출력
-        EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash3, this.transform.position, this.transform.rotation);
+        EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash3, this.transform.position, this.transform.rotation, 10f);
 
         // 2. 폭발 데미지 적용
         for (int i = 0; i < colliders.Length; i++)

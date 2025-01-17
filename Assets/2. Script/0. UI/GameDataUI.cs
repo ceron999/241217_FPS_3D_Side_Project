@@ -11,11 +11,14 @@ public class GameDataUI : UIBase
     public TextMeshProUGUI aIText;
 
     public TextMeshProUGUI timerText;
+
+    public bool isGameEnd = false;
     private float getTime;
 
     private void Update()
     {
-        UpdateTime();
+        if(!isGameEnd)
+            UpdateTime();
     }
 
     public void UpdateGameData(int playerCount, int AICount)
@@ -35,11 +38,20 @@ public class GameDataUI : UIBase
 
     public void UpdateTime()
     {
-        getTime -= Time.deltaTime;
+        if (getTime > 0)
+        {
+            getTime -= Time.deltaTime;
 
-        int minute = (int)getTime / 60;
-        int second = (int)getTime % 60;
+            int minute = (int)getTime / 60;
+            int second = (int)getTime % 60;
 
-        timerText.text = $"{minute} : {second}";
+            timerText.text = $"{minute} : {second}";
+        }
+        else
+        {
+            isGameEnd = true;
+            timerText.text = $"{0} : {0}";
+            GameManager.Singleton.GameEnd?.Invoke(false);
+        }
     }
 }

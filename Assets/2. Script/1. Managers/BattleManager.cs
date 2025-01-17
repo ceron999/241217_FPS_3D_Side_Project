@@ -62,18 +62,19 @@ public class BattleManager : MonoBehaviour
         if (playerCount == 0)
         {
             Debug.Log("Game Over");
+            GameManager.Singleton.GameEnd?.Invoke(false);
         }
     }
 
     public void AIDie()
     {
-
         aiCount--;
         UpdateGameDataUIs();
 
         if (aiCount == 0)
         {
             Debug.Log("Game Win");
+            GameManager.Singleton.GameEnd?.Invoke(true);
         }
     }
 

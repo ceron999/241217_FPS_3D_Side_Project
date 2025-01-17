@@ -57,12 +57,19 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        player.SetRunning(InputSystem.Instance.IsRun);
-        player.SetCrouch(InputSystem.Instance.IsCrouch);
-        player.Move(InputSystem.Instance.Movement);
+        if(!player.IsDie)
+        {
+            player.SetRunning(InputSystem.Instance.IsRun);
+            if (Input.GetKey(KeyCode.LeftShift))
+                player.aimRig.weight = 0f;
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+                player.aimRig.weight = 1f;
+            player.SetCrouch(InputSystem.Instance.IsCrouch);
+            player.Move(InputSystem.Instance.Movement);
 
-        player.Rotate(InputSystem.Instance.Look.x);
-        player.AimingPoint = CameraSystem.Singleton.AimingPoint;
+            player.Rotate(InputSystem.Instance.Look.x);
+            player.AimingPoint = CameraSystem.Singleton.AimingPoint;
+        }
     }
 
     private void LateUpdate()
@@ -96,7 +103,7 @@ public class CharacterController : MonoBehaviour
     #region Command Function
     void CommandJump()
     {
-        player.Jump();
+        //player.Jump();
     }
 
     // รั
@@ -141,6 +148,7 @@ public class CharacterController : MonoBehaviour
     {
         if (!isThrowMode)
         {
+            player.aimRig.weight = 0;
             isThrowMode = true;
             player.ThrowStart();
         }
@@ -177,7 +185,6 @@ public class CharacterController : MonoBehaviour
     public void CommandSwitchMainWeapon()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
@@ -185,51 +192,55 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchMainWeapon();
 
-        
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }
 
     public void CommandSwitchPistol()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchPistol();
+
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }
 
     public void CommandSwitchKnife()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandAttackStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandAttackEnd;
         player.SwitchKnife();
+
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }
 
     public void CommandSwitchGrenade()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
         player.SwitchGrenade();
+
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }
 
     public void CommandSwitchC4()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
 
         player.SwitchC4();
+
+        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }
 
 

@@ -31,10 +31,14 @@ public class PlayerBase : CharacterBase
     }
 
     private void Update()
-    {
+    { 
         // 1. 지형 확인
         CheckGround();
-        
+
+        // 2. 죽었으면 아무것도 못건들게
+        if (IsDie)
+            return;
+
         // 3. animation 설정
 
         runningBlend = Mathf.Lerp(runningBlend, IsRun ? 1f : 0f, Time.deltaTime * 10f);
@@ -52,6 +56,10 @@ public class PlayerBase : CharacterBase
 
     private void LateUpdate()
     {
+        // 1. 죽었으면 아무것도 못건들게
+        if (IsDie)
+            return;
+
         // 2. 사격
         /// 사격할 경우 총알이 불규칙하게 다른 방향으로 튀는 문제가 있었음.
         /// 해당 문제는 이 코드가 update에서 lateUpdate로 이동하니까 문제 해결
@@ -78,12 +86,14 @@ public class PlayerBase : CharacterBase
     // 무기 스위칭 관련 데이터
     public void SwitchMainWeapon()
     {
+        aimRig.weight = 1f;
         nowWeapon = weapons[0];
         SetWeaponActive(0);
     }
 
     public void SwitchPistol()
     {
+        aimRig.weight = 1f;
         nowWeapon = weapons[1];
         SetWeaponActive(1);
     }
@@ -96,6 +106,7 @@ public class PlayerBase : CharacterBase
 
     public void SwitchGrenade()
     {
+        aimRig.weight = 0f;
         nowWeapon = weapons[3];
         SetWeaponActive(3);
     }
@@ -142,6 +153,8 @@ public class PlayerBase : CharacterBase
         else
             StatusUI.Instance.SetHP(0);
 
-        BattleManager.Instance.PlayerDie();
+        // 사망 UI에게 전송
+        if(IsDie)
+            BattleManager.Instance.PlayerDie();
     }
 }
