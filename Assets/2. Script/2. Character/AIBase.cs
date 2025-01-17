@@ -58,6 +58,6 @@ public class AIBase : CharacterBase
         movement = transform.forward * vertical + transform.right * horizontal;
         movement.y = verticalVelocity;
 
-        unityCharacterController.Move(movement * Time.deltaTime);
+        unityCharacterController.Move(movement * Time.deltaTime * moveSpeed);
     }
 }

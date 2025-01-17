@@ -68,6 +68,7 @@ public class CharacterController_AI : MonoBehaviour
         _fsm = new FSM(new SearchState(this));
 
         navMeshAgent.updatePosition = false;
+        navMeshAgent.speed = linkedAIBase.moveSpeed;
     }
 
     private void Update()

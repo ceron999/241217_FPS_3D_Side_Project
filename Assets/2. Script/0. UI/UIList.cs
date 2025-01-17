@@ -6,6 +6,10 @@ public enum UIList
 {
     PANEL_START,
 
+    // 시작 화면 UI
+    StartUI,
+
+    // 게임 화면 UI
     CrosshairUI,
     RaderUI,
     GameDataUI,
