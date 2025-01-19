@@ -13,6 +13,7 @@ public enum UIList
     StartUI,
 
     // 게임 화면 UI
+    ZoomUI,
     CrosshairUI,
     RaderUI,
     GameDataUI,

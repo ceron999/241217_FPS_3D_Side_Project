@@ -8,7 +8,7 @@ public class Grenade : WeaponBase
 
     Rigidbody rigid;
     public Vector3 throwVector = Vector3.zero;
-    public float throwPower = 10;
+    public float throwPower = 7;
 
     // Æø¹ß °ü·Ã º¯¼ö
     public LayerMask targetLayerMask;
@@ -21,8 +21,8 @@ public class Grenade : WeaponBase
 
     private void Start()
     {
-        maxAmmo = 1;
-        holdAmmo = maxAmmo;
+        maxAmmo = 0;
+        holdAmmo = 0;
         clipSize = 1;
         currentAmmo = clipSize;
 
@@ -31,6 +31,9 @@ public class Grenade : WeaponBase
 
     public override bool Activate()
     {
+        clipSize--;
+
+        // ÅõÃ´ º¤ÅÍ ¼³Á¤
         throwVector = (throwStartPivot.transform.forward + throwStartPivot.transform.up) * throwPower;
         rigid.AddForce(throwVector, ForceMode.Impulse);
         Boom();
@@ -46,7 +49,7 @@ public class Grenade : WeaponBase
     {
         yield return new WaitForSeconds(4);
         // 1. Æø¹ß ¹Ý°æ °´Ã¼ Å½Áö
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 2.5f,
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f,
                                                     targetLayerMask, QueryTriggerInteraction.Ignore);
 
         // 2. Æø¹ß ÀÌÆåÆ® Àû¿ë

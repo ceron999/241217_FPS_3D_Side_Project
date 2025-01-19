@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    public static CameraSystem instance;
+    public static CameraSystem Instance;
 
     public Cinemachine.CinemachineVirtualCamera tpsCamera;
 
@@ -18,8 +18,8 @@ public class CameraSystem : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
-            instance = this;
+        if(Instance == null)
+            Instance = this;
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class CameraSystem : MonoBehaviour
         }
         else
         {
-            AimingPoint = ray.GetPoint(10f);
+            AimingPoint = ray.GetPoint(100f);
         }
     }
 

@@ -42,5 +42,4 @@ public abstract class WeaponBase : MonoBehaviour
 
         BulletUI.Instance.UpdateAmmoCount(currentAmmo, holdAmmo);
     }
-
 }

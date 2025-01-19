@@ -45,6 +45,7 @@ public class GameScene : SceneBase
         UIManager.Singleton.GetUI<BulletUI>(UIList.BulletUI, true);
         UIManager.Singleton.GetUI<WeaponUI>(UIList.WeaponUI, true);
         UIManager.Singleton.GetUI<GameEndUI>(UIList.GameEndUI, true);
+        UIManager.Singleton.GetUI<ZoomUI>(UIList.ZoomUI, true);
 
         yield return null;
     }

@@ -8083,7 +8083,7 @@ MonoBehaviour:
   AimingPoint: {x: 0, y: 0, z: 0}
   aimingLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4294967295
 --- !u!1001 &765618385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13092,6 +13092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c5f37a1e5cde54a8d0be4ec2c8de4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStopCameraMove: 0
 --- !u!4 &1173789345
 Transform:
   m_ObjectHideFlags: 0
@@ -24084,7 +24085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -24092,7 +24093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -24104,7 +24105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2372994101398126717, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

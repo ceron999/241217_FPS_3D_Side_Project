@@ -23,6 +23,12 @@ public class GameDataUI : UIBase
 
     public void UpdateGameData(int playerCount, int AICount)
     {
+        if(playerCount < 0)
+            playerCount = 0;
+
+        if (AICount < 0)
+            AICount = 0;
+
         playerText.text = $"00{playerCount}";
         aIText.text = $"00{AICount}";
     }

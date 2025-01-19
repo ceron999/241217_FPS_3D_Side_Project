@@ -16,6 +16,7 @@ public class CharacterController : MonoBehaviour
     public Transform throwStartPivot;
     public GameObject throwObjectPrefab;
     private bool isThrowMode = false;
+    private bool isThrowEnd = false;
 
     public float throwPower = 10f;
     #endregion
@@ -27,6 +28,8 @@ public class CharacterController : MonoBehaviour
     private float targetYaw;
     private float targetpitch;
     #endregion
+
+    public bool isZoom  = false;
 
     private void Awake()
     {
@@ -40,7 +43,9 @@ public class CharacterController : MonoBehaviour
 
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandZoomIn;       // 줌인
+
+        if(GameManager.StartData.startMainWeaponType == MainWeaponType.Sniper)
+            InputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
 
         // 스위칭
         InputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
@@ -52,7 +57,7 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // C4 변환
         InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // C4 변환
 
-        CameraSystem.instance.SetCameraFollowTarget(cameraPivot);
+        CameraSystem.Instance.SetCameraFollowTarget(cameraPivot);
     }
 
     private void Update()
@@ -68,7 +73,7 @@ public class CharacterController : MonoBehaviour
             player.Move(InputSystem.Instance.Movement);
 
             player.Rotate(InputSystem.Instance.Look.x);
-            player.AimingPoint = CameraSystem.instance.AimingPoint;
+            player.AimingPoint = CameraSystem.Instance.AimingPoint;
         }
     }
 
@@ -124,7 +129,17 @@ public class CharacterController : MonoBehaviour
 
     void CommandZoomIn()
     {
-
+        isZoom = !isZoom;
+        if (isZoom)
+        {
+            CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 20f;
+            ZoomUI.Instance.Show();
+        }
+        else
+        {
+            CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 40f;
+            ZoomUI.Instance.Hide();
+        }
     }
 
     // 칼
@@ -146,6 +161,9 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     void CommandThrowStart()
     {
+        if (isThrowEnd)
+            return;
+
         if (!isThrowMode)
         {
             player.aimRig.weight = 0;
@@ -178,6 +196,9 @@ public class CharacterController : MonoBehaviour
         {
             player.ThrowEnd();
             isThrowMode = false;
+            isThrowEnd = true;
+
+            WeaponUI.Instance.SetGrenadeUI();
         }
     }
 
@@ -223,6 +244,10 @@ public class CharacterController : MonoBehaviour
 
     public void CommandSwitchGrenade()
     {
+        // 수류탄을 사용했다면 스위칭 못하도록
+        if (isThrowEnd)
+            return;
+
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;

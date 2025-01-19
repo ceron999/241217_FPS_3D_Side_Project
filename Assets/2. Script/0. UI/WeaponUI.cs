@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponUI : UIBase
 {
+    public static WeaponUI Instance => UIManager.Singleton.GetUI<WeaponUI>(UIList.WeaponUI);
+
     public override void Show()
     {
         base.Show();
@@ -11,10 +13,17 @@ public class WeaponUI : UIBase
         StartCoroutine(WeaponUIShowCoroutine());
     }
 
+    public GameObject grenadeUI;
+
     // 3ÃÊ µÚ¿¡ ²¨Áü
     IEnumerator WeaponUIShowCoroutine()
     {
         yield return new WaitForSeconds(3f);
         this.gameObject.SetActive(false);
+    }
+
+    public void SetGrenadeUI()
+    {
+        grenadeUI.SetActive(false);
     }
 }

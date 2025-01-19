@@ -119,9 +119,9 @@ public class InputSystem : MonoBehaviour
             OnClickLeftMouseButtonUp?.Invoke();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
-            OnClickLeftMouseButtonDown?.Invoke();
+            OnClickRightMouseButtonDown?.Invoke();
         }
 
         // UI

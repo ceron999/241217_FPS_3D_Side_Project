@@ -7,10 +7,6 @@ public class PlayerBase : CharacterBase
     // 무기 데이터
     public List<WeaponBase> weapons;
 
-    //투척 데이터
-    public Transform throwPivot;
-    public GameObject throwPrefab;
-
     private void Start()
     {
         StatusUI.Instance.SetHP(curStat.HP);
