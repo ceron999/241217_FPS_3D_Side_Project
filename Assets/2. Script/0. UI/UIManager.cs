@@ -70,8 +70,10 @@ public class UIManager : SingletonBase<UIManager>
             {
                 if(reload && panels[uiType] != null)
                 {
+                    Debug.Log(11);
                     Destroy(panels[uiType].gameObject);
                     panels[uiType] = null;
+                    return null;
                 }
 
                 if(panels[uiType] == null)
@@ -107,6 +109,7 @@ public class UIManager : SingletonBase<UIManager>
                 {
                     Destroy(popups[uiType].gameObject);
                     popups[uiType] = null;
+                    return null;
                 }
 
                 if (popups[uiType] == null)

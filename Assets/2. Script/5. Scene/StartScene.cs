@@ -28,6 +28,7 @@ public class StartScene : SceneBase
     {
         // Hide Title UI
         UIManager.Hide<StartUI>(UIList.StartUI);
+        UIManager.Singleton.GetUI<StartUI>(UIList.StartUI, true);
 
         yield return null;
     }

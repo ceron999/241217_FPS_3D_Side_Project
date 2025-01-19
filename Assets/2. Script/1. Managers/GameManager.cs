@@ -18,16 +18,23 @@ public class GameManager : SingletonBase<GameManager>
 {
     public static StartData StartData;     // 시작 화면에서 게임 시작 버튼을 늘렀을 떄 사용
 
+    public System.Action GameStart;
     public System.Action<bool> GameEnd;
 
     private void Awake()
     {
+        GameStart += StartGame;
         GameEnd += EndGame;
     }
 
     public void SetStartData(int getAICountData = 1, MainWeaponType getMainWeaponType = MainWeaponType.Rifle)
     {
         StartData = new StartData(getAICountData, getMainWeaponType);
+    }
+
+    private void StartGame()
+    {
+        Time.timeScale = 1f;
     }
 
     private void EndGame(bool isWin)

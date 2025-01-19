@@ -113,6 +113,13 @@ public class CharacterController_AI : MonoBehaviour
                 break;
 
             case AIState.Battle:
+                // Á×¾úÀ» °æ¿ì -> Die
+                if (linkedAIBase.curStat.HP <= 0)
+                {
+                    ChangeState(AIState.Die);
+                    return;
+                }
+
                 // ÀûÀÌ Á×À¸¸é Die
                 if (target.IsDie)
                 {

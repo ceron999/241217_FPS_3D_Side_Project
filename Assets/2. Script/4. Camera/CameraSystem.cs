@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CameraSystem : SingletonBase<CameraSystem>
+public class CameraSystem : MonoBehaviour
 {
+    public static CameraSystem instance;
+
     public Cinemachine.CinemachineVirtualCamera tpsCamera;
 
     public Transform follow;
@@ -12,6 +15,12 @@ public class CameraSystem : SingletonBase<CameraSystem>
 
     public Vector3 AimingPoint;
     public LayerMask aimingLayerMask;
+
+    private void Awake()
+    {
+        if(instance == null)
+            instance = this;
+    }
 
     private void Update()
     {

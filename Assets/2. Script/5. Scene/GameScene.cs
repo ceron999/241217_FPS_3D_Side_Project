@@ -29,13 +29,21 @@ public class GameScene : SceneBase
 
     public override IEnumerator OnEnd()
     {
-        // TODO : Hide Ingame UI
+        // Ui ¼û±â±â
         UIManager.Hide<CrosshairUI>(UIList.CrosshairUI);
         UIManager.Hide<RaderUI>(UIList.RaderUI);
         UIManager.Hide<GameDataUI>(UIList.GameDataUI);
         UIManager.Hide<StatusUI>(UIList.StatusUI);
         UIManager.Hide<BulletUI>(UIList.BulletUI);
         UIManager.Hide<WeaponUI>(UIList.WeaponUI);
+
+        // UI Á¦°Å
+        UIManager.Singleton.GetUI<CrosshairUI>(UIList.CrosshairUI, true);
+        UIManager.Singleton.GetUI<RaderUI>(UIList.RaderUI, true);
+        UIManager.Singleton.GetUI<GameDataUI>(UIList.GameDataUI, true);
+        UIManager.Singleton.GetUI<StatusUI>(UIList.StatusUI, true);
+        UIManager.Singleton.GetUI<BulletUI>(UIList.BulletUI, true);
+        UIManager.Singleton.GetUI<WeaponUI>(UIList.WeaponUI, true);
 
         yield return null;
     }

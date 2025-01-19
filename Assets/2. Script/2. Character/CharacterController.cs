@@ -52,7 +52,7 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // C4 변환
         InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // C4 변환
 
-        CameraSystem.Singleton.SetCameraFollowTarget(cameraPivot);
+        CameraSystem.instance.SetCameraFollowTarget(cameraPivot);
     }
 
     private void Update()
@@ -68,7 +68,7 @@ public class CharacterController : MonoBehaviour
             player.Move(InputSystem.Instance.Movement);
 
             player.Rotate(InputSystem.Instance.Look.x);
-            player.AimingPoint = CameraSystem.Singleton.AimingPoint;
+            player.AimingPoint = CameraSystem.instance.AimingPoint;
         }
     }
 

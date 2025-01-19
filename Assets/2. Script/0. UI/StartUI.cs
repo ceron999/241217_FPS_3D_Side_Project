@@ -94,6 +94,7 @@ public class StartUI : UIBase
     public void OnClickStartButton()
     {
         GameManager.Singleton.SetStartData(aiCount, mainWeaponType);
+        GameManager.Singleton.GameStart?.Invoke();
         Main.Singleton.ChangeScene(SceneType.GameScene);
     }
 
