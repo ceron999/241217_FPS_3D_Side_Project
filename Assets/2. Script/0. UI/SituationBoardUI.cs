@@ -16,6 +16,23 @@ public class SituationBoardUI : UIBase
     private Dictionary<int, InfoPrefab> aiInfoDictionary = new Dictionary<int, InfoPrefab>();
     public void InitiateSituationBoardUI(List<string> playerNameList, int aiCount)
     {
+        if (playerInfoDictionary.Count > 0)
+        {
+            for (int i = 0; i < playerInfoDictionary.Count; i++)
+            {
+                Destroy(playerInfoDictionary[i].gameObject);
+                playerInfoDictionary.Remove(i);
+            }
+        }
+        if (aiInfoDictionary.Count > 0)
+        {
+            for (int i = 0; i < aiInfoDictionary.Count; i++)
+            {
+                Destroy(aiInfoDictionary[i].gameObject);
+                aiInfoDictionary.Remove(i);
+            }
+        }
+
         for (int i = 0; i < playerNameList.Count; i++)
         {
             InfoPrefab goPrefab = Instantiate(InfoPrefab).GetComponent<InfoPrefab>();

@@ -57,7 +57,11 @@ public class GameDataUI : UIBase
         {
             isGameEnd = true;
             timerText.text = $"{0} : {0}";
-            GameManager.Singleton.GameEnd?.Invoke(false);
+
+            if(!BattleManager.Instance.isC4Install)
+                GameManager.Singleton.GameEnd?.Invoke(false);
+            else
+                GameManager.Singleton.GameEnd?.Invoke(true);
         }
     }
 }

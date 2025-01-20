@@ -8,6 +8,8 @@ public class C4 : WeaponBase
     public float curInstallTime = 0f;
     public float maxInstallTime = 5f;
 
+    public float c4ExplosionTIme = 10f;
+
     protected override void Awake()
     {
         weaponDamage = 10000;
@@ -42,6 +44,7 @@ public class C4 : WeaponBase
         {
             Debug.Log("C4 ¼³Ä¡");
             BattleManager.Instance.isC4Install = true;
+            GameDataUI.Instance.InitializeTime(c4ExplosionTIme);
 
             GameObject go = Instantiate(this.gameObject);
             go.transform.position = installPosition.position;
