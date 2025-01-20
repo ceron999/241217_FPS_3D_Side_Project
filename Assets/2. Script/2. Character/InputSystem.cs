@@ -37,6 +37,7 @@ public class InputSystem : MonoBehaviour
     public System.Action OnClickSpace;                  // 점프
 
     public System.Action OnClickLeftMouseButtonDown;    // 좌클릭 down
+    public System.Action OnClickLeftMouseButton;        // 좌클릭 누른 상태
     public System.Action OnClickLeftMouseButtonUp;      // 좌클릭 up
     public System.Action OnClickRightMouseButtonDown;   // 우클릭
 
@@ -112,6 +113,11 @@ public class InputSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             OnClickLeftMouseButtonDown?.Invoke();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            OnClickLeftMouseButton?.Invoke();
         }
 
         if (Input.GetMouseButtonUp(0))

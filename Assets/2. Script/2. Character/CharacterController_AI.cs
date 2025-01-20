@@ -43,6 +43,7 @@ public class CharacterController_AI : MonoBehaviour
     public Vector3 listenPosition;              // 적 소리 들린 위치
     public Vector3 findPosition;                // 적 소리
 
+    public Transform c4InstallPosition;
     public Transform patrolPointParent;
     public List<Transform> patrolPointList;
     public int pointOffset = 0;                // 이동할 포인트를 지정해주는 offset
@@ -108,7 +109,7 @@ public class CharacterController_AI : MonoBehaviour
                     ChangeState(AIState.Battle);
 
                 // 적이 안보이면 그냥 Search
-                if (IsNotExistPlayer())
+                if (IsNotExistPlayer() && !BattleManager.Instance.isC4Install)
                     ChangeState(AIState.Search);
                 break;
 
@@ -126,6 +127,14 @@ public class CharacterController_AI : MonoBehaviour
                     linkedAIBase.Shoot(false);
                     GameManager.Singleton.AIKillAction?.Invoke(linkedAIBase.characterIndex);
                     ChangeState(AIState.Search);
+                }
+                else
+                {
+                    if (Vector3.Distance(target.transform.position, this.transform.position) > 7f)
+                    {
+                        linkedAIBase.Shoot(false);
+                        ChangeState(AIState.TakeWarning);
+                    }
                 }
                 break;
 
@@ -208,7 +217,14 @@ public class CharacterController_AI : MonoBehaviour
 
     public bool IsInstalledC4()
     {
-        return false;
+        if(BattleManager.Instance.isC4Install)
+        {
+            c4InstallPosition = GameObject.Find("C4InstallPosition").transform;
+            listenPosition = c4InstallPosition.position;
+            return true;
+        }
+        else
+            return false;
     }
 
     // 적을 확인했을 경우 Search, TakeWarning -> Battle

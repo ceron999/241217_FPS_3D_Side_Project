@@ -29,6 +29,11 @@ public class CharacterController : MonoBehaviour
     private float targetpitch;
     #endregion
 
+    #region C4 설치 변수
+    public Transform installPosition;
+    public float installRadius = 3f; 
+    #endregion
+
     public bool isZoom  = false;
 
     private void Awake()
@@ -147,10 +152,6 @@ public class CharacterController : MonoBehaviour
     {
         // 아직 애니메이션 없어서 나중에 구현
     }
-    void CommandAttackEnd()
-    {
-
-    }
 
     // 수류탄
 
@@ -202,12 +203,20 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    public void CommandInstallC4()
+    {
+        // 설치 장소에서 멀지 않다면 실행
+        if(Vector3.Distance(installPosition.position, this.transform.position) > installRadius)
+            player.nowWeapon.Activate();
+    }
+
     // 무기 변환
     public void CommandSwitchMainWeapon()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButton = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
@@ -221,6 +230,7 @@ public class CharacterController : MonoBehaviour
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButton = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
@@ -234,9 +244,9 @@ public class CharacterController : MonoBehaviour
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButton = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandAttackStart;
-        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandAttackEnd;
         player.SwitchKnife();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);
@@ -251,6 +261,7 @@ public class CharacterController : MonoBehaviour
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButton = null;
         InputSystem.Instance.OnClickLeftMouseButtonUp = null;
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
@@ -263,6 +274,10 @@ public class CharacterController : MonoBehaviour
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
+        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        InputSystem.Instance.OnClickLeftMouseButton = null;
+        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandInstallC4;
         player.SwitchC4();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);

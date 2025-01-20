@@ -9,6 +9,7 @@ public class BattleManager : MonoBehaviour
     public System.Action SpawnAI;               // AI Spawn
 
     [Header("AI 데이터 관련")]
+    public bool isC4Install = false;
     public Transform aiSpawnPositionParent;
     public GameObject enemyPrefab;              // 움직이는 객체는 묶어서 사용하지 말 것 
     public Transform aiPatrolPoints;
