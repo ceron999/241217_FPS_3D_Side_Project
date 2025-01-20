@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponUI : UIBase
 {
     public static WeaponUI Instance => UIManager.Singleton.GetUI<WeaponUI>(UIList.WeaponUI);
+
+    public List<Sprite> mainWeaponSprite = new List<Sprite>();
+
+    private void Start()
+    {
+        if (GameManager.StartData.startMainWeaponType == MainWeaponType.Rifle)
+            mainWeaponImage.sprite = mainWeaponSprite[0];
+        else
+            mainWeaponImage.sprite = mainWeaponSprite[1];
+    }
 
     public override void Show()
     {
@@ -13,6 +24,7 @@ public class WeaponUI : UIBase
         StartCoroutine(WeaponUIShowCoroutine());
     }
 
+    public Image mainWeaponImage;
     public GameObject grenadeUI;
     public GameObject c4UI;
 
