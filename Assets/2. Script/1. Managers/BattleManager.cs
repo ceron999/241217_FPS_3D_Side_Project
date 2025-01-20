@@ -51,6 +51,7 @@ public class BattleManager : MonoBehaviour
             goEnemy.transform.position = aiSpawnPositionParent.GetChild(i).position;
 
             goEnemy.GetComponent<CharacterController_AI>().patrolPointParent = aiPatrolPoints;
+            goEnemy.GetComponent<CharacterBase>().characterIndex = i;
         }
     }
     #region GameDataUI 설정 함수들

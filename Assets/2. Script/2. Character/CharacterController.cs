@@ -54,8 +54,8 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickAlpha4 += CommandSwitchGrenade;             // 수류탄 변환
         InputSystem.Instance.OnClickAlpha5 += CommandSwitchC4;                  // C4 변환
 
-        InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // C4 변환
-        InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // C4 변환
+        InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
+        InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
 
         CameraSystem.Instance.SetCameraFollowTarget(cameraPivot);
     }
@@ -272,12 +272,12 @@ public class CharacterController : MonoBehaviour
     // 상황판 표시 및 끄기
     public void CommandSummaryBoardOpen()
     {
-        UIManager.Show<SummaryBoardUI>(UIList.SummaryBoardUI);
+        UIManager.Show<SituationBoardUI>(UIList.SituationBoardUI);
     }
 
     public void CommandSummaryBoardClose()
     {
-        UIManager.Hide<SummaryBoardUI>(UIList.SummaryBoardUI);
+        UIManager.Hide<SituationBoardUI>(UIList.SituationBoardUI);
     }
     #endregion
 }

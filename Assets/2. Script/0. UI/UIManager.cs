@@ -70,7 +70,6 @@ public class UIManager : SingletonBase<UIManager>
             {
                 if(reload && panels[uiType] != null)
                 {
-                    Debug.Log(11);
                     Destroy(panels[uiType].gameObject);
                     panels[uiType] = null;
                     return null;

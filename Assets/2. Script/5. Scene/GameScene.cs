@@ -46,6 +46,7 @@ public class GameScene : SceneBase
         UIManager.Singleton.GetUI<WeaponUI>(UIList.WeaponUI, true);
         UIManager.Singleton.GetUI<GameEndUI>(UIList.GameEndUI, true);
         UIManager.Singleton.GetUI<ZoomUI>(UIList.ZoomUI, true);
+        UIManager.Singleton.GetUI<SituationBoardUI>(UIList.SituationBoardUI, true);
 
         yield return null;
     }

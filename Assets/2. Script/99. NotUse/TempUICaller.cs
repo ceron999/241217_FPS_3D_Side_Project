@@ -15,7 +15,5 @@ public class TempUICaller : MonoBehaviour
         UIManager.Show<StatusUI>(UIList.StatusUI);
         UIManager.Show<BulletUI>(UIList.BulletUI);
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        UIManager.Hide<SummaryBoardUI>(UIList.SummaryBoardUI);
     }
 }

@@ -29,8 +29,8 @@ public class BootStraper : MonoBehaviour
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
         // 2. 기본 시스템 설정
-        GameManager.Singleton.GameStart?.Invoke();
         GameManager.Singleton.SetStartData();
+        GameManager.Singleton.GameStart?.Invoke();
 
     }
 }

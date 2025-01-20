@@ -150,7 +150,10 @@ public class PlayerBase : CharacterBase
             StatusUI.Instance.SetHP(0);
 
         // 사망 UI에게 전송
-        if(IsDie)
+        if (IsDie)
+        {
+            GameManager.Singleton.PlayerDieAction?.Invoke();
             BattleManager.Instance.PlayerDie();
+        }
     }
 }

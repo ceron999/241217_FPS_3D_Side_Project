@@ -11,7 +11,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     /// </summary>
     // 플레이어인지 확인하는 변수
     public bool IsPlayer { get; private set; } = false;
-
+    public int characterIndex;
 
     // 이동 관련 데이터
     public bool IsDie { get; set; } = false;

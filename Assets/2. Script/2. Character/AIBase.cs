@@ -64,5 +64,10 @@ public class AIBase : CharacterBase
     public override void ApplyDamage(float getDamage)
     {
         base.ApplyDamage(getDamage);
+
+        if (IsDie)
+        { 
+            GameManager.Singleton.AIDieAction?.Invoke(characterIndex);
+        }
     }
 }

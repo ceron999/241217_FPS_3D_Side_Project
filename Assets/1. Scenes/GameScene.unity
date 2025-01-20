@@ -8083,7 +8083,7 @@ MonoBehaviour:
   AimingPoint: {x: 0, y: 0, z: 0}
   aimingLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1792
 --- !u!1001 &765618385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14330,6 +14330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ae4f32acbbe424eac9e4cc0cf7b43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNames: []
 --- !u!4 &1299024242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4308131712832156, guid: de57b9d2d981d874baffd8345fa9e03e, type: 3}
@@ -24113,7 +24114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5492063846315681624, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_Weight
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8146016977136088522, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: m_Name

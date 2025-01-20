@@ -132,7 +132,7 @@ public class InputSystem : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            OnClickTabDown?.Invoke();
+            OnClickTabUp?.Invoke();
         }
     }
 }

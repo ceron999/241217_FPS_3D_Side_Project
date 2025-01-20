@@ -19,6 +19,7 @@ public enum UIList
     GameDataUI,
     StatusUI,
     BulletUI,
+    SituationBoardUI,
 
     // 게임 종료 UI
     GameEndUI,

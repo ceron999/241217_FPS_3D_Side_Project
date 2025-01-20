@@ -124,6 +124,7 @@ public class CharacterController_AI : MonoBehaviour
                 if (target.IsDie)
                 {
                     linkedAIBase.Shoot(false);
+                    GameManager.Singleton.AIKillAction?.Invoke(linkedAIBase.characterIndex);
                     ChangeState(AIState.Search);
                 }
                 break;

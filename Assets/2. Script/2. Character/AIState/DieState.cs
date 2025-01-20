@@ -14,6 +14,7 @@ public class DieState : StateBase
 
     public override void OnStateEnter()
     {
+        GameManager.Singleton.PlayerKillAction?.Invoke();
         BattleManager.Instance.AIDie();
         _aiController.navMeshAgent.enabled = false;
         deleteTime = 0f;
