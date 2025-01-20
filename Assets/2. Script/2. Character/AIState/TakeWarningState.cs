@@ -19,10 +19,22 @@ public class TakeWarningState : StateBase
     {
         targetPosition = _aiController.listenPosition;
         SearchTargetPosition();
+
+        // C4 설치 후 C4 근처로 이동하였을 때 
+        if(BattleManager.Instance.isC4Install && _aiController.IsFindC4())
+        {
+            _aiController.UninstallC4();
+        }
+        else
+        {
+            _aiController.CancelUninstallC4();
+        }
     }
     public override void OnStateExit()
     {
         _aiController.listenPosition = Vector3.zero;
+        if(BattleManager.Instance.isC4Install)
+            _aiController.CancelUninstallC4();
         Debug.Log("Exit TakeWarning State");
     }
 

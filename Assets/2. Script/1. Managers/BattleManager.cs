@@ -10,6 +10,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("AI 데이터 관련")]
     public bool isC4Install = false;
+    public Transform c4InstallPosition;
     public Transform aiSpawnPositionParent;
     public GameObject enemyPrefab;              // 움직이는 객체는 묶어서 사용하지 말 것 
     public Transform aiPatrolPoints;
@@ -65,6 +66,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             GameManager.Singleton.GameEnd?.Invoke(false);
+            InputSystem.Instance.Clear();
         }
     }
 
@@ -77,6 +79,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Game Win");
             GameManager.Singleton.GameEnd?.Invoke(true);
+            InputSystem.Instance.Clear();
         }
     }
 
@@ -84,11 +87,6 @@ public class BattleManager : MonoBehaviour
     private void UpdateGameDataUIs()
     {
         GameDataUI.Instance.UpdateGameData(playerCount, aiCount);
-    }
-
-    public void InstallC4()
-    {
-        GameDataUI.Instance.InitializeTime(c4Time);
     }
     #endregion
 }

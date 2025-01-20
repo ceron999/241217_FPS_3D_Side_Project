@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grenadeUI: {fileID: 7599935781918677914}
+  c4UI: {fileID: 8110332166673847697}
 --- !u!1 &7599935781918677914
 GameObject:
   m_ObjectHideFlags: 0

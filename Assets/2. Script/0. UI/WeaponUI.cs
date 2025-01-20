@@ -14,6 +14,7 @@ public class WeaponUI : UIBase
     }
 
     public GameObject grenadeUI;
+    public GameObject c4UI;
 
     // 3ÃÊ µÚ¿¡ ²¨Áü
     IEnumerator WeaponUIShowCoroutine()
@@ -22,8 +23,13 @@ public class WeaponUI : UIBase
         this.gameObject.SetActive(false);
     }
 
-    public void SetGrenadeUI()
+    public void SetGrenadeUIOff()
     {
         grenadeUI.SetActive(false);
+    }
+
+    public void SetC4UIOff()
+    {
+        c4UI.SetActive(false);
     }
 }

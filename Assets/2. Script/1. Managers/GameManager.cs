@@ -19,6 +19,7 @@ public class GameManager : SingletonBase<GameManager>
     public static StartData StartData;     // 시작 화면에서 게임 시작 버튼을 늘렀을 떄 사용
     public List<string> playerNames;
 
+    private bool isGameEnd = false;
     public System.Action GameStart;
     public System.Action<bool> GameEnd;
 
@@ -54,15 +55,18 @@ public class GameManager : SingletonBase<GameManager>
     {
         SituationBoardUI.Instance.InitiateSituationBoardUI(playerNames, StartData.startAICount);
         Time.timeScale = 1f;
+        isGameEnd = false;
     }
 
     private void EndGame(bool isWin)
     {
-        StartCoroutine(EndGameCoroutine(isWin));
+        if(!isGameEnd)
+            StartCoroutine(EndGameCoroutine(isWin));
     }
 
     private IEnumerator EndGameCoroutine(bool isWin)
     {
+        isGameEnd = true;
         yield return new WaitForSeconds(3f);
 
         // 일시정지

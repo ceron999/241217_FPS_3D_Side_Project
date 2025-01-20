@@ -54,6 +54,9 @@ public class CharacterController_AI : MonoBehaviour
     private float battleRadius = 7f;            // 전투 변경 탐지 범위
     private float existRadius = 3f;             // 존재 탐지 범위
 
+    // 해체 변수
+    public bool isFocus = false;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -101,14 +104,14 @@ public class CharacterController_AI : MonoBehaviour
                     return;
                 }
 
-                // 탐지 목표 갱신
+                // 탐지 목표 갱신(꾸준히)
                 IsListenSound();
 
                 // 적을 발견했을 경우 -> Battle
                 if (IsDetectingPlayer())
                     ChangeState(AIState.Battle);
 
-                // 적이 안보이면 그냥 Search
+                // 적이 안보이고 폭발물 설치가 되어있지 않다면 그냥 Search
                 if (IsNotExistPlayer() && !BattleManager.Instance.isC4Install)
                     ChangeState(AIState.Search);
                 break;
@@ -219,7 +222,7 @@ public class CharacterController_AI : MonoBehaviour
     {
         if(BattleManager.Instance.isC4Install)
         {
-            c4InstallPosition = GameObject.Find("C4InstallPosition").transform;
+            c4InstallPosition = BattleManager.Instance.c4InstallPosition;
             listenPosition = c4InstallPosition.position;
             return true;
         }
@@ -393,6 +396,60 @@ public class CharacterController_AI : MonoBehaviour
                 linkedAIBase.Shoot(false);
             }
         }
+    }
+    #endregion
+
+    #region TakeWarning State 함수
+    public  bool IsFindC4()
+    {
+        if (Vector3.Distance(c4InstallPosition.position, this.transform.position) > 1f)
+            return false;
+        else
+            return true;
+    }
+
+    // C4 해체 함수
+    public void UninstallC4()
+    {
+        if(!isFocus)
+        {
+            isFocus = true;
+            StartCoroutine(UninstallC4Coroutine());
+        }
+    }
+
+    private IEnumerator UninstallC4Coroutine()
+    {
+        Debug.Log("C4 해체 시작!");
+        float nowTime = 0f;
+        float uninstallTime = 8f;
+
+        while(isFocus && nowTime < uninstallTime)
+        {
+            Debug.Log("C4 해체 중!");
+            if (!isFocus)
+            {
+                nowTime = 0;
+                break;
+            }
+            nowTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        // 성공했을 경우
+        if(nowTime >= uninstallTime)
+        {
+            Debug.Log("C4 해체 끝!");
+            GameManager.Singleton.GameEnd?.Invoke(false);
+        }
+    }
+
+    public void CancelUninstallC4()
+    {
+        Debug.Log("C4 해체 중단!");
+        isFocus = false;
+        listenPosition = c4InstallPosition.position;
     }
     #endregion
 

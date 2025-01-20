@@ -141,4 +141,23 @@ public class InputSystem : MonoBehaviour
             OnClickTabUp?.Invoke();
         }
     }
+
+    public void Clear()
+    {
+        // 조작 액션
+        OnClickAlpha1 = null;                 
+        OnClickAlpha2 = null;
+        OnClickAlpha3 = null;
+        OnClickAlpha4 = null;
+        OnClickAlpha5 = null;
+
+        OnClickR = null;
+
+        OnClickAlpha3 = null;
+
+        OnClickLeftMouseButtonDown = null;
+        OnClickLeftMouseButtonUp = null;
+        OnClickRightMouseButtonDown = null;
+
+    }
 }

@@ -36,6 +36,8 @@ public class GameDataUI : UIBase
     public void InitializeTime(float nowTime)
     {
         getTime = nowTime;
+
+        Debug.Log(getTime);
         int minute = (int)nowTime / 60;
         int second = (int)nowTime % 60;
 

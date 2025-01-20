@@ -199,15 +199,19 @@ public class CharacterController : MonoBehaviour
             isThrowMode = false;
             isThrowEnd = true;
 
-            WeaponUI.Instance.SetGrenadeUI();
+            WeaponUI.Instance.SetGrenadeUIOff();
+            InputSystem.Instance.OnClickAlpha4 = null;
         }
     }
 
     public void CommandInstallC4()
     {
         // 설치 장소에서 멀지 않다면 실행
-        if(Vector3.Distance(installPosition.position, this.transform.position) > installRadius)
+        if (Vector3.Distance(installPosition.position, this.transform.position) < installRadius)
+        {
+            BattleManager.Instance.c4InstallPosition = installPosition;
             player.nowWeapon.Activate();
+        }
     }
 
     // 무기 변환
