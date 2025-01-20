@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class Gun : WeaponBase
 {
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * 100f);
+    }
+
     public Projectile bulletPrefab;
     public Transform firePoint;
 

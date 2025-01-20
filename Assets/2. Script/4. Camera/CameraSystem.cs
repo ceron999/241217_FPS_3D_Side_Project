@@ -8,6 +8,12 @@ public class CameraSystem : MonoBehaviour
 {
     public static CameraSystem Instance;
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(Camera.main.transform.position, AimingPoint);
+    }
+
     public Cinemachine.CinemachineVirtualCamera tpsCamera;
 
     public Transform follow;
