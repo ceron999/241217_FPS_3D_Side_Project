@@ -19,7 +19,7 @@ public class GameManager : SingletonBase<GameManager>
     public static StartData StartData;     // 시작 화면에서 게임 시작 버튼을 늘렀을 떄 사용
     public List<string> playerNames;
 
-    private bool isGameEnd = false;
+    public bool isGameEnd = false;
     public System.Action GameStart;
     public System.Action<bool> GameEnd;
 

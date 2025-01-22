@@ -55,9 +55,8 @@ public class CharacterController : MonoBehaviour
         // 스위칭
         InputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
         InputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
-        InputSystem.Instance.OnClickAlpha3 += CommandSwitchKnife;               // 칼 변환
-        InputSystem.Instance.OnClickAlpha4 += CommandSwitchGrenade;             // 수류탄 변환
-        InputSystem.Instance.OnClickAlpha5 += CommandSwitchC4;                  // C4 변환
+        InputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
+        InputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
 
         InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
         InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
@@ -147,12 +146,6 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    // 칼
-    void CommandAttackStart()
-    {
-        // 아직 애니메이션 없어서 나중에 구현
-    }
-
     // 수류탄
 
     /// <summary>
@@ -182,9 +175,19 @@ public class CharacterController : MonoBehaviour
         GameObject throwObject = Instantiate(throwObjectPrefab, throwStartPivot);
         if(throwObject.TryGetComponent<Grenade>(out Grenade grenadeComponent))
         {
+            // 투척 시작 지점, 투척 힘 지정 
             grenadeComponent.throwStartPivot = throwStartPivot;
             grenadeComponent.throwPower = throwPower;
+
+            // 투척 방향 지정
+            Vector3 throwDirection = player.aimingPointTransform.position - throwStartPivot.position;
+            throwDirection.y = 0;
+            grenadeComponent.throwVector = throwDirection.normalized + Vector3.up;
+            grenadeComponent.throwPower = throwPower;
             grenadeComponent.Activate();
+
+            WeaponUI.Instance.SetGrenadeUIOff();
+            InputSystem.Instance.OnClickAlpha3 = null;
         }
     }
 
@@ -198,9 +201,6 @@ public class CharacterController : MonoBehaviour
             player.ThrowEnd();
             isThrowMode = false;
             isThrowEnd = true;
-
-            WeaponUI.Instance.SetGrenadeUIOff();
-            InputSystem.Instance.OnClickAlpha4 = null;
         }
     }
 
@@ -239,19 +239,6 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
         InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchPistol();
-
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
-    }
-
-    public void CommandSwitchKnife()
-    {
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        InputSystem.Instance.OnClickLeftMouseButton = null;
-        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandAttackStart;
-        player.SwitchKnife();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);
     }

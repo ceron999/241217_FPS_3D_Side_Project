@@ -17,7 +17,6 @@ using UnityEngine.Windows;
 ///     -> C4를 발견하면 해당 지점으로 이동하여 해체
 /// 3. Battle: AI가 적을 발견하고 공격
 /// 4. Die: AI의 체력이 0이 되어 행동이 불가능한 상태
-/// 5. Win: Player가 모두 처치되어 잡을 적이 없는 상태
 /// </summary>
 
 public enum AIState
@@ -47,6 +46,7 @@ public class CharacterController_AI : MonoBehaviour
     public Transform patrolPointParent;
     public List<Transform> patrolPointList;
     public int pointOffset = 0;                // 이동할 포인트를 지정해주는 offset
+    public float stoppingDistance;
 
     // 탐지 변수
     public LayerMask characterMask;
@@ -73,6 +73,7 @@ public class CharacterController_AI : MonoBehaviour
 
         navMeshAgent.updatePosition = false;
         navMeshAgent.speed = linkedAIBase.moveSpeed;
+        navMeshAgent.stoppingDistance = stoppingDistance;
     }
 
     private void Update()
@@ -251,7 +252,7 @@ public class CharacterController_AI : MonoBehaviour
     public bool IsNotExistPlayer()
     {
         // 탐지 목표 거리까 지 도착했는지 확인
-        if (navMeshAgent.remainingDistance > 0.1f)
+        if (navMeshAgent.remainingDistance > stoppingDistance)
             return false;
         
         // 플레이어 탐지
@@ -311,7 +312,7 @@ public class CharacterController_AI : MonoBehaviour
 
     public bool IsArrivedDestination()
     {
-        if (navMeshAgent.remainingDistance < 0.1f)
+        if (navMeshAgent.remainingDistance < stoppingDistance)
         {
             UpdatePointOffset();
             return true;

@@ -8,7 +8,7 @@ public class Grenade : WeaponBase
 
     Rigidbody rigid;
     public Vector3 throwVector = Vector3.zero;
-    public float throwPower = 7;
+    public float throwPower;
 
     // Æø¹ß °ü·Ã º¯¼ö
     public LayerMask targetLayerMask;
@@ -34,8 +34,8 @@ public class Grenade : WeaponBase
         clipSize--;
 
         // ÅõÃ´ º¤ÅÍ ¼³Á¤
-        throwVector = (throwStartPivot.transform.forward + throwStartPivot.transform.up) * throwPower;
-        rigid.AddForce(throwVector, ForceMode.Impulse);
+        Debug.Log(throwVector * throwPower);
+        rigid.AddForce(throwVector * throwPower, ForceMode.Impulse);
         Boom();
         return true;
     }

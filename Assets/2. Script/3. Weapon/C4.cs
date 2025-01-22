@@ -60,6 +60,9 @@ public class C4 : WeaponBase
 
             // 현재 객체 끄기
             this.gameObject.SetActive(false);
+
+            // 주 무기로 변경
+            InputSystem.Instance.OnClickAlpha1?.Invoke();
         }
     }
 }

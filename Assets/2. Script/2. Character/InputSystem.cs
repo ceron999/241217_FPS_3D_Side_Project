@@ -96,6 +96,10 @@ public class InputSystem : MonoBehaviour
             float lookY = Input.GetAxis("Mouse Y");
             look = isShowCursor ? Vector2.zero : new Vector2(lookX, lookY * (-1f));
         }
+        else
+        {
+            look = Vector2.zero;
+        }
 
         // มกวม
         if (Input.GetKeyDown(KeyCode.Space))

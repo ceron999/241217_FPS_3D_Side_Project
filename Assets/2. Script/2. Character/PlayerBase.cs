@@ -46,6 +46,9 @@ public class PlayerBase : CharacterBase
         characterAnimator.SetFloat("RunningBlend", runningBlend);
         characterAnimator.SetFloat("CrouchBlend", crouchBlend);
 
+        // 캐릭터 무기 애니메이션 설정
+
+
         // 4. 소리 설정
         audioSource.volume = IsCrouch ? 0f : 1f;
     }
@@ -60,7 +63,7 @@ public class PlayerBase : CharacterBase
         /// 사격할 경우 총알이 불규칙하게 다른 방향으로 튀는 문제가 있었음.
         /// 해당 문제는 이 코드가 update에서 lateUpdate로 이동하니까 문제 해결
         /// 해당 문제는 Animation에서 뭔가 위치가 바뀌면서 총알도 그리 나간 것으로 보임
-        if (isShooting)
+        if (isShooting && !GameManager.Singleton.isGameEnd)
         {
             bool isFireSuccess = nowWeapon.Activate();
             if (false == isFireSuccess)
@@ -74,7 +77,6 @@ public class PlayerBase : CharacterBase
                     Reload();
                 }
             }
-            //nowWeapon.Activate();
         }
 
     }
@@ -82,6 +84,7 @@ public class PlayerBase : CharacterBase
     // 무기 스위칭 관련 데이터
     public void SwitchMainWeapon()
     {
+        characterAnimator.SetFloat("RifleBlend", 1);
         aimRig.weight = 1f;
         nowWeapon = weapons[0];
         SetWeaponActive(0);
@@ -89,28 +92,26 @@ public class PlayerBase : CharacterBase
 
     public void SwitchPistol()
     {
+        characterAnimator.SetFloat("RifleBlend", 0);
         aimRig.weight = 1f;
         nowWeapon = weapons[1];
         SetWeaponActive(1);
     }
 
-    public void SwitchKnife()
+    public void SwitchGrenade()
     {
+        // 기본 애니메이션 상태로 진입
+        characterAnimator.SetFloat("RifleBlend", 1);
+        aimRig.weight = 0f;
         nowWeapon = weapons[2];
         SetWeaponActive(2);
     }
 
-    public void SwitchGrenade()
-    {
-        aimRig.weight = 0f;
-        nowWeapon = weapons[3];
-        SetWeaponActive(3);
-    }
-
     public void SwitchC4()
     {
-        nowWeapon = weapons[4];
-        SetWeaponActive(4);
+        characterAnimator.SetFloat("RifleBlend", 1);
+        nowWeapon = weapons[3];
+        SetWeaponActive(3);
     }
 
     void SetWeaponActive(int weaponIndex)
