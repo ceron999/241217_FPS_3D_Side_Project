@@ -8,7 +8,7 @@ public class C4 : WeaponBase
     public float curInstallTime = 0f;
     public float maxInstallTime = 5f;
 
-    public float c4ExplosionTIme = 60.1f;
+    public float c4ExplosionTIme = 60000000.1f;
 
     protected override void Awake()
     {

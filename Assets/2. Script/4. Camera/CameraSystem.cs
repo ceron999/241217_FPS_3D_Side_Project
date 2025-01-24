@@ -15,6 +15,7 @@ public class CameraSystem : MonoBehaviour
     }
 
     public Cinemachine.CinemachineVirtualCamera tpsCamera;
+    public Cinemachine.CinemachineVirtualCamera scopeCamera;
 
     public Transform follow;
     public Transform target;
@@ -53,5 +54,10 @@ public class CameraSystem : MonoBehaviour
     public void SetCameraFollowTarget(Transform cameraPivot)
     {
         tpsCamera.Follow = cameraPivot;
+    }
+
+    public void SetActiveScopeMode(bool isZoom)
+    {
+        scopeCamera.gameObject.SetActive(isZoom);
     }
 }

@@ -50,6 +50,9 @@ public class BattleManager : MonoBehaviour
             GameObject goEnemy = Instantiate(enemyPrefab);
             goEnemy.transform.position = aiSpawnPositionParent.GetChild(i).position;
 
+            goEnemy.GetComponent<CharacterController_AI>().patrolPointParent = aiPatrolPoints;
+            goEnemy.GetComponent<CharacterController_AI>().SetPatrolPointList();
+            goEnemy.GetComponent<CharacterController_AI>().pointOffset = i;
             goEnemy.GetComponent<CharacterBase>().characterIndex = i;
         }
     }

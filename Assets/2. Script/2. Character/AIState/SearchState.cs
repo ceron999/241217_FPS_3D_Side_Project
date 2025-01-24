@@ -28,6 +28,7 @@ public class SearchState : StateBase
         // 남은 거리가 얼마 남지 않았다면 다음 위치로 이동하도록 설정
         if (_aiController.IsArrivedDestination())
         {
+            Debug.Log($"{_aiController.linkedAIBase.characterIndex} 번째 목표지점 : {_aiController.pointOffset}");
             targetPosition = _aiController.patrolPointList[_aiController.pointOffset];
             _aiController.navMeshAgent.SetDestination(targetPosition);
         }

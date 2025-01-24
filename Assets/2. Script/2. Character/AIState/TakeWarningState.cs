@@ -40,7 +40,7 @@ public class TakeWarningState : StateBase
         {
             _aiController.SetMoveDirection();
 
-            _aiController.navMeshAgent.SetDestination(targetPosition);
+            //_aiController.navMeshAgent.SetDestination(targetPosition);
         }
     }
 }

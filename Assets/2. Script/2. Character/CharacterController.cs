@@ -136,13 +136,17 @@ public class CharacterController : MonoBehaviour
         isZoom = !isZoom;
         if (isZoom)
         {
-            CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 20f;
-            ZoomUI.Instance.Show();
+            CameraSystem.Instance.SetActiveScopeMode(true);
+            ScopeVinetteController.Instance.SetActiveVinette(true);
+            //CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 20f;
+            //ZoomUI.Instance.Show();
         }
         else
         {
-            CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 40f;
-            ZoomUI.Instance.Hide();
+            CameraSystem.Instance.SetActiveScopeMode(false);
+            ScopeVinetteController.Instance.SetActiveVinette(false);
+            //CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 40f;
+            //ZoomUI.Instance.Hide();
         }
     }
 
