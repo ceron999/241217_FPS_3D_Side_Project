@@ -29,7 +29,7 @@ public class GameManager : SingletonBase<GameManager>
     public System.Action<int> AIKillAction;
     public System.Action<int> AIDieAction;
 
-    private void Awake()
+    protected override void Awake()
     {
         playerNames = new List<string>();
         // 임시로 플레이어 이름 지정

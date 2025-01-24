@@ -35,21 +35,23 @@ public class CharacterController_AI : MonoBehaviour
     private AIState _curState;
     private FSM _fsm;
 
+    [Header("캐릭터 정보")]
     public AIBase linkedAIBase;
-
     public CharacterBase target;                // 목표 타겟
 
+    [Header("추적 정보")]
     public Vector3 listenPosition;              // 적 소리 들린 위치
-    public Vector3 findPosition;                // 적 소리
 
     public Transform c4InstallPosition;
     public Transform patrolPointParent;
-    public List<Transform> patrolPointList;
+    public List<Vector3> patrolPointList;
     public int pointOffset = 0;                // 이동할 포인트를 지정해주는 offset
     public float stoppingDistance;
 
+
     // 탐지 변수
     public LayerMask characterMask;
+    public LayerMask navMeshMask;
     private float listenRadius = 15f;           // 소리 탐지 범위
     private float battleRadius = 7f;            // 전투 변경 탐지 범위
     private float existRadius = 3f;             // 존재 탐지 범위
@@ -78,7 +80,7 @@ public class CharacterController_AI : MonoBehaviour
 
     private void Update()
     {
-        //navMeshAgent.nextPosition = transform.position;
+        navMeshAgent.nextPosition = transform.position;
         switch (_curState)
         {
             case AIState.Search:
@@ -181,7 +183,28 @@ public class CharacterController_AI : MonoBehaviour
     {
         for(int i =0; i< patrolPointParent.childCount; i++)
         {
-            patrolPointList.Add(patrolPointParent.GetChild(i));
+            patrolPointList.Add(patrolPointParent.GetChild(i).position);
+
+            IsPositionOnNavMesh(i);
+        }
+    }
+
+    private void IsPositionOnNavMesh(int nowIndex)
+    {
+        float randomX = Random.Range(-0.5f, 0.5f);
+        float randomY = Random.Range(-0.5f, 0.5f);
+        Vector3 nowPos = patrolPointList[nowIndex] + new Vector3(randomX, 0, randomY);
+        Vector3 rayStartPos = nowPos + new Vector3(0.3f, 0);
+
+        Ray ray = new Ray(rayStartPos, (rayStartPos - nowPos).normalized);
+        if (!Physics.Raycast(ray, out RaycastHit hitInfo, 3.5f, navMeshMask))
+        {
+            Debug.Log("loop");
+            //IsPositionOnNavMesh(targetPosition);
+        }
+        else
+        {
+            patrolPointList[nowIndex] = nowPos;
         }
     }
 

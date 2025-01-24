@@ -14,7 +14,7 @@ public class Grenade : WeaponBase
     public LayerMask targetLayerMask;
     float bombRadius = 2.5f;
 
-    private void Awake()
+    protected override void Awake()
     {
         rigid = GetComponent<Rigidbody>();
     }
@@ -49,7 +49,7 @@ public class Grenade : WeaponBase
     {
         yield return new WaitForSeconds(4);
         // 1. Æø¹ß ¹Ý°æ °´Ã¼ Å½Áö
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f,
+        Collider[] colliders = Physics.OverlapSphere(transform.position, bombRadius,
                                                     targetLayerMask, QueryTriggerInteraction.Ignore);
 
         // 2. Æø¹ß ÀÌÆåÆ® Àû¿ë

@@ -12,14 +12,14 @@ public class SearchState : StateBase
     public SearchState(CharacterController_AI getData) : base(getData) 
     {
         _aiController.target = null;
-        targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
+        targetPosition = _aiController.patrolPointList[_aiController.pointOffset];
         _aiController.navMeshAgent.SetDestination(targetPosition);
     }
 
     public override void OnStateEnter()
     {
         _aiController.target = null;
-        targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
+        targetPosition = _aiController.patrolPointList[_aiController.pointOffset];
         _aiController.navMeshAgent.SetDestination(targetPosition);
         Debug.Log("Enter Search State");
     }
@@ -28,7 +28,7 @@ public class SearchState : StateBase
         // 남은 거리가 얼마 남지 않았다면 다음 위치로 이동하도록 설정
         if (_aiController.IsArrivedDestination())
         {
-            targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
+            targetPosition = _aiController.patrolPointList[_aiController.pointOffset];
             _aiController.navMeshAgent.SetDestination(targetPosition);
         }
 
@@ -50,7 +50,7 @@ public class SearchState : StateBase
         }
         else
         {
-            targetPosition = _aiController.patrolPointList[_aiController.pointOffset].position;
+            targetPosition = _aiController.patrolPointList[_aiController.pointOffset];
             _aiController.navMeshAgent.SetDestination(targetPosition);
         }
     }

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    public bool IsUsable => IsUsable;
-    private bool isUsable = true;
-
     public float weaponDamage;
 
     protected int maxAmmo;              // 무기의 최대 보유량

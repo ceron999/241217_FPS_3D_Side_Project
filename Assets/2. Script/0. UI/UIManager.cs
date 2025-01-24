@@ -26,7 +26,7 @@ public class UIManager : SingletonBase<UIManager>
     private Dictionary<UIList, UIBase> panels = new Dictionary<UIList, UIBase>();
     private Dictionary<UIList, UIBase> popups = new Dictionary<UIList, UIBase>();
 
-    private void Awake()
+    protected override void Awake()
     {
         Initialize();
     }

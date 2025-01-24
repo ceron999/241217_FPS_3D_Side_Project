@@ -21,8 +21,6 @@ public class BattleManager : MonoBehaviour
     public System.Action UpdateGameDataUI;
 
     private float gameTime  = 180f;
-    private float nowTime = 0f;
-    private float c4Time = 60f;
 
     private void Awake()
     {
@@ -52,7 +50,6 @@ public class BattleManager : MonoBehaviour
             GameObject goEnemy = Instantiate(enemyPrefab);
             goEnemy.transform.position = aiSpawnPositionParent.GetChild(i).position;
 
-            goEnemy.GetComponent<CharacterController_AI>().patrolPointParent = aiPatrolPoints;
             goEnemy.GetComponent<CharacterBase>().characterIndex = i;
         }
     }
