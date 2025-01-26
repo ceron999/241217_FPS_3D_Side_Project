@@ -9,19 +9,22 @@ public class GameEndUI : UIBase
     public static GameEndUI Instance => UIManager.Singleton.GetUI<GameEndUI>(UIList.GameEndUI);
 
     public TextMeshProUGUI gameEndText;
-
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI killCountText;
+    
     public Button retryButton;
     public Button exitButton;
 
     private void Awake()
     {
+        this.transform.localScale = Vector3.one;
         retryButton.onClick.AddListener(OnClickRetryButton);
         exitButton.onClick.AddListener(OnClickExitButton);
     }
 
-    public void SetGameEndText(bool isWin)
+    public void SetGameEndUI(bool isWin)
     {
-        if(isWin)
+        if (isWin)
         {
             gameEndText.text = "Game Win!";
         }
@@ -29,6 +32,9 @@ public class GameEndUI : UIBase
         {
             gameEndText.text = "Game Lose!";
         }
+
+        timerText.text = GameDataUI.Instance.timerText.text;
+        killCountText.text = SituationBoardUI.Instance.GetPlayerKillCount(0).ToString();
     }
 
     public void OnClickRetryButton()

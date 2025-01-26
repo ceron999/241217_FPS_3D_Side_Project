@@ -70,4 +70,9 @@ public class SituationBoardUI : UIBase
                 aiInfoDictionary[dictionaryKey].UpdateDead();
         }
     }
+
+    public int GetPlayerKillCount(int playerIndex)
+    {
+        return playerInfoDictionary[playerIndex].GetKillCount();
+    }
 }

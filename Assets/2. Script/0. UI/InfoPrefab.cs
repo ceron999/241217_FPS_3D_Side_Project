@@ -28,4 +28,9 @@ public class InfoPrefab : MonoBehaviour
     {
         this.GetComponent<Image>().color = new Color(0, 0, 0);
     }
+
+    public int GetKillCount()
+    {
+        return killCount; 
+    }
 }

@@ -78,7 +78,7 @@ public class GameManager : SingletonBase<GameManager>
         Cursor.visible = true;
 
         GameEndUI.Instance.Show();
-        GameEndUI.Instance.SetGameEndText(isWin);
+        GameEndUI.Instance.SetGameEndUI(isWin);
     }
 
     #region 킬/데스 이벤트
