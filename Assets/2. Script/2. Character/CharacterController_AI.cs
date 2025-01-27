@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Windows;
@@ -47,6 +49,7 @@ public class CharacterController_AI : MonoBehaviour
     public List<Vector3> patrolPointList;
     public int pointOffset;                // 이동할 포인트를 지정해주는 offset
     public float stoppingDistance;
+    public Coroutine updateOffset;
 
 
     // 탐지 변수
@@ -73,12 +76,22 @@ public class CharacterController_AI : MonoBehaviour
         navMeshAgent.updatePosition = false;
         navMeshAgent.speed = linkedAIBase.moveSpeed;
         navMeshAgent.stoppingDistance = stoppingDistance;
+        navMeshAgent.SetDestination(patrolPointList[linkedAIBase.characterIndex]);
     }
 
     private void Update()
     {
         //Debug.Log($"{linkedAIBase.characterIndex} 번째 목표지점 : {pointOffset}");
         navMeshAgent.nextPosition = transform.position;
+
+        // 죽었을 경우 -> Die
+        if (linkedAIBase.curStat.HP <= 0)
+        {
+            StopAllCoroutines();
+            ChangeState(AIState.Die);
+            return;
+        }
+
         switch (_curState)
         {
             case AIState.Search:
@@ -89,10 +102,6 @@ public class CharacterController_AI : MonoBehaviour
                 // 소리를 들었을 경우 or C4가 설치되었을 경우 -> takeWarning
                 if(IsListenSound() || IsInstalledC4())
                     ChangeState(AIState.TakeWarning);
-
-                // 죽었을 경우 -> Die
-                if (linkedAIBase.curStat.HP <= 0)
-                    ChangeState(AIState.Die); 
 
                 // 모든 적이 처치되었을 경우 -> Win
                 break;
@@ -118,12 +127,6 @@ public class CharacterController_AI : MonoBehaviour
                 break;
 
             case AIState.Battle:
-                // 죽었을 경우 -> Die
-                if (linkedAIBase.curStat.HP <= 0)
-                {
-                    ChangeState(AIState.Die);
-                    return;
-                }
 
                 // 적이 죽으면 Die
                 if (target.IsDie)
@@ -304,9 +307,6 @@ public class CharacterController_AI : MonoBehaviour
         }
         else
         {
-            //Debug.Log(navMeshAgent.steeringTarget);
-            //해당 방향을 거의 다 바라보았을 때 이동하도록
-            //if((linkedAIBase.transform.forward.normalized - moveDirection).magnitude < 0.1f)
             linkedAIBase.AIMove(input);
         }
     }
@@ -326,16 +326,39 @@ public class CharacterController_AI : MonoBehaviour
     {
         // 이동 경로 자체가 없으면 리턴
         if (patrolPointList.Count == 0)
-            return;
+            return; 
+        
 
         // 마지막 위치까지 이동했다면 처음 위치로 이동
-        if(pointOffset == patrolPointList.Count - 1)
+        if (pointOffset == patrolPointList.Count - 1)
         {
             pointOffset = 0;
             return;
         }
 
+        // 업데이트 
+        if (updateOffset == null)
+        {
+            updateOffset = StartCoroutine(UpdateDestination());
+        }
+    }
+
+    private IEnumerator UpdateDestination()
+    {
         pointOffset++;
+        navMeshAgent.SetDestination(patrolPointList[pointOffset]);
+        yield return new WaitForSeconds(1);
+        updateOffset = null;
+    }
+    #endregion
+
+    #region Search State
+    public void SearchPatrolPoints()
+    {
+        if (navMeshAgent.hasPath)
+        {
+            SetMoveDirection();
+        }
     }
     #endregion
 

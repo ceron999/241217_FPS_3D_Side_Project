@@ -17,7 +17,6 @@ public class GameEndUI : UIBase
 
     private void Awake()
     {
-        this.transform.localScale = Vector3.one;
         retryButton.onClick.AddListener(OnClickRetryButton);
         exitButton.onClick.AddListener(OnClickExitButton);
     }
