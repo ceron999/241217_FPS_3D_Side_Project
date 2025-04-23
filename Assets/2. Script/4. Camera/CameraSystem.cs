@@ -38,11 +38,6 @@ public class CameraSystem : MonoBehaviour
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1f));
         if(Physics.Raycast(ray, out RaycastHit hitInfo, 100f, aimingLayerMask, QueryTriggerInteraction.Ignore))
         {
-            if (Vector3.Distance(this.transform.position, hitInfo.transform.position) < aimingValidDistance)
-            {
-                AimingPoint = ray.GetPoint(100f);
-                return;
-            }
             AimingPoint = hitInfo.point;
         }
         else

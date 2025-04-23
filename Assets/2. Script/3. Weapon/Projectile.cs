@@ -10,8 +10,6 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        //Rigidbody rigid = GetComponent<Rigidbody>();
-        //rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(gameObject, lifeTime); // 본인 GameObject를 LifeTime 이후에 파괴 되도록 명령
     }
 
@@ -30,6 +28,7 @@ public class Projectile : MonoBehaviour
                 {
                     damageMultiple = multiflier.DamageMultiplier;
                 }
+
                 damageInterface.ApplyDamage(bulletDamage * damageMultiple);
                 Destroy(this.gameObject);
             }

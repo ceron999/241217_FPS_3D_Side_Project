@@ -13,15 +13,21 @@ public class CharacterController : MonoBehaviour
     public PlayerBase player;
 
     #region 투사 변수
+    [Header("투사 데이터")]
     public Transform throwStartPivot;
     public GameObject throwObjectPrefab;
     private bool isThrowMode = false;
     private bool isThrowEnd = false;
 
     public float throwPower = 10f;
+
+    [Header("투사 궤적 데이터")]
+    public LineRenderer grenadeLineRenderer;
+    public int linePoint;
     #endregion
 
     #region 카메라 변수
+    [Header("카메라 데이터")]
     public Transform cameraPivot;
     public float bottomClamp = -90f;
     public float topClamp = 90f;
@@ -30,6 +36,7 @@ public class CharacterController : MonoBehaviour
     #endregion
 
     #region C4 설치 변수
+    [Header("C4 데이터")]
     public Transform installPosition;
     public float installRadius = 3f; 
     #endregion
@@ -192,6 +199,17 @@ public class CharacterController : MonoBehaviour
 
             WeaponUI.Instance.SetGrenadeUIOff();
             InputSystem.Instance.OnClickAlpha3 = null;
+        }
+    }
+
+    private void CalculateThrowLine()
+    {
+        grenadeLineRenderer.positionCount = 0;
+        grenadeLineRenderer.positionCount = linePoint;
+
+        for (int i = 0; i< linePoint; i++)
+        {
+
         }
     }
 
