@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 
 public class Gun : WeaponBase
 {
+    // 총알 발사 궤적 확인용
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -18,6 +19,14 @@ public class Gun : WeaponBase
     public float fireRate; // 연사 속도 (시간 값) => ex) 0.1: 0.1초에 1발씩 발사 할 수 있는 값
 
     private float lastFireTime; // 마지막 발사 실제 시간
+
+    #region Bullet Pool
+    public IObjectPool<GameObject> BulletPool;
+
+    int defaultSize;
+    int maxPoolSize;
+
+    #endregion Bullet Pool
 
     protected override void Awake()
     {
@@ -43,4 +52,17 @@ public class Gun : WeaponBase
 
         return true;
     }
+
+
+    private void InitPool()
+    {
+        //BulletPool = new ObjectPool<Projectile>
+        //    (
+        //        createFunc: () => Instantiate(bulletPrefab),
+
+        //    )
+
+    }
+
+
 }

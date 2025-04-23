@@ -12,8 +12,6 @@ public class ProjectilePoolManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this);
-
-        InitPool();
     }
 
     int defaultSIze = 30;
@@ -21,15 +19,7 @@ public class ProjectilePoolManager : MonoBehaviour
     public GameObject smallProjectilePrefab;
     public GameObject largeProjectilePrefab;
 
-    public IObjectPool<GameObject> IProjectilePool;
-
-    public void InitPool()
-    {
-        IProjectilePool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
-        OnDestroyPoolObject, true, defaultSIze, maxPoolSize);
-
-    }
-
+    
     // »ý¼º
     private GameObject CreatePooledItem()
     {
