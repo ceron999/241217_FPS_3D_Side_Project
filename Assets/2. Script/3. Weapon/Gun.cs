@@ -21,10 +21,11 @@ public class Gun : WeaponBase
     private float lastFireTime; // 마지막 발사 실제 시간
 
     #region Bullet Pool
-    public IObjectPool<GameObject> BulletPool;
+    public IObjectPool<Projectile> bulletPool;
 
-    int defaultSize;
-    int maxPoolSize;
+    [Header("풀링 데이터")]
+    [SerializeField] int defaultSize;
+    [SerializeField] int maxPoolSize;
 
     #endregion Bullet Pool
 
@@ -33,15 +34,19 @@ public class Gun : WeaponBase
         fireRate = Mathf.Max(fireRate, 0.1f); // 연사 속도가 0.1보다 작다면, 0.1로 설정
     }
 
+    private void Start()
+    {
+
+        InitPool();
+    }
+
     //총 발사
     public override bool Activate()
     {
         if (currentAmmo <= 0 || Time.time - lastFireTime < fireRate)
             return false;
-        
-        Projectile bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.bulletDamage = weaponDamage;
-        bullet.gameObject.SetActive(true);
+
+        Shoot();
         lastFireTime = Time.time;
         currentAmmo--;
 
@@ -53,16 +58,49 @@ public class Gun : WeaponBase
         return true;
     }
 
-
+    #region Pool Func
     private void InitPool()
     {
-        //BulletPool = new ObjectPool<Projectile>
-        //    (
-        //        createFunc: () => Instantiate(bulletPrefab),
-
-        //    )
+        bulletPool = new ObjectPool<Projectile>
+            (
+                createFunc: CreatePooledItem,
+                actionOnGet: OnTakeFromPool,
+                actionOnRelease: OnReturnedToPool,
+                actionOnDestroy: OnDestroyPoolObject,
+                collectionCheck: true,
+                defaultCapacity: defaultSize,
+                maxSize: maxPoolSize
+            );
 
     }
 
+    Projectile CreatePooledItem()
+    {
+        return Instantiate(bulletPrefab);
+    }
 
+    void OnReturnedToPool(Projectile bullet)
+    {
+        bullet.transform.position = firePoint.position;
+        bullet.gameObject.SetActive(false);
+    }
+    
+    void OnTakeFromPool(Projectile bullet)
+    {
+        bullet.transform.rotation = firePoint.rotation;
+        bullet.gameObject.SetActive(true);
+    }
+
+    void OnDestroyPoolObject(Projectile bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    public void Shoot()
+    {
+        Projectile b = bulletPool.Get();
+        b.transform.position = firePoint.position;
+        b.Init(() => bulletPool.Release(b));  // bullet 내부에서 사용 후 반납
+    }
+    #endregion
 }

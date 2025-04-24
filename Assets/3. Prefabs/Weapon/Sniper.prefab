@@ -211,6 +211,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1604527894874482771, guid: 50f9a8f5fae683145a8a25a673b20540, type: 3}
   firePoint: {fileID: 4242913063157061077}
   fireRate: 2
+  defaultSize: 10
+  maxPoolSize: 40
 --- !u!1 &1645298540226796
 GameObject:
   m_ObjectHideFlags: 0

@@ -123,11 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a9af14e66d3c145b8d50dd302f7167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDamage: 0
+  holdAmmo: 0
   bulletPrefab: {fileID: 7846164642439440378, guid: 973dd08f9a8f5e94a99a61ef8e48245b, type: 3}
   firePoint: {fileID: 2763494746624710515}
   fireRate: 1
-  clipSize: 20
-  currentAmmo: 0
+  defaultSize: 20
+  maxPoolSize: 40
 --- !u!1 &1504444984545858
 GameObject:
   m_ObjectHideFlags: 0
