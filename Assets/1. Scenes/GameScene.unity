@@ -47523,6 +47523,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3515995132226473279, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
+      propertyPath: m_Weight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3674024705713729068, guid: 32709dd13ea87c34ea907e8e66e03b6a, type: 3}
       propertyPath: throwPower
       value: 0
