@@ -20,7 +20,7 @@ public class BattleManager : MonoBehaviour
     public int aiCount;
     public System.Action UpdateGameDataUI;
 
-    private float gameTime  = 180f;
+    private float gameTime  = 999999;
 
     private void Awake()
     {

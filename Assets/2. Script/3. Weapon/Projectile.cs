@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -5,20 +6,46 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public Vector3 firePoint;
     public float bulletDamage;
-    public float lifeTime;
+    
     public float bulletSpeed;
+
+    [Header("pool 복귀 타이밍 조절 데이터")]
+    private DateTime shootingTime;
+    private DateTime returnTime;
+    public float lifeTime;
+
+    [SerializeField] private Rigidbody bulletRb;
 
     public System.Action returnToPoolCallBack;
 
-    private void Start()
+    private void Awake()
     {
-        //Invoke(returnToPoolCallBack?.Invoke(), lifeTime); // 본인 GameObject를 LifeTime 이후에 파괴 되도록 명령
+        bulletRb = GetComponent<Rigidbody>();
+    }
+
+    private void OnEnable()
+    {
+        shootingTime = DateTime.Now;
+        returnTime = shootingTime.AddSeconds(lifeTime);
+
+
+        Vector3 shootDir = (CameraSystem.Instance.AimingPoint - firePoint).normalized;
+        
+        bulletRb.velocity = shootDir * bulletSpeed;
     }
 
     private void Update()
     {
-        transform.position += transform.forward * Time.deltaTime * bulletSpeed;
+        if (returnTime < DateTime.Now)
+            returnToPoolCallBack?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        shootingTime = DateTime.MaxValue;
+        returnTime = DateTime.MaxValue;
     }
 
     public void Init(System.Action onReturn)
@@ -42,6 +69,10 @@ public class Projectile : MonoBehaviour
                 //Destroy(this.gameObject);
                 returnToPoolCallBack?.Invoke();
             }
+        }
+        else if(getCol.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            returnToPoolCallBack?.Invoke();
         }
     }
     

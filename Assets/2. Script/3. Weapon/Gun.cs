@@ -76,7 +76,9 @@ public class Gun : WeaponBase
 
     Projectile CreatePooledItem()
     {
-        return Instantiate(bulletPrefab);
+        Projectile bullet = Instantiate(bulletPrefab);
+        bullet.firePoint = firePoint.position;
+        return bullet;
     }
 
     void OnReturnedToPool(Projectile bullet)

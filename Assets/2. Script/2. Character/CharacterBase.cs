@@ -42,31 +42,31 @@ public class CharacterBase : MonoBehaviour, IDamage
     protected float jumpFoice = 8;
     protected float gravity = -9.8f;
 
-    // 공격 관련 데이터
+    [Header("무기")]
     public Transform weaponHolder;
     public WeaponBase nowWeapon;
     protected bool isShooting = false;
     protected bool isReloading = false;
 
-    // 캐릭터가 보유한 Status
+    [Header("스테이터스")]
     public CharacterStatusData maxStat;
     public CharacterStatusData curStat;
 
-    // 무기 관련 데이터
     public Vector3 AimingPoint 
     { 
         get => aimingPointTransform.position; 
-        set => aimingPointTransform.position = value; 
+        set => aimingPointTransform.position = value;
     }
+    [Header("에임 데이터")]
     public Transform aimingPointTransform;
 
-    // 애니메이션 데이터
+    [Header("애니메이션 데이터")]
     public Animator characterAnimator;
     public UnityEngine.CharacterController unityCharacterController;
     public RigBuilder rigBuilder;
     public Rig aimRig;
 
-    // 음향
+    [Header("음향")]
     public AudioSource audioSource;
 
     private void Awake()
@@ -180,6 +180,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
         //데미지 받음
         curStat.HP -= getDamage;
+        Debug.Log($"curr hp : {curStat.HP}");
         if (curStat.HP <= 0)
         {
             // 사망
