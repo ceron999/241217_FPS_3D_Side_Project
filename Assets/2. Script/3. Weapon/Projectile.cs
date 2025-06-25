@@ -25,15 +25,10 @@ public class Projectile : MonoBehaviour
         bulletRb = GetComponent<Rigidbody>();
     }
 
+
     private void OnEnable()
     {
-        shootingTime = DateTime.Now;
-        returnTime = shootingTime.AddSeconds(lifeTime);
-
-
-        Vector3 shootDir = (CameraSystem.Instance.AimingPoint - firePoint).normalized;
-        
-        bulletRb.velocity = shootDir * bulletSpeed;
+        StartCoroutine(InitializeDelayShootDirection());
     }
 
     private void Update()
@@ -76,4 +71,18 @@ public class Projectile : MonoBehaviour
         }
     }
     
+    private IEnumerator InitializeDelayShootDirection()
+    {
+
+        while(firePoint == Vector3.zero)
+            yield return null;
+
+        shootingTime = DateTime.Now;
+        returnTime = shootingTime.AddSeconds(lifeTime);
+
+        Debug.Log(firePoint);
+        Vector3 shootDir = (CameraSystem.Instance.AimingPoint - firePoint).normalized;
+
+        bulletRb.velocity = shootDir * bulletSpeed;
+    }
 }

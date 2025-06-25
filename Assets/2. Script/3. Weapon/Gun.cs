@@ -78,6 +78,7 @@ public class Gun : WeaponBase
     {
         Projectile bullet = Instantiate(bulletPrefab);
         bullet.firePoint = firePoint.position;
+        
         return bullet;
     }
 
