@@ -80,7 +80,6 @@ public class Projectile : MonoBehaviour
         shootingTime = DateTime.Now;
         returnTime = shootingTime.AddSeconds(lifeTime);
 
-        Debug.Log(firePoint);
         Vector3 shootDir = (CameraSystem.Instance.AimingPoint - firePoint).normalized;
 
         bulletRb.velocity = shootDir * bulletSpeed;
