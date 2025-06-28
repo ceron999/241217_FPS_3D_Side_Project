@@ -1,3 +1,4 @@
+using Character.InputSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,23 +51,32 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        OldInputSystem.Instance.OnClickSpace += CommandJump;                       // 점프
-        OldInputSystem.Instance.OnClickR += CommandReload;                         // 재장전
+        #region Old Input System
+        //OldInputSystem.Instance.OnClickSpace += CommandJump;                       // 점프
+        //OldInputSystem.Instance.OnClickR += CommandReload;                         // 재장전
 
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
+        //OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
+        //OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
 
-        if(GameManager.StartData.startMainWeaponType == MainWeaponType.Sniper)
-            OldInputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
+        //if(GameManager.StartData.startMainWeaponType == MainWeaponType.Sniper)
+        //    OldInputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
 
-        // 스위칭
-        OldInputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
-        OldInputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
-        OldInputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
-        OldInputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
+        //// 스위칭
+        //OldInputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
+        //OldInputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
+        //OldInputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
+        //OldInputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
 
-        OldInputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
-        OldInputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
+        //OldInputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
+        //OldInputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
+        #endregion
+
+        InputSystem.Instance.OnFireStart += CommandFireStart;
+        InputSystem.Instance.OnFireEnd += CommandFireStop;
+        InputSystem.Instance.OnAimPressed += CommandZoomIn;
+        //InputSystem.Instance.OnAimHeld += CommandFireStart;
+
+        InputSystem.Instance.OnReload += CommandReload;
 
         CameraSystem.Instance.SetCameraFollowTarget(cameraPivot);
     }
@@ -75,15 +85,15 @@ public class CharacterController : MonoBehaviour
     {
         if(!player.IsDie)
         {
-            player.SetRunning(OldInputSystem.Instance.IsRun);
+            player.SetRunning(InputSystem.Instance.IsRun);
             if (Input.GetKey(KeyCode.LeftShift))
                 player.aimRig.weight = 0f;
             else if (Input.GetKeyUp(KeyCode.LeftShift))
                 player.aimRig.weight = 1f;
-            player.SetCrouch(OldInputSystem.Instance.IsCrouch);
-            player.Move(OldInputSystem.Instance.Movement);
+            player.SetCrouch(InputSystem.Instance.IsCrouch);
+            player.Move(InputSystem.Instance.Movement);
 
-            player.Rotate(OldInputSystem.Instance.Look.x);
+            player.Rotate(InputSystem.Instance.Look.x);
             player.AimingPoint = CameraSystem.Instance.AimingPoint;
         }
     }
@@ -95,10 +105,10 @@ public class CharacterController : MonoBehaviour
 
     private void CameraRotation()
     {
-        if (OldInputSystem.Instance.Look.magnitude > 0f)
+        if (InputSystem.Instance.Look.magnitude > 0f)
         {
-            float yaw = OldInputSystem.Instance.Look.x;
-            float pitch = OldInputSystem.Instance.Look.y;
+            float yaw = InputSystem.Instance.Look.x;
+            float pitch = InputSystem.Instance.Look.y;
 
             targetYaw += yaw;
             targetpitch += pitch;

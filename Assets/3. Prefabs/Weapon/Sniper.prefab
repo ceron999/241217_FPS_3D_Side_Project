@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67cbd961d4e4ca845967808b942050cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponData: {fileID: 11400000, guid: 2432e834eda6f2243b0e22193371e6b0, type: 2}
   weaponDamage: 0
   holdAmmo: 0
   bulletPrefab: {fileID: 1604527894874482771, guid: 50f9a8f5fae683145a8a25a673b20540, type: 3}

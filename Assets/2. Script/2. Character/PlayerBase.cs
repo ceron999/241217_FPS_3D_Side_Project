@@ -23,7 +23,7 @@ public class PlayerBase : CharacterBase
         }
         
         nowWeapon = weapons[0];
-        BulletUI.Instance.InitializeBulletUI(nowWeapon);
+        nowWeapon.Initialize();
     }
 
     private void Update()

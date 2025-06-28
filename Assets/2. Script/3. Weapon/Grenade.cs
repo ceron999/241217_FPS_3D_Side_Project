@@ -19,16 +19,6 @@ public class Grenade : WeaponBase
         rigid = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        maxAmmo = 0;
-        holdAmmo = 0;
-        clipSize = 1;
-        currentAmmo = clipSize;
-
-        weaponDamage = 120;
-    }
-
     public override bool Activate()
     {
         clipSize--;

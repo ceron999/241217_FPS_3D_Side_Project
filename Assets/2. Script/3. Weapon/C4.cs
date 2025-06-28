@@ -10,11 +10,6 @@ public class C4 : WeaponBase
 
     public float c4ExplosionTIme = 60000000.1f;
 
-    protected override void Awake()
-    {
-        weaponDamage = 10000;
-    }
-
     public override bool Activate()
     {
         Debug.Log("C4 설치 시작!");

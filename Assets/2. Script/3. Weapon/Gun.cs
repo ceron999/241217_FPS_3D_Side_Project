@@ -43,17 +43,15 @@ public class Gun : WeaponBase
     //ÃÑ ¹ß»ç
     public override bool Activate()
     {
-        if (currentAmmo <= 0 || Time.time - lastFireTime < fireRate)
+        if (remainAmmo <= 0 || Time.time - lastFireTime < fireRate)
             return false;
 
         Shoot();
         lastFireTime = Time.time;
-        currentAmmo--;
+        remainAmmo--;
 
         // Muzzle effect Ãâ·Â
         EffectManager.Instance.CreateEffect(EffectType.MuzzleFlash1, firePoint.position, firePoint.rotation);
-
-        BulletUI.Instance.UpdateAmmoCount(currentAmmo, holdAmmo);
 
         return true;
     }

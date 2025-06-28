@@ -96,5 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1b55060b2354d4ba5f11a7bef6d2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 0
-  clipSize: 0
+  _weaponData: {fileID: 11400000, guid: 09924748d3fc38d4bb5b35afc9d94162, type: 2}
+  weaponDamage: 0
+  holdAmmo: 0
+  installPosition: {fileID: 0}
+  curInstallTime: 0
+  maxInstallTime: 5
+  c4ExplosionTIme: 60000000

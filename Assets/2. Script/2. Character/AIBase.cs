@@ -65,7 +65,7 @@ public class AIBase : CharacterBase
 
         if (IsDie)
         { 
-            GameManager.Singleton.AIDieAction?.Invoke(characterIndex);
+            //GameManager.Singleton.AIDieAction?.Invoke(characterIndex);
         }
     }
 }

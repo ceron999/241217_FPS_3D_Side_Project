@@ -288,8 +288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05409b4d1b737974a8421ebf1451ee19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 0
-  clipSize: 0
+  _weaponData: {fileID: 11400000, guid: 4d4f3fbd70d5ca246a263fbbc0b15c87, type: 2}
+  weaponDamage: 0
+  holdAmmo: 0
   throwStartPivot: {fileID: 0}
   throwVector: {x: 0, y: 0, z: 0}
   throwPower: 10

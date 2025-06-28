@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Knife : WeaponBase
 {
-    protected override void Awake()
-    {
-        weaponDamage = 40;
-    }
     public override bool Activate()
     {
         return true;

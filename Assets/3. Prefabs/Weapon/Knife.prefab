@@ -119,3 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9334f579e14b7be4f96a35d002539482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponData: {fileID: 11400000, guid: f4079d49eeb574d4fb67ab3d08d235a3, type: 2}
+  weaponDamage: 0
+  holdAmmo: 0
