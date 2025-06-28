@@ -50,23 +50,23 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        InputSystem.Instance.OnClickSpace += CommandJump;                       // 점프
-        InputSystem.Instance.OnClickR += CommandReload;                         // 재장전
+        OldInputSystem.Instance.OnClickSpace += CommandJump;                       // 점프
+        OldInputSystem.Instance.OnClickR += CommandReload;                         // 재장전
 
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
-        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
 
         if(GameManager.StartData.startMainWeaponType == MainWeaponType.Sniper)
-            InputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
+            OldInputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
 
         // 스위칭
-        InputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
-        InputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
-        InputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
-        InputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
+        OldInputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
+        OldInputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
+        OldInputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
+        OldInputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
 
-        InputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
-        InputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
+        OldInputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
+        OldInputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
 
         CameraSystem.Instance.SetCameraFollowTarget(cameraPivot);
     }
@@ -75,15 +75,15 @@ public class CharacterController : MonoBehaviour
     {
         if(!player.IsDie)
         {
-            player.SetRunning(InputSystem.Instance.IsRun);
+            player.SetRunning(OldInputSystem.Instance.IsRun);
             if (Input.GetKey(KeyCode.LeftShift))
                 player.aimRig.weight = 0f;
             else if (Input.GetKeyUp(KeyCode.LeftShift))
                 player.aimRig.weight = 1f;
-            player.SetCrouch(InputSystem.Instance.IsCrouch);
-            player.Move(InputSystem.Instance.Movement);
+            player.SetCrouch(OldInputSystem.Instance.IsCrouch);
+            player.Move(OldInputSystem.Instance.Movement);
 
-            player.Rotate(InputSystem.Instance.Look.x);
+            player.Rotate(OldInputSystem.Instance.Look.x);
             player.AimingPoint = CameraSystem.Instance.AimingPoint;
         }
     }
@@ -95,10 +95,10 @@ public class CharacterController : MonoBehaviour
 
     private void CameraRotation()
     {
-        if (InputSystem.Instance.Look.magnitude > 0f)
+        if (OldInputSystem.Instance.Look.magnitude > 0f)
         {
-            float yaw = InputSystem.Instance.Look.x;
-            float pitch = InputSystem.Instance.Look.y;
+            float yaw = OldInputSystem.Instance.Look.x;
+            float pitch = OldInputSystem.Instance.Look.y;
 
             targetYaw += yaw;
             targetpitch += pitch;
@@ -198,7 +198,7 @@ public class CharacterController : MonoBehaviour
             grenadeComponent.Activate();
 
             WeaponUI.Instance.SetGrenadeUIOff();
-            InputSystem.Instance.OnClickAlpha3 = null;
+            OldInputSystem.Instance.OnClickAlpha3 = null;
         }
     }
 
@@ -241,11 +241,11 @@ public class CharacterController : MonoBehaviour
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
-        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        InputSystem.Instance.OnClickLeftMouseButton = null;
-        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
-        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        OldInputSystem.Instance.OnClickLeftMouseButton = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchMainWeapon();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);
@@ -255,11 +255,11 @@ public class CharacterController : MonoBehaviour
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
-        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        InputSystem.Instance.OnClickLeftMouseButton = null;
-        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
-        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        OldInputSystem.Instance.OnClickLeftMouseButton = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
         player.SwitchPistol();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);
@@ -273,11 +273,11 @@ public class CharacterController : MonoBehaviour
 
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
-        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        InputSystem.Instance.OnClickLeftMouseButton = null;
-        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
-        InputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        OldInputSystem.Instance.OnClickLeftMouseButton = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
         player.SwitchGrenade();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);
@@ -287,10 +287,10 @@ public class CharacterController : MonoBehaviour
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);
 
-        InputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        InputSystem.Instance.OnClickLeftMouseButton = null;
-        InputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        InputSystem.Instance.OnClickLeftMouseButtonDown += CommandInstallC4;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
+        OldInputSystem.Instance.OnClickLeftMouseButton = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
+        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandInstallC4;
         player.SwitchC4();
 
         BulletUI.Instance.ChangeWeapon(player.nowWeapon);

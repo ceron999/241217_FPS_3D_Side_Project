@@ -52,7 +52,7 @@ public class C4 : WeaponBase
 
             // WeaponUI에 C4 끄기
             WeaponUI.Instance.SetC4UIOff();
-            InputSystem.Instance.OnClickAlpha5 = null;
+            OldInputSystem.Instance.OnClickAlpha5 = null;
 
             // C4 객체 생성해서 지정 위치에 놓기
             GameObject go = Instantiate(this.gameObject);
@@ -62,7 +62,7 @@ public class C4 : WeaponBase
             this.gameObject.SetActive(false);
 
             // 주 무기로 변경
-            InputSystem.Instance.OnClickAlpha1?.Invoke();
+            OldInputSystem.Instance.OnClickAlpha1?.Invoke();
         }
     }
 }

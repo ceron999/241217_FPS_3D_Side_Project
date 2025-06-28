@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             GameManager.Singleton.GameEnd?.Invoke(false);
-            InputSystem.Instance.Clear();
+            OldInputSystem.Instance.Clear();
         }
     }
 
@@ -79,7 +79,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Game Win");
             GameManager.Singleton.GameEnd?.Invoke(true);
-            InputSystem.Instance.Clear();
+            OldInputSystem.Instance.Clear();
         }
     }
 

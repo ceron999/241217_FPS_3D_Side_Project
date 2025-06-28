@@ -73,7 +73,7 @@ public class GameManager : SingletonBase<GameManager>
         Time.timeScale = 0f;
 
         // 커서 활성화
-        InputSystem.Instance.isStopCameraMove = true;
+        OldInputSystem.Instance.isStopCameraMove = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
