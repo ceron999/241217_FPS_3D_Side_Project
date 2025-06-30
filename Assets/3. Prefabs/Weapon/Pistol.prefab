@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 64663616809961444}
   - component: {fileID: 2293566365603142601}
   - component: {fileID: 8399713364762830543}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb9bda2ea0ce34c8b53f26f620a02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPickedUp: 0
   slotIndex: 0
   slotWeapon: {fileID: 8399713364762830543}
   animVariables:

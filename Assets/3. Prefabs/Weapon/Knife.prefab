@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 64000497879591178}
   - component: {fileID: 5994145725091148036}
   - component: {fileID: 3729444982387794350}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb9bda2ea0ce34c8b53f26f620a02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPickedUp: 0
   slotIndex: 0
   slotWeapon: {fileID: 3729444982387794350}
   animVariables:

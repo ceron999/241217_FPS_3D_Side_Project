@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 4620559907945696227}
   - component: {fileID: 4976801042078984012}
   - component: {fileID: 3615237120830634577}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb9bda2ea0ce34c8b53f26f620a02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPickedUp: 0
   slotIndex: 0
   slotWeapon: {fileID: 4976801042078984012}
   animVariables:

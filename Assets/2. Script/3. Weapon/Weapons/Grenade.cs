@@ -19,10 +19,6 @@ public class Grenade : WeaponBase
         base.Awake();
         rigid = GetComponent<Rigidbody>();
     }
-    private void Update()
-    {
-        Debug.Log(rigid.velocity);
-    }
 
     public override bool Activate()
     {

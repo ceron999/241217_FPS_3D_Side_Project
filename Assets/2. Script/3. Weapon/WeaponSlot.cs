@@ -6,6 +6,8 @@ namespace Weapon
 {
     public class WeaponSlot : MonoBehaviour
     {
+        public bool isPickedUp = false;
+
         [Header("ΩΩ∑‘ µ•¿Ã≈Õ")]
         [SerializeField] int slotIndex;
         public WeaponBase slotWeapon;
@@ -43,6 +45,14 @@ namespace Weapon
         public virtual AnimVariables GetAnimVariables()
         {
             return animVariables;
+        }
+
+        public void CheckWeapon()
+        {
+            if (isPickedUp)
+                return;
+
+            Debug.Log(slotWeapon.name);
         }
     }
 }

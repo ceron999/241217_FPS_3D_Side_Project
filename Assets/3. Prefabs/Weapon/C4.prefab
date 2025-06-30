@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23749523217505848}
   - component: {fileID: 5959375455167063054}
   - component: {fileID: 868542047201290545}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: C4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcb9bda2ea0ce34c8b53f26f620a02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPickedUp: 0
   slotIndex: 0
   slotWeapon: {fileID: 868542047201290545}
   animVariables:
