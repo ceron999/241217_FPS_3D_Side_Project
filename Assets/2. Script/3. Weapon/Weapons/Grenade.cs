@@ -16,7 +16,12 @@ public class Grenade : WeaponBase
 
     protected override void Awake()
     {
+        base.Awake();
         rigid = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        Debug.Log(rigid.velocity);
     }
 
     public override bool Activate()
@@ -24,8 +29,7 @@ public class Grenade : WeaponBase
         clipSize--;
 
         // ≈ı√¥ ∫§≈Õ º≥¡§
-        Debug.Log(throwVector * throwPower);
-        rigid.AddForce(throwVector * throwPower, ForceMode.Impulse);
+        rigid.velocity = throwVector * throwPower;
         Boom();
         return true;
     }

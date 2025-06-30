@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.TextCore.Text;
 
 /// <summary>
@@ -25,6 +26,8 @@ public class CharacterController : MonoBehaviour
     [Header("투사 궤적 데이터")]
     public LineRenderer grenadeLineRenderer;
     public int linePoint;
+    [SerializeField] private Vector3 throwDirection;
+    [SerializeField] private Vector3 initialVelocity;
     #endregion
 
     #region 카메라 변수
@@ -76,6 +79,13 @@ public class CharacterController : MonoBehaviour
 
             player.Rotate(InputSystem.Instance.Look.x);
             player.AimingPoint = CameraSystem.Instance.AimingPoint;
+        }
+
+        if (isThrowMode)
+        {
+            throwDirection = (player.aimingPointTransform.position - throwStartPivot.position).normalized;
+            throwDirection.y += 1.0f; // 약간 위쪽으로 던지는 각도 추가
+            ShowTrajectory(throwStartPivot.position, throwDirection * throwPower);
         }
     }
 
@@ -158,6 +168,8 @@ public class CharacterController : MonoBehaviour
 
         if (!isThrowMode)
         {
+            grenadeLineRenderer.gameObject.SetActive(true);
+
             player.aimRig.weight = 0;
             isThrowMode = true;
             player.ThrowStart();
@@ -170,34 +182,39 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public void ThrowPrefab()
     {
-        GameObject throwObject = Instantiate(throwObjectPrefab, throwStartPivot);
-        if(throwObject.TryGetComponent<Grenade>(out Grenade grenadeComponent))
-        {
-            // 투척 시작 지점, 투척 힘 지정 
-            grenadeComponent.throwStartPivot = throwStartPivot;
-            grenadeComponent.throwPower = throwPower;
+        Grenade throwObject = Instantiate(throwObjectPrefab).GetComponent<Grenade>();
 
-            // 투척 방향 지정
-            Vector3 throwDirection = player.aimingPointTransform.position - throwStartPivot.position;
-            throwDirection.y = 0;
-            grenadeComponent.throwVector = throwDirection.normalized + Vector3.up;
-            grenadeComponent.throwPower = throwPower;
-            grenadeComponent.Activate();
+        throwObject.transform.position = throwStartPivot.position;
+        throwObject.throwStartPivot = throwStartPivot;
+        throwObject.throwPower = throwPower;
+        throwObject.throwVector = throwDirection;
 
-            //WeaponUI.Instance.SetGrenadeUIOff();
-            //OldInputSystem.Instance.OnClickAlpha3 = null;
-        }
+        throwObject.Activate();
     }
 
-    private void CalculateThrowLine()
+    /// <summary>
+    /// 수류탄 궤적 표시
+    /// </summary>
+    /// <param name="startPosition">투척 시작 위치</param>
+    /// <param name="initialVelocity">초기 속도 (방향 * 힘)</param>
+    private void ShowTrajectory(Vector3 startPosition, Vector3 initialVelocity)
     {
-        grenadeLineRenderer.positionCount = 0;
-        grenadeLineRenderer.positionCount = linePoint;
+        Vector3 currentPosition = startPosition;
+        Vector3 velocity = initialVelocity; // 초기 속도
+        float timeStep = 0.1f;              // 궤적 샘플링 간격
 
-        for (int i = 0; i< linePoint; i++)
+        for (int i = 0; i < linePoint; i++)
         {
+            // 궤적의 현재 위치 계산
+            grenadeLineRenderer.SetPosition(i, currentPosition);
 
+            // 위치 업데이트: 포물선 운동 (s = ut + 0.5 * a * t^2, v = u + at)
+            currentPosition += velocity * timeStep;
+            velocity += Physics.gravity * timeStep; // 중력 적용
         }
+
+        // LineRenderer 활성화
+        grenadeLineRenderer.enabled = true;
     }
 
     void CommandThrowEnd()
@@ -207,6 +224,8 @@ public class CharacterController : MonoBehaviour
             player.ThrowEnd();
             isThrowMode = false;
             isThrowEnd = true;
+
+            grenadeLineRenderer.gameObject.SetActive(false);
         }
     }
 
