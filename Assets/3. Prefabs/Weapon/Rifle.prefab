@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 972117593725960363}
   - component: {fileID: 3789359805917703392}
   - component: {fileID: 5043385453219709077}
+  - component: {fileID: 7207438506996576663}
   - component: {fileID: 3793927672500526595}
   m_Layer: 0
   m_Name: Rifle
@@ -311,6 +312,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43410215507678426, guid: 43906eee8e761254c9c56f5b690db6e0, type: 2}
+--- !u!114 &7207438506996576663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528158616838447859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdcb9bda2ea0ce34c8b53f26f620a02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotIndex: 0
+  slotWeapon: {fileID: 1528158616838447859}
 --- !u!114 &3793927672500526595
 MonoBehaviour:
   m_ObjectHideFlags: 0

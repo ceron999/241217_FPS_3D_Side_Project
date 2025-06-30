@@ -1,27 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Weapon;
 
 public class PlayerBase : CharacterBase
 {
     // 무기 데이터
+    public WeaponInventory _weaponInventory;
     public List<WeaponBase> weapons;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _weaponInventory = GetComponent<WeaponInventory>();
+    }
 
     private void Start()
     {
-        StatusUI.Instance.SetHP(curStat.HP);
-
-        if (GameManager.StartData.startMainWeaponType == MainWeaponType.Rifle)
-        {
-            Destroy(weapons[1].gameObject);
-            weapons.RemoveAt(1);
-        }
-        else
-        {
-            Destroy(weapons[0].gameObject);
-            weapons.RemoveAt(0);
-        }
-        
         nowWeapon = weapons[0];
         nowWeapon.Initialize();
     }

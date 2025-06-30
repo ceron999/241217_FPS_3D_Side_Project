@@ -23,7 +23,7 @@ namespace Character.InputSystem
         bool IsAimPressed();
         bool IsAimHeld();
 
-        // UI 관련
-
+        // 무기 스위칭 관련
+        int SwitchWeapon();
     }
 }

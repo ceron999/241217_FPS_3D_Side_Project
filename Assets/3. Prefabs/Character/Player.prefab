@@ -4001,6 +4001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2372994101398126717}
   - component: {fileID: 1281909059450087337}
+  - component: {fileID: 5675812885115140668}
   - component: {fileID: 4492016774007360491}
   - component: {fileID: 633998558298528011}
   - component: {fileID: 8064735175591952044}
@@ -4057,6 +4058,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5675812885115140668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146016977136088522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6440abb57290e468a19095df4a49e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponSlots: 3
+  equipWeaponSlots: []
 --- !u!114 &4492016774007360491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4069,6 +4084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8e201284487924b9e7a318b6d698b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterIndex: 0
   speed: 0
   moveSpeed: 4
   horizontal: 0
@@ -4097,8 +4113,6 @@ MonoBehaviour:
   - {fileID: 7314915630872187980}
   - {fileID: 3674024705713729068}
   - {fileID: 5190723363181525127}
-  throwPivot: {fileID: 0}
-  throwPrefab: {fileID: 0}
 --- !u!114 &633998558298528011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4115,9 +4129,14 @@ MonoBehaviour:
   throwStartPivot: {fileID: 6133360802993050884}
   throwObjectPrefab: {fileID: 1684924197149832, guid: c046ff3b3c15cfe489bace9ddfcdc0c9, type: 3}
   throwPower: 10
+  grenadeLineRenderer: {fileID: 0}
+  linePoint: 0
   cameraPivot: {fileID: 2318638833497856008}
   bottomClamp: -90
   topClamp: 90
+  installPosition: {fileID: 0}
+  installRadius: 3
+  isZoom: 0
 --- !u!143 &8064735175591952044
 CharacterController:
   m_ObjectHideFlags: 0

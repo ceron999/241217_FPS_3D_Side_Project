@@ -24,7 +24,9 @@ namespace Character.InputSystem
         public event Action OnAimPressed;
         public event Action OnAimHeld;
 
-        // 키보드 이벤트
+        // 무기 스위칭 이벤트
+        public event Action<int> OnSwtichWeapon;
+
         public event Action OnJump;
         public event Action OnReload;
         public event Action OnOpenInventory;
@@ -51,6 +53,13 @@ namespace Character.InputSystem
 
             if (inputHandler.IsJumpPressed())
                 OnJump?.Invoke();
+
+            // 무기 스위칭 이벤트 확인
+            if(inputHandler.SwitchWeapon() >=1 && inputHandler.SwitchWeapon() <= 5)
+            {
+                int switchWeaponNum = inputHandler.SwitchWeapon();
+                OnSwtichWeapon?.Invoke(switchWeaponNum);
+            }
 
             // 키보드 이벤트 확인
             if (inputHandler.IsReloadPressed())

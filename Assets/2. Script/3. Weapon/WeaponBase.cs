@@ -20,6 +20,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     public void Initialize()
     {
+        weaponDamage = _weaponData.weaponDamage;
+
         maxAmmo = _weaponData.maxAmmo;
         holdAmmo = _weaponData.maxAmmo;
         remainAmmo = _weaponData.maxAmmo;

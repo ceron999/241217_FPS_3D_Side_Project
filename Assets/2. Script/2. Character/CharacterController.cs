@@ -74,7 +74,11 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnFireStart += CommandFireStart;
         InputSystem.Instance.OnFireEnd += CommandFireStop;
         InputSystem.Instance.OnAimPressed += CommandZoomIn;
-        //InputSystem.Instance.OnAimHeld += CommandFireStart;
+
+
+
+        // 무기 스위칭 연결
+        InputSystem.Instance.OnSwtichWeapon += CommandSwitchWeapon;
 
         InputSystem.Instance.OnReload += CommandReload;
 
@@ -247,6 +251,11 @@ public class CharacterController : MonoBehaviour
     }
 
     // 무기 변환
+    public void CommandSwitchWeapon(int inputIndex)
+    {
+        player._weaponInventory.SwitchWeapon(inputIndex);
+    }
+
     public void CommandSwitchMainWeapon()
     {
         UIManager.Show<WeaponUI>(UIList.WeaponUI);

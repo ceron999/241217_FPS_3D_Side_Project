@@ -69,7 +69,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     [Header("À½Çâ")]
     public AudioSource audioSource;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         characterAnimator = GetComponent<Animator>();
         unityCharacterController = GetComponent<UnityEngine.CharacterController>();
