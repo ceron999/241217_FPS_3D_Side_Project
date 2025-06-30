@@ -51,31 +51,8 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        #region Old Input System
-        //OldInputSystem.Instance.OnClickSpace += CommandJump;                       // 점프
-        //OldInputSystem.Instance.OnClickR += CommandReload;                         // 재장전
-
-        //OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;    // 사격
-        //OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;       // 사격 중지
-
-        //if(GameManager.StartData.startMainWeaponType == MainWeaponType.Sniper)
-        //    OldInputSystem.Instance.OnClickRightMouseButtonDown += CommandZoomIn;       // 줌인 (스나이퍼일 경우만)
-
-        //// 스위칭
-        //OldInputSystem.Instance.OnClickAlpha1 += CommandSwitchMainWeapon;          // 주 무기 변환
-        //OldInputSystem.Instance.OnClickAlpha2 += CommandSwitchPistol;              // 권총 변환
-        //OldInputSystem.Instance.OnClickAlpha3 += CommandSwitchGrenade;             // 수류탄 변환
-        //OldInputSystem.Instance.OnClickAlpha4 += CommandSwitchC4;                  // C4 변환
-
-        //OldInputSystem.Instance.OnClickTabDown += CommandSummaryBoardOpen;         // 상황판 키기
-        //OldInputSystem.Instance.OnClickTabUp += CommandSummaryBoardClose;          // 상황판 끄기
-        #endregion
-
-        InputSystem.Instance.OnFireStart += CommandFireStart;
-        InputSystem.Instance.OnFireEnd += CommandFireStop;
-        InputSystem.Instance.OnAimPressed += CommandZoomIn;
-
-
+        InputSystem.Instance.OnWeaponStart += CommandFireStart;
+        InputSystem.Instance.OnWeaponEnd += CommandFireStop;
 
         // 무기 스위칭 연결
         InputSystem.Instance.OnSwtichWeapon += CommandSwitchWeapon;
@@ -159,15 +136,11 @@ public class CharacterController : MonoBehaviour
         {
             CameraSystem.Instance.SetActiveScopeMode(true);
             ScopeVinetteController.Instance.SetActiveVinette(true);
-            //CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 20f;
-            //ZoomUI.Instance.Show();
         }
         else
         {
             CameraSystem.Instance.SetActiveScopeMode(false);
             ScopeVinetteController.Instance.SetActiveVinette(false);
-            //CameraSystem.Instance.tpsCamera.m_Lens.FieldOfView = 40f;
-            //ZoomUI.Instance.Hide();
         }
     }
 
@@ -227,9 +200,6 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CommandThrowEnd()
     {
         if (isThrowMode)
@@ -242,77 +212,67 @@ public class CharacterController : MonoBehaviour
 
     public void CommandInstallC4()
     {
-        // 설치 장소에서 멀지 않다면 실행
-        if (Vector3.Distance(installPosition.position, this.transform.position) < installRadius)
-        {
-            BattleManager.Instance.c4InstallPosition = installPosition;
-            player.nowWeapon.Activate();
-        }
+        
     }
 
     // 무기 변환
-    public void CommandSwitchWeapon(int inputIndex)
+    private void CommandSwitchWeapon(int inputIndex)
     {
-        player._weaponInventory.SwitchWeapon(inputIndex);
+        player.SwitchWeapon(inputIndex);
+
+        // input을 초기화하고 무기 전용 input으로 변경
+        ClearMouseInput();
+
+        switch(inputIndex)
+        {
+            case 1:
+                SetGunInputs();
+                break;
+            case 2:
+                SetGunInputs();
+                InputSystem.Instance.OnAimPressed += CommandZoomIn;
+                break;
+            case 3:
+                SetGunInputs();
+                break;
+            case 4:
+                SetGrenadeInputs();
+                break;
+            case 5:
+                SetC4Inputs();
+                break;
+        }
     }
 
-    public void CommandSwitchMainWeapon()
+    private void ClearMouseInput()
     {
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
+        InputSystem.Instance.OnWeaponStart = null;
+        InputSystem.Instance.OnWeaponHeld = null;
+        InputSystem.Instance.OnWeaponEnd = null;
 
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        OldInputSystem.Instance.OnClickLeftMouseButton = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
-        player.SwitchMainWeapon();
-
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
+        InputSystem.Instance.OnAimPressed = null;
     }
 
-    public void CommandSwitchPistol()
+
+    public void SetGunInputs()
     {
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        OldInputSystem.Instance.OnClickLeftMouseButton = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandFireStart;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandFireStop;
-        player.SwitchPistol();
-
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
+        InputSystem.Instance.OnWeaponStart += CommandFireStart;
+        InputSystem.Instance.OnWeaponEnd += CommandFireStop;
     }
 
-    public void CommandSwitchGrenade()
+    public void SetGrenadeInputs()
     {
         // 수류탄을 사용했다면 스위칭 못하도록
         if (isThrowEnd)
             return;
 
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        OldInputSystem.Instance.OnClickLeftMouseButton = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandThrowStart;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp += CommandThrowEnd;
-        player.SwitchGrenade();
-
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
+        InputSystem.Instance.OnWeaponStart += CommandThrowStart;
+        InputSystem.Instance.OnWeaponEnd += CommandThrowEnd;
     }
 
-    public void CommandSwitchC4()
+    public void SetC4Inputs()
     {
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown = null;
-        OldInputSystem.Instance.OnClickLeftMouseButton = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonUp = null;
-        OldInputSystem.Instance.OnClickLeftMouseButtonDown += CommandInstallC4;
-        player.SwitchC4();
-
-        BulletUI.Instance.ChangeWeapon(player.nowWeapon);
+        InputSystem.Instance.OnWeaponStart += CommandInstallC4;
     }
 
 

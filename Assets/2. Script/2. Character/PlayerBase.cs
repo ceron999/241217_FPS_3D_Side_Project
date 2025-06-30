@@ -7,18 +7,11 @@ public class PlayerBase : CharacterBase
 {
     // 무기 데이터
     public WeaponInventory _weaponInventory;
-    public List<WeaponBase> weapons;
 
     protected override void Awake()
     {
         base.Awake();
         _weaponInventory = GetComponent<WeaponInventory>();
-    }
-
-    private void Start()
-    {
-        nowWeapon = weapons[0];
-        nowWeapon.Initialize();
     }
 
     private void Update()
@@ -60,13 +53,13 @@ public class PlayerBase : CharacterBase
         /// 해당 문제는 Animation에서 뭔가 위치가 바뀌면서 총알도 그리 나간 것으로 보임
         if (isShooting && !GameManager.Singleton.isGameEnd)
         {
-            bool isFireSuccess = nowWeapon.Activate();
+            bool isFireSuccess = _weaponInventory.CurrWeapon.Activate();
             if (false == isFireSuccess)
             {
-                if (nowWeapon.holdAmmo <= 0)
+                if (_weaponInventory.CurrWeapon.holdAmmo <= 0)
                     return;
 
-                if (nowWeapon.RemainAmmo <= 0 && false == isReloading)
+                if (_weaponInventory.CurrWeapon.RemainAmmo <= 0 && false == isReloading)
                 {
                     isReloading = true;
                     Reload();
@@ -77,58 +70,22 @@ public class PlayerBase : CharacterBase
     }
 
     // 무기 스위칭 관련 데이터
-    public void SwitchMainWeapon()
+    public void SetPlayerAnimationAndRIg(int rifleBlend, float rigWeight)
     {
-        characterAnimator.SetFloat("RifleBlend", 1);
-        aimRig.weight = 1f;
-        nowWeapon = weapons[0];
-        SetWeaponActive(0);
+        characterAnimator.SetFloat("RifleBlend", rifleBlend);
+        aimRig.weight = rigWeight;
     }
 
-    public void SwitchPistol()
+    public void SwitchWeapon(int inputIndex)
     {
-        characterAnimator.SetFloat("RifleBlend", 0);
-        aimRig.weight = 1f;
-        nowWeapon = weapons[1];
-        SetWeaponActive(1);
-    }
-
-    public void SwitchGrenade()
-    {
-        // 기본 애니메이션 상태로 진입
-        characterAnimator.SetFloat("RifleBlend", 1);
-        aimRig.weight = 0f;
-        nowWeapon = weapons[2];
-        SetWeaponActive(2);
-    }
-
-    public void SwitchC4()
-    {
-        characterAnimator.SetFloat("RifleBlend", 1);
-        nowWeapon = weapons[3];
-        SetWeaponActive(3);
-    }
-
-    void SetWeaponActive(int weaponIndex)
-    {
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            if (i != weaponIndex)
-                weapons[i].gameObject.SetActive(false);
-            else
-                weapons[i].gameObject.SetActive(true);
-        }
+        WeaponSlot currWeaponSlot = _weaponInventory.SwitchWeapon(inputIndex);
+        (int rifleBlend, float rigWeight) = currWeaponSlot.GetAnimVariables();
+        SetPlayerAnimationAndRIg(rifleBlend, rigWeight);
     }
 
     public void ThrowStart()
     {
         characterAnimator.SetTrigger("Throw Start Trigger");
-    }
-
-    public void SetGrenadeVisual(int active)
-    {
-        bool isActive = active == 1 ? true : false;
-        nowWeapon.gameObject.SetActive(isActive);
     }
 
     public void ThrowEnd()
@@ -139,17 +96,5 @@ public class PlayerBase : CharacterBase
     public override void ApplyDamage(float getDamage)
     {
         base.ApplyDamage(getDamage);
-
-        if(curStat.HP >= 0)
-            StatusUI.Instance.SetHP(curStat.HP);
-        else
-            StatusUI.Instance.SetHP(0);
-
-        // 사망 UI에게 전송
-        if (IsDie)
-        {
-            GameManager.Singleton.PlayerDieAction?.Invoke();
-            BattleManager.Instance.PlayerDie();
-        }
     }
 }

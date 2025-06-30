@@ -1,3 +1,4 @@
+using Character.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -26,6 +27,14 @@ public abstract class WeaponBase : MonoBehaviour
         holdAmmo = _weaponData.maxAmmo;
         remainAmmo = _weaponData.maxAmmo;
         clipSize = _weaponData.maxAmmo;   
+    }
+
+    /// <summary>
+    /// 무기에 알맞게 좌클릭, 우클릭 기능을 변경합니다.
+    /// </summary>
+    protected virtual void UpdateInputSystem()
+    {
+
     }
 
     public abstract bool Activate();

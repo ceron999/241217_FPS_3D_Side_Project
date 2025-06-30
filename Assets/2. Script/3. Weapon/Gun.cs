@@ -31,6 +31,7 @@ public class Gun : WeaponBase
 
     protected override void Awake()
     {
+        base.Awake();
         fireRate = Mathf.Max(fireRate, 0.1f); // 연사 속도가 0.1보다 작다면, 0.1로 설정
     }
 

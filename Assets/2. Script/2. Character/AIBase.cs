@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AIBase : CharacterBase
 {
+    public WeaponBase nowWeapon;
+
     private void Start()
     {
         nowWeapon = weaponHolder.GetChild(0).GetComponent<WeaponBase>();

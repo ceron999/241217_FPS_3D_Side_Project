@@ -21,9 +21,12 @@ namespace Character.InputSystem
         bool IsFireHeld();
         bool IsFireEnd();
         bool IsAimPressed();
-        bool IsAimHeld();
+        bool IsAimEnd();
 
-        // 무기 스위칭 관련
+        // 무기 관련
         int SwitchWeapon();
+
+        // UI 관련
+        bool IsOpenInventory();
     }
 }

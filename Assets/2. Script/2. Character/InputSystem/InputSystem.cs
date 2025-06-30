@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using Weapon;
 
 namespace Character.InputSystem
 {
@@ -17,18 +19,20 @@ namespace Character.InputSystem
         public bool IsRun => inputHandler.IsRunning();
         public bool IsCrouch => inputHandler.IsCrouching();
 
-        // 마우스 이벤트
-        public event Action OnFireStart;
-        public event Action OnFireHeld;
-        public event Action OnFireEnd;
-        public event Action OnAimPressed;
-        public event Action OnAimHeld;
-
-        // 무기 스위칭 이벤트
-        public event Action<int> OnSwtichWeapon;
-
         public event Action OnJump;
+
+        // 마우스 이벤트
+        public Action OnWeaponStart;
+        public Action OnWeaponHeld;
+        public Action OnWeaponEnd;
+        public Action OnAimPressed;
+        // public event Action OnAimEnd;
+
+        // 무기 이벤트
+        public event Action<int> OnSwtichWeapon;
         public event Action OnReload;
+
+        // UI 이벤트
         public event Action OnOpenInventory;
 
         private void Awake()
@@ -45,9 +49,9 @@ namespace Character.InputSystem
         {
             // 마우스 이벤트 확인
             if (inputHandler.IsFirePressed())
-                OnFireStart?.Invoke();
+                OnWeaponStart?.Invoke();
             if (inputHandler.IsFireEnd())
-                OnFireEnd?.Invoke();
+                OnWeaponEnd?.Invoke();
             if (inputHandler.IsAimPressed())
                 OnAimPressed?.Invoke();
 
@@ -64,6 +68,11 @@ namespace Character.InputSystem
             // 키보드 이벤트 확인
             if (inputHandler.IsReloadPressed())
                 OnReload?.Invoke();
+            
+            // UI 연동
+            if(inputHandler.IsOpenInventory())
+                OnOpenInventory?.Invoke();
+
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Character.InputSystem
         public bool IsFireHeld() => Input.GetMouseButton(0);
         public bool IsFireEnd() => Input.GetMouseButtonUp(0);
         public bool IsAimPressed() => Input.GetMouseButtonDown(1);
-        public bool IsAimHeld() => Input.GetMouseButton(1);
+        public bool IsAimEnd() => Input.GetMouseButtonUp(1);
 
 
-        // 무기 스위칭 관련
+        // 무기 관련
         public int SwitchWeapon()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1)) return 1;
@@ -37,5 +37,7 @@ namespace Character.InputSystem
                 return -1;
             }
         }
+
+        public bool IsOpenInventory() => Input.GetKeyDown(KeyCode.Tab);
     }
 }

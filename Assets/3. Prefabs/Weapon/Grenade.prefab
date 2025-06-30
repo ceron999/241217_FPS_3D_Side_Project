@@ -290,7 +290,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIndex: 0
-  slotWeapon: {fileID: 1684924197149832}
+  slotWeapon: {fileID: 4976801042078984012}
+  rifleBlend: 1
+  rigWeight: 0
 --- !u!114 &4976801042078984012
 MonoBehaviour:
   m_ObjectHideFlags: 0

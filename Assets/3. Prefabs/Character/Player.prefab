@@ -4106,6 +4106,7 @@ MonoBehaviour:
   rigBuilder: {fileID: 0}
   aimRig: {fileID: 5492063846315681624}
   audioSource: {fileID: 0}
+  _weaponInventory: {fileID: 0}
   weapons:
   - {fileID: 6425863357767967095}
   - {fileID: 2323007420756809290}
@@ -4748,7 +4749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1252744804793604, guid: b5a20a605f4c99c4da72b27e6dfe8cde, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4335121968968054, guid: b5a20a605f4c99c4da72b27e6dfe8cde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4825,7 +4826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1528158616838447859, guid: 0a1e3b6d4c487d442923269fd43a7016, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3688815203657726377, guid: 0a1e3b6d4c487d442923269fd43a7016, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4906,7 +4907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619436894274318, guid: 46bc8993686db4b429b5b873a042fb3b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4833889617908870, guid: 46bc8993686db4b429b5b873a042fb3b, type: 3}
       propertyPath: m_LocalPosition.x

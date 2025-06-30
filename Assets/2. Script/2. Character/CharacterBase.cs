@@ -44,7 +44,6 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     [Header("무기")]
     public Transform weaponHolder;
-    public WeaponBase nowWeapon;
     protected bool isShooting = false;
     protected bool isReloading = false;
 
@@ -130,15 +129,15 @@ public class CharacterBase : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 
-    //public void Jump()
-    //{
-    //    if(isGrounded)
-    //    {
-    //        verticalVelocity = jumpFoice;
-    //        characterAnimator.SetTrigger("Jump Trigger");
-    //        // 애니메이션 구동
-    //    }
-    //}
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            verticalVelocity = jumpFoice;
+            characterAnimator.SetTrigger("Jump Trigger");
+            // 애니메이션 구동
+        }
+    }
 
     public void Shoot(bool isShoot)
     {
@@ -154,7 +153,7 @@ public class CharacterBase : MonoBehaviour, IDamage
 
     public void ReloadComplete()
     {
-        nowWeapon.Reload();
+        //nowWeapon.Reload();
         isReloading = false;
     }
 
