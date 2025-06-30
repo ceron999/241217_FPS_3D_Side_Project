@@ -126,8 +126,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotIndex: 0
   slotWeapon: {fileID: 8399713364762830543}
-  rifleBlend: 0
-  rigWeight: 1
+  animVariables:
+    rifleBlend: 0
+    rigWeight: 1
+    weapon_LeftHandIk_Target_Position: {x: 0.039, y: 0.111, z: 0.02}
+    weapon_LeftHandIk_Target_Rotation: {x: -152.635, y: -85.79401, z: 247.309}
 --- !u!114 &8399713364762830543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +425,7 @@ Transform:
   m_GameObject: {fileID: 4520136742891748568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0006, y: 0.063, z: 0.2309}
+  m_LocalPosition: {x: 0.0006, y: 0.063, z: 0.2587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -11,8 +11,7 @@ namespace Weapon
         public WeaponBase slotWeapon;
 
         [Header("애니메이션 데이터")]
-        [SerializeField] private int rifleBlend;
-        [SerializeField] private float rigWeight;
+        [SerializeField] private AnimVariables animVariables;
 
         private void Awake()
         {
@@ -41,9 +40,9 @@ namespace Weapon
             }
         }
 
-        public virtual (int, float) GetAnimVariables()
+        public virtual AnimVariables GetAnimVariables()
         {
-            return (rifleBlend, rigWeight);
+            return animVariables;
         }
     }
 }

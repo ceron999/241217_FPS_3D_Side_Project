@@ -69,18 +69,21 @@ public class PlayerBase : CharacterBase
 
     }
 
-    // 무기 스위칭 관련 데이터
-    public void SetPlayerAnimationAndRIg(int rifleBlend, float rigWeight)
+    // 무기 스위칭할 때 애니메이션 및 모습 정보 변경
+    public void SetPlayerAnimationAndRIg(AnimVariables animVariables)
     {
-        characterAnimator.SetFloat("RifleBlend", rifleBlend);
-        aimRig.weight = rigWeight;
+        characterAnimator.SetFloat("RifleBlend", animVariables.rifleBlend);
+        aimRig.weight = animVariables.rigWeight;
+
+        leftHand_IK_Target.localPosition = animVariables.weapon_LeftHandIk_Target_Position;
+        leftHand_IK_Target.localRotation = Quaternion.Euler(animVariables.weapon_LeftHandIk_Target_Rotation);
     }
 
     public void SwitchWeapon(int inputIndex)
     {
         WeaponSlot currWeaponSlot = _weaponInventory.SwitchWeapon(inputIndex);
-        (int rifleBlend, float rigWeight) = currWeaponSlot.GetAnimVariables();
-        SetPlayerAnimationAndRIg(rifleBlend, rigWeight);
+        AnimVariables animVariables = currWeaponSlot.GetAnimVariables();
+        SetPlayerAnimationAndRIg(animVariables);
     }
 
     public void ThrowStart()

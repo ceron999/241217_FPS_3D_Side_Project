@@ -19,6 +19,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected int remainAmmo;           // 현재 사용 중인 무기의 남은 개수(현재 탄창의 남은 탄 개수
     protected int clipSize;             // 탄창 크기
 
+
+
     public void Initialize()
     {
         weaponDamage = _weaponData.weaponDamage;
@@ -27,14 +29,6 @@ public abstract class WeaponBase : MonoBehaviour
         holdAmmo = _weaponData.maxAmmo;
         remainAmmo = _weaponData.maxAmmo;
         clipSize = _weaponData.maxAmmo;   
-    }
-
-    /// <summary>
-    /// 무기에 알맞게 좌클릭, 우클릭 기능을 변경합니다.
-    /// </summary>
-    protected virtual void UpdateInputSystem()
-    {
-
     }
 
     public abstract bool Activate();

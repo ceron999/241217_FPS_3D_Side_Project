@@ -60,6 +60,7 @@ public class CharacterBase : MonoBehaviour, IDamage
     public Transform aimingPointTransform;
 
     [Header("애니메이션 데이터")]
+    [SerializeField] protected Transform leftHand_IK_Target;
     public Animator characterAnimator;
     public UnityEngine.CharacterController unityCharacterController;
     public RigBuilder rigBuilder;

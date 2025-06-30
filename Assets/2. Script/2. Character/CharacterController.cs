@@ -184,8 +184,8 @@ public class CharacterController : MonoBehaviour
             grenadeComponent.throwPower = throwPower;
             grenadeComponent.Activate();
 
-            WeaponUI.Instance.SetGrenadeUIOff();
-            OldInputSystem.Instance.OnClickAlpha3 = null;
+            //WeaponUI.Instance.SetGrenadeUIOff();
+            //OldInputSystem.Instance.OnClickAlpha3 = null;
         }
     }
 
@@ -258,6 +258,10 @@ public class CharacterController : MonoBehaviour
     {
         InputSystem.Instance.OnWeaponStart += CommandFireStart;
         InputSystem.Instance.OnWeaponEnd += CommandFireStop;
+    }
+    public void SetGrenadeVisual()
+    {
+
     }
 
     public void SetGrenadeInputs()

@@ -209,8 +209,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotIndex: 0
   slotWeapon: {fileID: 5834061678129175269}
-  rifleBlend: 1
-  rigWeight: 1
+  animVariables:
+    rifleBlend: 1
+    rigWeight: 1
+    weapon_LeftHandIk_Target_Position: {x: 0.327, y: 0.096, z: -0.035}
+    weapon_LeftHandIk_Target_Rotation: {x: -150.816, y: -85.94699, z: 265.367}
 --- !u!114 &5834061678129175269
 MonoBehaviour:
   m_ObjectHideFlags: 0
