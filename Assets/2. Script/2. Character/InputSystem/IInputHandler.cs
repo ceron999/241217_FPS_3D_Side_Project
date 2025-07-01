@@ -28,5 +28,6 @@ namespace Character.InputSystem
 
         // UI ฐüทร
         bool IsOpenInventory();
+        bool IsCloseInventory();
     }
 }

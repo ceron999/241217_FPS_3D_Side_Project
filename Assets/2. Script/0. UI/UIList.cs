@@ -12,7 +12,7 @@ public enum UIList
     // 시작 화면 UI
     StartUI,
 
-    // 게임 화면 UI
+    // Old 게임 화면 UI
     ZoomUI,
     CrosshairUI,
     RaderUI,
@@ -20,6 +20,9 @@ public enum UIList
     StatusUI,
     BulletUI,
     SituationBoardUI,
+
+    // New 게임 화면
+    InventoryUI,
 
     // 게임 종료 UI
     GameEndUI,

@@ -9,6 +9,7 @@ namespace Weapon
     {
         [SerializeField] private int currentWeaponSlot = 3;
         [SerializeField] private List<WeaponSlot> equipWeaponSlots = new List<WeaponSlot>();
+
         public WeaponBase CurrWeapon 
         { 
             get 

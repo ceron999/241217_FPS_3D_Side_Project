@@ -9,6 +9,7 @@ namespace Weapon
         public bool isPickedUp = false;
 
         [Header("ΩΩ∑‘ µ•¿Ã≈Õ")]
+        public Sprite weaponSprite;
         [SerializeField] int slotIndex;
         public WeaponBase slotWeapon;
 

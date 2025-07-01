@@ -39,14 +39,8 @@ public class C4 : WeaponBase
         if (curInstallTime >= maxInstallTime)
         {
             Debug.Log("C4 설치");
-            // Battle Manager에 C4 설치했다고 알림
-            BattleManager.Instance.isC4Install = true;
-
-            // 게임매니저한테 타이머 재설정 요청
-            GameDataUI.Instance.InitializeTime(c4ExplosionTIme);
 
             // WeaponUI에 C4 끄기
-            WeaponUI.Instance.SetC4UIOff();
             OldInputSystem.Instance.OnClickAlpha5 = null;
 
             // C4 객체 생성해서 지정 위치에 놓기

@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPickedUp: 0
+  weaponSprite: {fileID: 21300000, guid: 843711415bb39e04abbcc74c3f6fec83, type: 3}
   slotIndex: 0
   slotWeapon: {fileID: 5834061678129175269}
   animVariables:

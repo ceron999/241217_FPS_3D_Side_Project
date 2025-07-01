@@ -34,6 +34,7 @@ namespace Character.InputSystem
 
         // UI 이벤트
         public event Action OnOpenInventory;
+        public event Action OnCloseInventory;
 
         private void Awake()
         {
@@ -71,7 +72,9 @@ namespace Character.InputSystem
             
             // UI 연동
             if(inputHandler.IsOpenInventory())
-                OnOpenInventory?.Invoke();
+                OnOpenInventory?.Invoke(); 
+            if (inputHandler.IsCloseInventory())
+                OnCloseInventory?.Invoke();
 
         }
     }

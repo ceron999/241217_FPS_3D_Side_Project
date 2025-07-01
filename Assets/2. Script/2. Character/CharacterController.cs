@@ -2,6 +2,7 @@ using Character.InputSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.TextCore.Text;
@@ -61,6 +62,8 @@ public class CharacterController : MonoBehaviour
         InputSystem.Instance.OnSwtichWeapon += CommandSwitchWeapon;
 
         InputSystem.Instance.OnReload += CommandReload;
+        InputSystem.Instance.OnOpenInventory += CommandOpenInventory;
+        InputSystem.Instance.OnCloseInventory += CommandCloseInventory;
 
         CameraSystem.Instance.SetCameraFollowTarget(cameraPivot);
     }
@@ -299,15 +302,14 @@ public class CharacterController : MonoBehaviour
     }
 
 
-    // 상황판 표시 및 끄기
-    public void CommandSummaryBoardOpen()
+    // 인벤토리 표시 및 끄기
+    public void CommandOpenInventory()
     {
-        UIManager.Show<SituationBoardUI>(UIList.SituationBoardUI);
+        UIManager.Show<InventoryUI>(UIList.InventoryUI);
     }
-
-    public void CommandSummaryBoardClose()
+    public void CommandCloseInventory()
     {
-        UIManager.Hide<SituationBoardUI>(UIList.SituationBoardUI);
+        UIManager.Hide<InventoryUI>(UIList.InventoryUI);
     }
     #endregion
 }
