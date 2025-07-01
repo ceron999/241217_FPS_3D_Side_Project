@@ -18,8 +18,8 @@ namespace Weapon
                 inventoryCollider.gameObject.SetActive(true);
             else if(Input.GetKeyUp(KeyCode.Tab))
                 inventoryCollider.gameObject.SetActive(false);
-
-            CheckSurroundingItems();
+            else if(!Input.GetKey(KeyCode.Tab))
+                CheckSurroundingItems();
         }
 
         private void CheckSurroundingItems()

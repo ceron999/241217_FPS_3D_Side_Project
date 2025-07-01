@@ -23,6 +23,8 @@ namespace UI
         [SerializeField] private Transform InventoryItemParent;
         private IObjectPool<WeaponItemPrefab> inventoryItemPool;
 
+        private Dictionary<int, WeaponItemPrefab> itemDictionary = new Dictionary<int, WeaponItemPrefab>();
+
         [Header("Âø¿ë ÆÄÃ÷")]
         [SerializeField] private Image headPartsImage;
         [SerializeField] private Image armorPartsImage;
@@ -41,20 +43,13 @@ namespace UI
         }
         public override void Hide()
         {
+            foreach (var item in itemDictionary.Values)
+            {
+                item.Release();
+            }
+
+            itemDictionary.Clear();
             base.Hide();
-        }
-
-        public void SetGroundItems(ref Collider[] groundItems)
-        {
-            for (int i = 0; i < groundItemParent.childCount; i++)
-            {
-                groundItemParent.GetChild(i).GetComponent<WeaponItemPrefab>().returnToPoolCallBack?.Invoke();
-            }
-
-            for (int i = 0; i < groundItems.Length; i++)
-            {
-                ShowGroundItem(groundItems[i].GetComponent<WeaponSlot>());
-            }
         }
 
         #region Pool Func
@@ -118,9 +113,28 @@ namespace UI
 
         public void ShowGroundItem(WeaponSlot weapon)
         {
+            int weaponID = weapon.GetInstanceID();
+            if(itemDictionary.ContainsKey(weaponID))
+            {
+                itemDictionary[weaponID].ShowWeaponItem(weapon);
+                return;
+            }
+
             WeaponItemPrefab item = groundItemPool.Get();
-            item.UpdateWeaponItemPrefab(weapon);
+            item.ShowWeaponItem(weapon);
             item.Init(() => groundItemPool.Release(item));  // bullet ³»ºÎ¿¡¼­ »ç¿ë ÈÄ ¹Ý³³
+
+            itemDictionary.Add(weapon.GetInstanceID(), item);
+        }
+
+        public void HideGroundItem(WeaponSlot weapon)
+        {
+            int weaponID = weapon.GetInstanceID();
+            if(itemDictionary.ContainsKey(weaponID))
+            {
+                itemDictionary[weaponID].Release();
+                itemDictionary.Remove(weaponID);
+            }
         }
 
         public void ShowInventoryItem()

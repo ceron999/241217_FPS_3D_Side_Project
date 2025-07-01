@@ -31,10 +31,12 @@ namespace UI
             IsReleased = false;
         }
 
-        public void UpdateWeaponItemPrefab(WeaponSlot weapon)
+        public void ShowWeaponItem(WeaponSlot weapon)
         {
             weaponImage.sprite = weapon.weaponSprite;
             weaponNameText.text = weapon.slotWeapon.name;
         }
+
+        public void Release() => returnToPoolCallBack?.Invoke();
     }
 }

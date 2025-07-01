@@ -98,6 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPickedUp: 0
+  inventoryLayer:
+    serializedVersion: 2
+    m_Bits: 16777216
+  weaponSprite: {fileID: 0}
   slotIndex: 0
   slotWeapon: {fileID: 868542047201290545}
   animVariables:

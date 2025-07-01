@@ -325,6 +325,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPickedUp: 0
+  inventoryLayer:
+    serializedVersion: 2
+    m_Bits: 16777216
   weaponSprite: {fileID: 21300000, guid: 05f69faad42ee85418acff45bef7ed58, type: 3}
   slotIndex: 0
   slotWeapon: {fileID: 3793927672500526595}
