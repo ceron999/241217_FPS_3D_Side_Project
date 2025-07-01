@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class BootStraper : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void SystemBoot()
     {
-        if(SceneManager.GetActiveScene().name == "GameScene")
+        if(SceneManager.GetActiveScene().name == "TestScene")
             InternalBoot();
     }
 
@@ -22,15 +23,6 @@ public class BootStraper : MonoBehaviour
     {
         // 1. 게임 씬 UI 불러오기
         UIManager.Show<CrosshairUI>(UIList.CrosshairUI);
-        UIManager.Show<RaderUI>(UIList.RaderUI);
-        UIManager.Show<GameDataUI>(UIList.GameDataUI);
-        UIManager.Show<StatusUI>(UIList.StatusUI);
-        UIManager.Show<BulletUI>(UIList.BulletUI);
-        UIManager.Show<WeaponUI>(UIList.WeaponUI);
-
-        // 2. 기본 시스템 설정
-        GameManager.Singleton.SetStartData();
-        GameManager.Singleton.GameStart?.Invoke();
-
+        UIManager.Hide<InventoryUI>(UIList.InventoryUI);
     }
 }

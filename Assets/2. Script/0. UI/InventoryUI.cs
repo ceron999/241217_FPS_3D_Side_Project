@@ -10,7 +10,8 @@ namespace UI
 {
     public class InventoryUI : UIBase
     {
-        public  static InventoryUI Instance;
+        public  static InventoryUI Instance => UIManager.Singleton.GetUI<InventoryUI>(UIList.InventoryUI);
+
         [Header("Pool Size")]
         [SerializeField] private const int defaultSize = 5;
         [SerializeField] private const int maxPoolSize = 15;
@@ -43,14 +44,16 @@ namespace UI
             base.Hide();
         }
 
-        public void SetGroundItems(Collider[] groundItems)
+        public void SetGroundItems(ref Collider[] groundItems)
         {
+            for (int i = 0; i < groundItemParent.childCount; i++)
+            {
+                groundItemParent.GetChild(i).GetComponent<WeaponItemPrefab>().returnToPoolCallBack?.Invoke();
+            }
+
             for (int i = 0; i < groundItems.Length; i++)
             {
-                if (groundItems[i].TryGetComponent<WeaponSlot>(out WeaponSlot slotInfo))
-                {
-                    ShowGroundItem(slotInfo);
-                }
+                ShowGroundItem(groundItems[i].GetComponent<WeaponSlot>());
             }
         }
 
@@ -85,6 +88,7 @@ namespace UI
         {
             WeaponItemPrefab weaponItem = Instantiate(_weaponItemPrefab);
             weaponItem.transform.SetParent(groundItemParent);
+            weaponItem.transform.localScale = Vector3.one;
 
             return weaponItem;
         }

@@ -10,6 +10,7 @@ namespace UI
     public class WeaponItemPrefab : MonoBehaviour
     {
         // Pool Action
+        public bool IsReleased { get; private set; }
         public System.Action returnToPoolCallBack;
 
         [Header("아이템 UI 정보")]
@@ -17,9 +18,17 @@ namespace UI
         [SerializeField] private TextMeshProUGUI weaponNameText;
         [SerializeField] private TextMeshProUGUI weaponAmmoText;
 
-        public void Init(System.Action onReturn)
+        public void Init(System.Action returnToPool)
         {
-            returnToPoolCallBack = onReturn;
+            this.returnToPoolCallBack = () =>
+            {
+                if (!IsReleased)
+                {
+                    returnToPool?.Invoke();
+                    IsReleased = true;
+                }
+            };
+            IsReleased = false;
         }
 
         public void UpdateWeaponItemPrefab(WeaponSlot weapon)
