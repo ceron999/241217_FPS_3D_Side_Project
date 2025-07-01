@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Weapon
 {
@@ -28,19 +29,18 @@ namespace Weapon
         #region 인벤토리 충돌 감지
         private void OnTriggerEnter(Collider other)
         {
-                Debug.Log(other.name);
+            // 현재 무기를 인벤토리 Ground 에 표시
             if (((1 << other.gameObject.layer) & inventoryLayer.value) != 0)
             {
-                Debug.Log(this.name);
                 InventoryUI.Instance.ShowGroundItem(this);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            // 현재 무기를 인벤토리 Ground 에서 제거
             if (((1 << other.gameObject.layer) & inventoryLayer.value) != 0)
             {
-                Debug.Log(this.name);
                 InventoryUI.Instance.HideGroundItem(this);
             }
         }

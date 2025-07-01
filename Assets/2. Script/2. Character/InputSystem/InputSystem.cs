@@ -34,6 +34,7 @@ namespace Character.InputSystem
 
         // UI 이벤트
         public event Action OnOpenInventory;
+        public event Action OnOpeningInventory;
         public event Action OnCloseInventory;
 
         private void Awake()
@@ -49,13 +50,15 @@ namespace Character.InputSystem
         private void Update()
         {
             // 마우스 이벤트 확인
-            if (inputHandler.IsFirePressed())
-                OnWeaponStart?.Invoke();
-            if (inputHandler.IsFireEnd())
-                OnWeaponEnd?.Invoke();
-            if (inputHandler.IsAimPressed())
-                OnAimPressed?.Invoke();
-
+            if (!inputHandler.IsOpeningInventory())
+            {
+                if (inputHandler.IsFirePressed())
+                    OnWeaponStart?.Invoke();
+                if (inputHandler.IsFireEnd())
+                    OnWeaponEnd?.Invoke();
+                if (inputHandler.IsAimPressed())
+                    OnAimPressed?.Invoke();
+            }
             if (inputHandler.IsJumpPressed())
                 OnJump?.Invoke();
 
@@ -72,7 +75,7 @@ namespace Character.InputSystem
             
             // UI 연동
             if(inputHandler.IsOpenInventory())
-                OnOpenInventory?.Invoke(); 
+                OnOpenInventory?.Invoke();
             if (inputHandler.IsCloseInventory())
                 OnCloseInventory?.Invoke();
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 using Weapon;
@@ -18,11 +19,16 @@ namespace UI
 
         [Header("인벤토리")]
         [SerializeField] private WeaponItemPrefab _weaponItemPrefab;
+
+        // 주변에 위치한 아이템 UI
         [SerializeField] private Transform groundItemParent;
         private IObjectPool<WeaponItemPrefab> groundItemPool;
+
+        // 보유한 아이템 UI
         [SerializeField] private Transform InventoryItemParent;
         private IObjectPool<WeaponItemPrefab> inventoryItemPool;
 
+        // <Weapon의 instance ID, 주변 아이템의 UI 프리팹>로 이루어진 Dict
         private Dictionary<int, WeaponItemPrefab> itemDictionary = new Dictionary<int, WeaponItemPrefab>();
 
         [Header("착용 파츠")]
@@ -40,9 +46,17 @@ namespace UI
         public override void Show()
         {
             base.Show();
+
+            // 커서 표시
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         public override void Hide()
         {
+            // 커서 제거
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             foreach (var item in itemDictionary.Values)
             {
                 item.Release();

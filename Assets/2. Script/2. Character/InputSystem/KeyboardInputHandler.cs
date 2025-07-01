@@ -39,6 +39,7 @@ namespace Character.InputSystem
         }
 
         public bool IsOpenInventory() => Input.GetKeyDown(KeyCode.Tab);
+        public bool IsOpeningInventory() => Input.GetKey(KeyCode.Tab);
         public bool IsCloseInventory() => Input.GetKeyUp(KeyCode.Tab);
     }
 }
