@@ -23,8 +23,8 @@ namespace UI
         [Header("아이템 UI 드래그 변수")]
         private RectTransform rectTransform;
         [SerializeField] private RectTransform inventoryRectTransform;
-        [SerializeField] private int itemDefaultIndex = -1;
-        [SerializeField] private Vector3 originalPanelLocalPosition;
+        [SerializeField] private Transform beforeParent;
+        [SerializeField] private Vector3 originalUIBeforePosition;
         [SerializeField] private Vector2 originalLocalPointerPosition;
 
         private void Awake()
@@ -59,11 +59,13 @@ namespace UI
         #region Mouse Actions
         public void OnBeginDrag(PointerEventData eventData)
         {
-            itemDefaultIndex = transform.GetSiblingIndex();
+            beforeParent = transform.parent;
 
-            // 드래그 시작시 마우스 위치와 패널의 원래 위치 기억
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                inventoryRectTransform, eventData.position, eventData.pressEventCamera, out originalLocalPointerPosition);
+            // UI 튀는거 방지하기 위해 부모 객체 변경
+            transform.SetParent(inventoryRectTransform);
+
+            // 기존 UI 위치 기억
+            originalUIBeforePosition = rectTransform.localPosition;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -72,8 +74,7 @@ namespace UI
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 inventoryRectTransform, eventData.position, eventData.pressEventCamera, out localPointerPosition))
             {
-                Vector3 offsetToOriginal = localPointerPosition - originalLocalPointerPosition;
-                rectTransform.localPosition = originalPanelLocalPosition + offsetToOriginal;
+                rectTransform.localPosition = localPointerPosition;
             }
         }
 
@@ -93,9 +94,11 @@ namespace UI
                 if (targetUI != null)
                 {
                     targetUI.StartDragEndEvent(this);   
-                    break;
+                    return;
                 }
             }
+
+            transform.SetParent(beforeParent); // 부모 강제 지정
         }
         #endregion
 
